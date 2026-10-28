@@ -329,7 +329,7 @@ function evo(){const n=Object.keys(S.c).length,ns=Math.max(stageOf(n),K.bs||0);K
 function stg(on,tb){$("stg").style.display=on?"":"none";$("tabs").style.display=on&&tb!==0?"flex":"none"}
 function sinfo(){const f=K.stage>=3?" · "+(K.stage==4?FORMS[K.form].n2:FORMS[K.form].n):"";$("sinfo").innerHTML=`Lv ${lvl(S.st.xp)} · ${STN[K.stage]}${f} · 🪙 ${M.coins}`}
 const qz=on=>document.body.classList.toggle('qz',on);
-function home(){PV={};G=null;qz(0);stg(1);$("stg").style.position=TAB==2?"sticky":"";sinfo();document.querySelectorAll("#tabs button").forEach((b,i)=>b.classList.toggle("on",i===TAB));[garden,catPage,shopPage,rankPage][TAB]()}
+function home(){mgStop();PV={};G=null;qz(0);stg(1);$("stg").style.position=TAB==2?"sticky":"";sinfo();document.querySelectorAll("#tabs button").forEach((b,i)=>b.classList.toggle("on",i===TAB));[garden,catPage,shopPage,rankPage][TAB]()}
 $("tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;TAB=+b.dataset.t;home()};
 let RTM=0;function loop(t){if(x&&$("stg").style.display!=="none")draw(t);if(TAB==3&&RK.length&&t-RTM>50){RTM=t;document.querySelectorAll('.rc').forEach(cv=>drawOther(cv,RK[cv.dataset.i],t))}requestAnimationFrame(loop)}
 function catPage(){let m=0,n=0;for(const k in S.c){n++;if(S.c[k][0]>=4)m++}
@@ -348,7 +348,7 @@ const sbOn=()=>SB.url&&SB.key;
 async function sbF(path,opt){const r=await fetch(SB.url+"/rest/v1/"+path,Object.assign({headers:{apikey:SB.key,"Content-Type":"application/json"}},opt));if(!r.ok)throw new Error(r.status);const t=await r.text();return t?JSON.parse(t):null}
 function pinfo(){let m=0,n=0;for(const k in S.c){n++;if(S.c[k][0]>=4)m++}const eq={};for(const s in M.eq)if(M.eq[s]>=0)eq[s]=M.eq[s];
  return{p_id:S.pid,p_token:S.ptk,p_name:S.pname,p_xp:S.st.xp||0,p_level:lvl(S.st.xp),p_words:n,p_mastered:m,p_streak:S.st.streak||0,p_stage:K.stage,p_form:K.form||null,p_eq:eq,p_seed:K.seed|0}}
-async function sync(){if(!sbOn()||!S.pname)return;try{await sbF("rpc/save_player",{method:"POST",body:JSON.stringify(pinfo())})}catch(e){}}
+async function sync(){bup();if(!sbOn()||!S.pname)return;try{await sbF("rpc/save_player",{method:"POST",body:JSON.stringify(pinfo())})}catch(e){}}
 const rnd=n=>{const a=new Uint8Array(n);crypto.getRandomValues(a);return[...a].map(b=>b.toString(16).padStart(2,"0")).join("")};
 function joinRk(){const v=$("#pn").value.trim().slice(0,16);if(!v)return;S.pid=rnd(8);S.ptk=rnd(16);S.pname=v;save();rankPage()}
 let RK=[];
@@ -385,9 +385,9 @@ function garden(){const T=day(),n=D.length;let m=0,l=0,due=0;
  <div class="row" style="gap:6px;margin-top:14px">${[["e","ง่าย","เลือกตอบ","x1"],["n","ปกติ","ปรับตามระดับ","x1.5"],["h","ยาก","พิมพ์เอง","x2.5"]].map(([k,a,b,m])=>`<button class="o${(S.cfg.df||"n")==k?" ok":""}" style="text-align:center;margin:0;padding:10px 4px;font-size:15px" onclick="setdf('${k}')"><b>${a}</b><br><span class="mu">${b} · ${m} แต้ม</span></button>`).join("")}</div>
  <button class="ghost" style="margin-top:8px" onclick="tls()">🎧 โหมดฟังเสียง: ${S.cfg.ls?"เปิด":"ปิด"} <span class="mu">(สุ่มแทรก 40% ของคำถาม)</span></button><button class="go" onclick="start(0)" ${due+nw?"":"disabled"}>${due+nw?"เริ่มภารกิจวันนี้":"วันนี้ครบแล้ว 🎉"}</button>
  ${due+nw?"":`<button class="ghost" onclick="start(1)">เรียนเพิ่มอีก 10 คำ</button>`}
- ${qhtml()}<h2>สวนคำศัพท์ · แตะจุดเพื่อดูคำ</h2><div id="gd"><div class="g">${g}</div></div><div id="inf" class="mu">เทา = ยังไม่เรียน · เหลืองเข้มขึ้น = จำแน่นขึ้น · แดง = ใกล้ลืม</div>
+ ${mgMenu()}${qhtml()}<h2>สวนคำศัพท์ · แตะจุดเพื่อดูคำ</h2><div id="gd"><div class="g">${g}</div></div><div id="inf" class="mu">เทา = ยังไม่เรียน · เหลืองเข้มขึ้น = จำแน่นขึ้น · แดง = ใกล้ลืม</div>
  <details><summary>ตั้งค่าและสำรองข้อมูล</summary><p>คำใหม่ต่อวัน <select onchange="S.cfg.nw=+this.value;save();home()">${[5,10,20,30].map(v=>`<option ${S.cfg.nw===v?"selected":""}>${v}</option>`).join("")}</select></p><p>ระดับที่จะเรียน ${lvb}</p>
- <button class="ghost" onclick="tst(this)">🔊 ทดสอบเสียง</button><button class="ghost" onclick="trd()">ลำดับคำใหม่: ${S.cfg.rd===false?"เรียงตามลำดับ":"สุ่ม"}</button><button class="ghost" onclick="tfx()">เอฟเฟกต์และเสียง: ${S.cfg.fx===false?"ปิด":"เปิด"}</button><button class="ghost" onclick="bk(0)">สำรองความคืบหน้า</button><button class="ghost" onclick="bk(1)">กู้คืน</button><button class="ghost" onclick="bk(2)">คำแปลแปลกๆ (${Object.keys(S.fl).length})</button><button class="ghost" onclick="if(confirm('ล้างความคืบหน้าทั้งหมด?')){localStorage.removeItem('wg1');location.reload()}">รีเซ็ต</button>
+ <button class="ghost" onclick="tst(this)">🔊 ทดสอบเสียง</button><button class="ghost" onclick="trd()">ลำดับคำใหม่: ${S.cfg.rd===false?"เรียงตามลำดับ":"สุ่ม"}</button><button class="ghost" onclick="tfx()">เอฟเฟกต์และเสียง: ${S.cfg.fx===false?"ปิด":"เปิด"}</button><button class="ghost" onclick="rcUi()">🔑 รหัสกู้คืน</button><button class="ghost" onclick="bk(0)">สำรองความคืบหน้า</button><button class="ghost" onclick="bk(1)">กู้คืน</button><button class="ghost" onclick="bk(2)">คำแปลแปลกๆ (${Object.keys(S.fl).length})</button><button class="ghost" onclick="if(confirm('ล้างความคืบหน้าทั้งหมด?')){localStorage.removeItem('wg1');location.reload()}">รีเซ็ต</button>
  <textarea id="bk" placeholder="ข้อมูลสำรองจะขึ้นที่นี่ วางข้อมูลที่นี่เพื่อกู้คืน"></textarea></details>`;
  $("#gd").onclick=e=>{const i=e.target.dataset.i;if(i==null)return;const d=D[i],c=S.c[i];say(d.w);
   $("#inf").innerHTML=`<b style="font-size:19px">${E(d.w)}</b> ${E(d.n||"")} — ${E(d.t)}<br><span class="mu">${LV[d.l]} · ${ST[c?c[0]:0]}${c?" · ทบทวนครั้งถัดไป "+(c[1]<=T?"วันนี้":"อีก "+(c[1]-T)+" วัน"):""}</span>`}
@@ -463,6 +463,100 @@ function res(ok){const xp0=G.xp,id=G.cur.id,d=D[id],T=day(),first=G.cur.nw&&!S.c
  if(G.m==="spell"||G.m==="clozeT"||G.m==="listenT"){const b=document.querySelector("#go");if(b&&b!==g.querySelector("#go"))b.remove()}}
 function fin(){if(!G.rv&&Object.keys(G.miss).length){G.rv=1;G.q=Object.keys(G.miss).map(k=>({id:+k,rv:1}));return nxt()}const T=day();S.st.xp+=G.xp;const fd=S.st.last!==T;K.l+=Math.round(10*G.ok/Math.max(1,G.tot));K.s+=Math.round(10*G.hd/Math.max(1,G.tot));K.a+=Math.round(10*G.nw/Math.max(1,G.tot0));K.e+=fd?5:1;const cb=Math.round(10*MUL());M.coins+=cb;G.co+=cb;const ev=evo();T0=LA=performance.now();if(S.st.last!==T){S.st.streak=S.st.last===T-1?S.st.streak+1:1;S.st.last=T}save();sync();
  app.innerHTML=`<div class="q"><div class="big">${G.ok}<small> / ${G.tot}</small></div><div class="mu">ตอบถูก · คำใหม่ ${G.nw} คำ · ⭐ +${G.xp} · 🪙 +${G.co}</div><div style="margin-top:12px">🔥 ต่อเนื่อง ${S.st.streak} วัน</div>${ev?`<div style="margin-top:12px;color:var(--ac)">${ev}</div>`:""}</div>${qready()?`<div class="fb ok">🎁 มีหีบรางวัลรอเปิดที่หน้าสวน!</div>`:""}<button class="go" onclick="home()">กลับหน้าหลัก</button>`;qz(0);stg(1,0);sinfo();if(ev)evoFx()}
+/* ===== โหมดฝึกพิเศษ + รหัสกู้คืน ===== */
+let MGT=0,MG=null;
+function mgStop(){if(MGT){clearInterval(MGT);MGT=0}MG=null}
+const mgIds=()=>Object.keys(S.c).map(Number);
+const BE=()=>["👾","🐲","🧌","🦑","👹","🦖","🐙"][day()%7];
+function mgMenu(){const ok=mgIds().length>=6;
+ const b=(k,e,t,s)=>`<button class="o" style="text-align:center;margin:0;padding:12px 6px" ${ok?"":"disabled"} onclick="mg('${k}')"><span style="font-size:26px">${e}</span><br><b>${t}</b><br><span class="mu">${s}</span></button>`;
+ return `<h2>โหมดฝึกพิเศษ</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${b("sp","⚡","Speed Round","60 วินาที")}${b("mt","🧩","จับคู่คำ","15 คำ 3 รอบ")}${b("od","🔤","เรียงประโยค","5 ประโยค")}${b("bs",BE(),"ด่านบอส","สู้กับคำที่พลาดบ่อย")}</div>${ok?"":`<div class="mu" style="margin-top:6px">เรียนให้ครบ 6 คำก่อน จึงจะเล่นโหมดพิเศษได้</div>`}`}
+function mg(k){const ids=mgIds();if(ids.length<6)return;mgStop();qz(1);stg(1,0);({sp:spStart,mt:mtStart,od:odStart,bs:bsStart})[k](ids)}
+function mgMg(){const T=day();if(!S.mg||S.mg.d!==T)S.mg={d:T,n:{}};return S.mg}
+function mgPay(k,coins,xp,aura,lim){const m=mgMg(),first=(m.n[k]||0)<lim;m.n[k]=(m.n[k]||0)+1;const c=first?coins:0;M.coins+=c;S.st.xp+=xp;if(first&&aura)K[aura]+=2;T0=LA=performance.now();save();sync();return{c,first}}
+function mgRes(title,line,miss,p,xp,lim){qz(0);stg(1,0);sinfo();
+ app.innerHTML=`<div class="q"><div style="font-size:20px"><b>${title}</b></div>${line}<div class="mu" style="margin-top:10px">⭐ +${xp} · 🪙 +${p.c}${p.first?"":" (รับเหรียญได้วันละ "+lim+" รอบต่อโหมด)"}</div></div>${miss.length?`<h2>คำที่พลาด</h2>`+miss.map(i=>`<div class="cd"><b>${E(D[i].w)}</b> <button class="sp" style="font-size:16px" onclick="say(D[${i}].w)">🔊</button> — ${E(D[i].t)}</div>`).join(""):""}<button class="go" onclick="home()">กลับหน้าหลัก</button>`}
+const sfxOn=ok=>{if(S.cfg.fx!==false)sfx(ok)};
+
+/* ⚡ Speed Round */
+function spStart(ids){MG={m:"sp",ok:0,bad:0,t:60,combo:0,mx:0,miss:[],ids,end:0};spQ();
+ MGT=setInterval(()=>{if(!MG||MG.m!=="sp")return;MG.t=Math.max(0,MG.t-.1);const e=$("tm"),b=$("tbar");if(e)e.textContent=Math.ceil(MG.t)+" วิ";if(b)b.style.width=MG.t/60*100+"%";if(MG.t<=0)spEnd()},100)}
+function spQ(){const g=MG,id=g.ids[Math.random()*g.ids.length|0],d=D[id],th=Math.random()<.5;g.id=id;g.k=th?d.w:d.t;g.o=opts(id,th?"w":"t");g.lock=0;
+ app.innerHTML=`<div class="hud"><span>✅ ${g.ok} · 🔥 ${g.combo}</span><b id="tm" style="font-size:20px;color:var(--ac)">${Math.ceil(g.t)} วิ</b><button class="ghost" onclick="home()">ออก</button></div><div class="pg"><i id="tbar" style="width:${g.t/60*100}%"></i></div><div class="q">${th?`<div class="th">${E(d.t)}</div>`:`<div class="w">${E(d.w)}</div>`}</div>`+g.o.map((o,i)=>`<button class="o" onclick="spPick(${i})">${E(o)}</button>`).join("")+`<div class="mu" style="text-align:center">ตอบผิดเสียเวลา 3 วิ · คอมโบ 5 ข้อได้เวลาคืน 2 วิ</div>`}
+function spPick(i){const g=MG;if(!g||g.m!=="sp"||g.lock||g.t<=0)return;g.lock=1;const ok=g.o[i]===g.k;
+ document.querySelectorAll(".o").forEach((b,j)=>{b.disabled=true;if(g.o[j]===g.k)b.classList.add("ok");else if(j===i)b.classList.add("no")});
+ if(ok){g.ok++;g.combo++;g.mx=Math.max(g.mx,g.combo);if(g.combo%5==0)g.t=Math.min(60,g.t+2)}else{g.bad++;g.combo=0;g.t=Math.max(0,g.t-3);g.miss.push(g.id)}
+ sfxOn(ok);setTimeout(()=>{if(MG===g&&g.t>0)spQ()},ok?220:650)}
+function spEnd(){const g=MG;if(!g||g.end)return;g.end=1;clearInterval(MGT);MGT=0;const xp=g.ok*3,p=mgPay("sp",Math.min(60,Math.round(g.ok*1.5)),xp,"a",3);
+ mgRes("⚡ หมดเวลา!",`<div class="big" style="margin:10px 0">${g.ok}<small> ข้อถูก</small></div><div class="mu">พลาด ${g.bad} ข้อ · คอมโบสูงสุด ${g.mx}</div>`,[...new Set(g.miss)],p,xp,3);MG=null}
+
+/* 🧩 จับคู่คำ */
+function mtStart(ids){const pool=[...shuf(ids),...shuf(D.map((_,i)=>i))],used=new Set(),pick=[];
+ for(const i of pool){const d=D[i];if(used.has(d.t)||used.has(d.w))continue;used.add(d.t);used.add(d.w);pick.push(i);if(pick.length>=15)break}
+ MG={m:"mt",rounds:[pick.slice(0,5),pick.slice(5,10),pick.slice(10,15)].filter(a=>a.length>=3),r:0,err:0,miss:[],left:null,lock:0};mtRound()}
+function mtRound(){const g=MG,r=g.rounds[g.r],L=shuf(r),Rr=shuf(r);g.left=null;g.rem=r.length;
+ app.innerHTML=`<div class="hud"><span>รอบ ${g.r+1}/${g.rounds.length} · ✗ ${g.err}</span><button class="ghost" onclick="home()">ออก</button></div><div class="pg"><i style="width:${g.r/g.rounds.length*100}%"></i></div><div class="mu" style="text-align:center;margin-bottom:6px">แตะคำอังกฤษ แล้วแตะคำแปลที่ตรงกัน</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div>${L.map(i=>`<button class="o" data-s="e" data-i="${i}" onclick="mtTap(this)">${E(D[i].w)}</button>`).join("")}</div><div>${Rr.map(i=>`<button class="o" data-s="t" data-i="${i}" style="font-size:15px" onclick="mtTap(this)">${E(D[i].t)}</button>`).join("")}</div></div>`}
+function mtTap(b){const g=MG;if(!g||g.m!=="mt"||g.lock||b.disabled)return;const s=b.dataset.s,i=+b.dataset.i;
+ if(s==="e"){say(D[i].w);document.querySelectorAll('[data-s="e"]').forEach(x=>x.style.borderColor="");b.style.borderColor="var(--ac)";g.left=i;return}
+ if(g.left==null)return;const le=document.querySelector(`[data-s="e"][data-i="${g.left}"]`);
+ if(g.left===i){[le,b].forEach(x=>{x.disabled=true;x.classList.add("ok");x.style.borderColor=""});g.left=null;sfxOn(true);
+  if(--g.rem==0){g.lock=1;setTimeout(()=>{if(MG!==g)return;g.r++;g.lock=0;g.r>=g.rounds.length?mtEnd():mtRound()},500)}}
+ else{g.err++;g.miss.push(g.left,i);[le,b].forEach(x=>x.classList.add("no"));g.lock=1;sfxOn(false);setTimeout(()=>{if(MG!==g)return;[le,b].forEach(x=>{x.classList.remove("no");x.style.borderColor=""});g.left=null;g.lock=0},450)}}
+function mtEnd(){const g=MG,e=g.err,xp=Math.max(10,45-e*3),p=mgPay("mt",Math.max(5,22-e*2),xp,"l",3);
+ mgRes("🧩 จับคู่ครบแล้ว!",`<div class="big" style="margin:10px 0">${e}<small> ครั้งที่ผิด</small></div><div class="mu">${e==0?"สมบูรณ์แบบ! 🎉":"จับคู่ได้ทุกคำ"}</div>`,[...new Set(g.miss)],p,xp,3);MG=null}
+
+/* 🔤 เรียงประโยค */
+function odStart(ids){const okf=i=>{const n=D[i].x.split(" ").length;return n>=4&&n<=9};
+ const qs=[...new Set([...shuf(ids.filter(okf)),...shuf(D.map((_,i)=>i).filter(okf))])].slice(0,5);MG={m:"od",qs,n:0,ok:0,miss:[]};odQ()}
+function odQ(){const g=MG,id=g.qs[g.n],d=D[id],w=d.x.split(" ");let t=shuf(w.map((_,i)=>i)),k=0;while(k++<6&&t.map(i=>w[i]).join(" ")===d.x)t=shuf(t);g.id=id;g.w=w;g.t=t;g.a=[];g.done=0;odDraw()}
+function odDraw(){const g=MG,d=D[g.id],dis=g.done?"disabled":"";
+ app.innerHTML=`<div class="hud"><span>ข้อ ${g.n+1}/${g.qs.length} · ✅ ${g.ok}</span><button class="ghost" onclick="home()">ออก</button></div><div class="pg"><i style="width:${g.n/g.qs.length*100}%"></i></div><div class="q"><div class="mu">เรียงคำให้เป็นประโยคภาษาอังกฤษ</div><div class="th" style="font-size:20px;margin-top:6px">${E(d.y)}</div></div><div style="min-height:56px;border:1px dashed var(--bd);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px">${g.a.map(i=>`<button class="ghost" style="margin:0;font-size:17px" ${dis} onclick="odRm(${i})">${E(g.w[i])}</button>`).join("")}</div><div style="margin:12px 0;display:flex;flex-wrap:wrap;gap:6px">${g.t.filter(i=>!g.a.includes(i)).map(i=>`<button class="ghost" style="margin:0;font-size:17px" ${dis} onclick="odAdd(${i})">${E(g.w[i])}</button>`).join("")}</div><div id="fb"></div>${g.done?"":`<button class="go" id="go" ${g.a.length==g.w.length?"":"disabled"} onclick="odChk()">ตรวจคำตอบ</button>`}`}
+function odAdd(i){if(MG.done)return;MG.a.push(i);odDraw()}
+function odRm(i){if(MG.done)return;MG.a=MG.a.filter(v=>v!==i);odDraw()}
+function odChk(){const g=MG,d=D[g.id],ok=g.a.map(i=>g.w[i]).join(" ")===d.x;g.done=1;ok?g.ok++:g.miss.push(g.id);sfxOn(ok);say(d.x);odDraw();
+ $("fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><b>${ok?"ถูกต้อง":"ประโยคที่ถูกคือ"}</b> · ${E(d.x)}<br><span class="mu">${E(d.y)}</span></div>`;
+ const b=document.createElement("button");b.className="go";b.id="go";b.textContent=g.n+1>=g.qs.length?"ดูผล":"ต่อไป";b.onclick=()=>{g.n++;g.n>=g.qs.length?odEnd():odQ()};$("fb").after(b)}
+function odEnd(){const g=MG,xp=g.ok*8,p=mgPay("od",g.ok*3,xp,"s",3);
+ mgRes("🔤 เรียงประโยคเสร็จแล้ว!",`<div class="big" style="margin:10px 0">${g.ok}<small> / ${g.qs.length}</small></div>`,[...new Set(g.miss)],p,xp,3);MG=null}
+
+/* 👹 ด่านบอส: กินคำที่พลาดบ่อย ตอบถูกแล้วบอสเสียเลือด คำนั้นก็ "อ่อนแอ" ลง */
+function bsStart(ids){const w=ids.slice().sort((a,b)=>(S.c[b][2]-S.c[a][2])||(S.c[a][0]-S.c[b][0])).slice(0,12),q=shuf(w).slice(0,Math.min(10,w.length));
+ MG={m:"bs",q,hpM:q.length,me:3,miss:[]};bsQ()}
+function bsQ(){const g=MG,id=g.q[0],d=D[id],r=Math.random(),m=d.a>=0&&r<.34?"c":r<.67?"t":"w";let q,key;g.id=id;g.lock=0;
+ if(m=="c"){q=`<div style="font-size:21px">${blank(d)}</div><div class="mu" style="margin-top:8px">${E(d.y)}</div>`;key="w"}
+ else if(m=="t"){q=`<div class="th">${E(d.t)}</div>${nt(d)}`;key="w"}
+ else{q=`<div class="w">${E(d.w)}</div>${nt(d)}`;key="t"}
+ g.k=d[key];g.o=opts(id,key);
+ app.innerHTML=`<div class="hud"><span>${"❤️".repeat(g.me)}${"🖤".repeat(3-g.me)}</span><span>บอสเหลือ ${g.q.length} คำ</span><button class="ghost" onclick="home()">ออก</button></div><div id="bsb" style="text-align:center;font-size:56px;line-height:1.3">${BE()}</div><div class="bar" style="height:10px;margin:2px 0 8px"><i style="width:${g.q.length/g.hpM*100}%;background:var(--no)"></i></div><div class="q" style="padding:18px 14px">${q}</div>`+g.o.map((o,i)=>`<button class="o" onclick="bsPick(${i})">${E(o)}</button>`).join("")}
+function bsPick(i){const g=MG;if(!g||g.m!=="bs"||g.lock)return;g.lock=1;const ok=g.o[i]===g.k,id=g.id,c=S.c[id],bb=$("bsb");
+ document.querySelectorAll(".o").forEach((b,j)=>{b.disabled=true;if(g.o[j]===g.k)b.classList.add("ok");else if(j===i)b.classList.add("no")});
+ if(ok){g.q.shift();if(c&&c[2]>0)c[2]--}else{g.me--;g.miss.push(id);g.q.push(g.q.shift());if(c)c[2]++}
+ if(bb&&S.cfg.fx!==false)bb.classList.add(ok?"shk":"pop");save();sfxOn(ok);say(D[id].w);
+ setTimeout(()=>{if(MG!==g)return;!g.q.length?bsEnd(1):g.me<=0?bsEnd(0):bsQ()},ok?600:1100)}
+function bsEnd(win){const g=MG;let p={c:0,first:1},xp=win?60:10,msg="";
+ if(win){p=mgPay("bsw",50,xp,"e",1);
+  if(p.first){const un=ITEMS.map((_,i)=>i).filter(i=>!M.own[i]&&ITEMS[i][2]>=2&&ITEMS[i][2]<=3);
+   if(un.length&&Math.random()<.6){const pk=un[Math.random()*un.length|0];M.own[pk]=1;msg=`<div style="margin-top:8px">🎁 บอสทิ้งไอเทม <b style="color:${RC[ITEMS[pk][2]]}">${ITEMS[pk][0]}</b> (${RT[ITEMS[pk][2]]})</div>`;save()}}}
+ else{S.st.xp+=xp;save()}
+ mgRes(win?"🏆 ชนะบอส!":"💀 แพ้บอส",`<div style="font-size:54px;margin:6px 0">${win?"🏆":"💀"}</div><div class="mu">${win?"คำที่เคยพลาดอ่อนแอลงแล้ว":"ลองใหม่ได้เลย บอสยังอยู่"}</div>${msg}`,[...new Set(g.miss)],p,xp,1);MG=null}
+
+/* 🔑 รหัสกู้คืน */
+const fmtRc=c=>c.match(/.{4}/g).join("-");
+function genRc(){const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",a=new Uint8Array(16);crypto.getRandomValues(a);return[...a].map(b=>A[b%32]).join("")}
+let _bt=0;
+async function bup(force){if(!S.rc||!sbOn())return 0;const n=Date.now();if(!force&&n-_bt<20000)return 0;_bt=n;
+ try{await sbF("rpc/save_backup",{method:"POST",body:JSON.stringify({p_code:S.rc,p_data:S})});return 1}catch(e){return 0}}
+function rcUi(){if(!sbOn()){alert("ยังไม่ได้ตั้งค่าฐานข้อมูล");return}
+ const d=document.createElement("div");d.id="rcm";d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:10;display:flex;align-items:flex-start;justify-content:center;padding:16px;overflow:auto";
+ d.innerHTML=`<div class="q" style="background:var(--sf);max-width:380px;width:100%;margin:auto;text-align:left"><b style="font-size:18px">🔑 รหัสกู้คืน</b><p class="mu">จดรหัสไว้ใช้ย้ายเครื่องหรือกู้ข้อมูลที่หาย ใครมีรหัสนี้จะเปิดข้อมูลของคุณได้ จึงไม่ควรแชร์</p><div id="rcc" style="font-size:22px;font-weight:700;letter-spacing:2px;text-align:center;margin:10px 0;user-select:all">${S.rc?fmtRc(S.rc):"ยังไม่มีรหัส"}</div><button class="go" style="margin:0 0 6px" onclick="rcMake()">${S.rc?"สำรองข้อมูลตอนนี้":"สร้างรหัสและสำรองข้อมูล"}</button><div id="rcs" class="mu" style="min-height:22px"></div><h2>กู้คืนด้วยรหัส</h2><input type="text" id="rci" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX"><button class="go" style="background:var(--sf);color:var(--tx);border:1px solid var(--bd)" onclick="rcRestore()">กู้คืนข้อมูล</button><button class="ghost" onclick="document.getElementById('rcm').remove()">ปิด</button></div>`;document.body.appendChild(d)}
+async function rcMake(){if(!S.rc){S.rc=genRc();save()}$("rcc").textContent=fmtRc(S.rc);$("rcs").textContent="กำลังบันทึก...";
+ const ok=await bup(1);$("rcs").textContent=ok?"✅ สำรองแล้ว จดรหัสไว้ได้เลย ต่อไปจะสำรองอัตโนมัติหลังเล่นจบ":"❌ บันทึกไม่ได้ (เช็กอินเทอร์เน็ต หรือยังไม่ได้รัน SQL ใน Supabase)"}
+async function rcRestore(){const c=$("rci").value.toUpperCase().replace(/[^A-Z0-9]/g,""),s=$("rcs");
+ if(c.length!==16){s.textContent="รหัสต้องมี 16 ตัวอักษร";return}
+ s.textContent="กำลังค้นหา...";let r;try{r=await sbF("rpc/load_backup",{method:"POST",body:JSON.stringify({p_code:c})})}catch(e){s.textContent="เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง";return}
+ if(!r||!r.c){s.textContent="ไม่พบรหัสนี้";return}
+ if(!confirm("ข้อมูลในเครื่องนี้จะถูกแทนที่ด้วยข้อมูลจากรหัส ดำเนินการต่อ?"))return;
+ S=Object.assign({c:{},cfg:{nw:10,lv:[1,2,3,4]},st:{last:0,streak:0,xp:0},td:{d:0,nw:0},fl:{}},r);S.rc=c;bind();evo();save();document.body.classList.toggle("nofx",S.cfg.fx===false);$("rcm").remove();TAB=0;home()}
 addEventListener("keydown",e=>{if(e.key!=="Enter")return;const b=$("#go");if(b&&!b.disabled)b.click()});
 bind();evo();document.body.classList.toggle("nofx",S.cfg.fx===false);requestAnimationFrame(loop);home();
 </script></body></html>
