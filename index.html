@@ -103,7 +103,7 @@ const SKD={cat:{tabby:["แมวส้ม","#e8923a","#e8b070",250,"tabby"],bla
 const curBg=()=>PVB!=null?PVB:(K.bg==null?-1:K.bg);
 function skinData(k){const sp=k.sp||"cat";let id=k.sk;if(PVS!=null&&k===S.pets[S.pet])id=PVS;const r=id&&SKD[sp]&&SKD[sp][id];return r?{base:r[1],fur0:r[2],ov:r[4],fix:r[5]}:null}
 function skOv(o,a){const{bx,by,bw,bh,hx,hy,hw,hh,ey,es,e1,e2}=a,B="#2f2f3a",hb=hh-(ey-hy)-es-1;
- if(o=="panda"){R(hx-1,hy-3,6,4,B);R(hx+hw-5,hy-3,6,4,B);R(e1-2,ey-1,es+3,es+3,B);R(e2-1,ey-1,es+3,es+3,B);R(bx,by+1,3,bh-2,B);R(bx+bw-3,by+1,3,bh-2,B);R(bx+2,by+1,bw-4,2,B);R(bx+1,by+bh-3,5,3,B);R(bx+bw-6,by+bh-3,5,3,B);R(bx+2,by+bh,4,2,B);R(bx+bw-6,by+bh,4,2,B)}
+ if(o=="panda"){const G="#5a5a6a";R(hx-2,hy-3,6,5,B);R(hx+hw-4,hy-3,6,5,B);R(hx-1,hy-4,4,1,B);R(hx+hw-3,hy-4,4,1,B);R(hx,hy-2,2,2,G);R(hx+hw-2,hy-2,2,2,G);ell(rd(e1+es/2),rd(ey+es/2),3,4,B,1);ell(rd(e2+es/2),rd(ey+es/2),3,4,B,1);R(bx,by+2,3,bh-3,B);R(bx+bw-3,by+2,3,bh-3,B);R(bx+2,by+1,bw-4,2,B);R(bx+1,by+bh-3,5,3,B);R(bx+bw-6,by+bh-3,5,3,B);R(bx+2,by+bh,4,2,B);R(bx+bw-6,by+bh,4,2,B);R(bx+3,by+bh,2,1,G);R(bx+bw-5,by+bh,2,1,G)}
  else if(o=="dal"){for(const p of[[bx+3,by+3],[bx+bw-6,by+5],[hx+3,hy+2],[hx+hw-6,hy+4]])R(p[0],p[1],2,2,"#2a2a2a")}
  else if(o=="husky"){R(hx+2,ey+es,hw-4,hb,"#f0f0f0");R(bx+3,by+bh-5,bw-6,5,"#f0f0f0")}
  else if(o=="shiba"){R(bx+3,by+bh-4,bw-6,4,"#f6e8d0");R(hx+1,ey+es,3,hb,"#f6e8d0");R(hx+hw-4,ey+es,3,hb,"#f6e8d0")}
@@ -139,9 +139,9 @@ function buySkin(id){PVS=null;const sp=K.sp||"cat";if(id){const L=SKD[sp][id],k=
 function newPet(sp){return{sp,seed:Math.random()*1000|0,n:0,stage:0,l:0,s:0,a:0,e:0,snap:null,form:null,found:{},xp:0,eq:{h:-1,n:-1,w:-1,f:-1,g:-1,t:-1}}}
 function setPet(sp){if(!S.pets[sp])return;S.pet=sp;K=S.pets[sp];M.eq=K.eq;PV={};W.x=W.tx=0;T0=LA=performance.now();evo();save();sync();home()}
 function buyPet(sp){const U=UNL[sp];if(!U||S.pets[sp]||S.pets.cat.stage<U.st||M.coins<U.p)return;M.coins-=U.p;S.pets[sp]=newPet(sp);setPet(sp)}
-function normRk(p){let sp="cat",sk=null,f=p.form||null;if(f&&f.indexOf("|")>=0){const a=f.split("|");sp=SPC[a[0]]?a[0]:"cat";if(a.length>=3){sk=a[1]||null;f=a[2]||null}else f=a[1]||null}return Object.assign({},p,{species:sp,sk,form:f})}
+function normRk(p){let sp="cat",sk=null,f=p.form||null,bg=-1,pn="";if(f&&f.indexOf("|")>=0){const a=f.split("|");sp=SPC[a[0]]?a[0]:"cat";if(a.length>=3){sk=a[1]||null;f=a[2]||null;if(a[3]!==undefined&&a[3]!=="")bg=+a[3];pn=a[4]||""}else f=a[1]||null}return Object.assign({},p,{species:sp,sk,form:f,bg,pn})}
 function petsUi(){return"<h2>สัตว์เลี้ยง</h2><div class=\"mu\">ตัวใหม่เริ่มจากไข่ และโตตามแต้ม ⭐ ที่ได้ขณะเลี้ยงตัวนั้น</div>"+Object.keys(SPC).map(sp=>{const C=SPC[sp],p=S.pets[sp],U=UNL[sp];
- if(p){const on=S.pet===sp;return`<div class="cd" style="${on?"border-color:var(--ac)":""}"><div class="row"><b>${C.e} ${C.th}</b><span class="mu">${stn(p.stage,sp)}${p.stage>=3&&p.form?" · "+fn(p.form,p.stage==4,sp):""}</span></div>${on?`<span class="mu">กำลังเลี้ยงอยู่</span>`:`<button class="o" style="text-align:center;margin:8px 0 0" onclick="setPet('${sp}')">เลี้ยงตัวนี้</button>`}</div>`}
+ if(p){const on=S.pet===sp;return`<div class="cd" style="${on?"border-color:var(--ac)":""}"><div class="row"><b>${C.e} ${p.nm?E(p.nm)+" ("+C.th+")":C.th}</b><span class="mu">${stn(p.stage,sp)}${p.stage>=3&&p.form?" · "+fn(p.form,p.stage==4,sp):""}</span></div>${on?`<span class="mu">กำลังเลี้ยงอยู่</span> <button class="ghost" onclick="rnPet()">✏️ เปลี่ยนชื่อ</button>`:`<button class="o" style="text-align:center;margin:8px 0 0" onclick="setPet('${sp}')">เลี้ยงตัวนี้</button>`}</div>`}
  const lk=S.pets.cat.stage<U.st;
  return`<div class="cd${lk?" lk":""}"><div class="row"><b>${C.e} ${C.th}</b><span class="mu">🪙 ${U.p}</span></div>${lk?`<span class="mu">ปลดล็อกเมื่อแมวเป็น${STN[U.st]}</span>`:`<button class="o" style="text-align:center;margin:8px 0 0" ${M.coins>=U.p?"":"disabled"} onclick="buyPet('${sp}')">${M.coins>=U.p?"ซื้อและเริ่มเลี้ยง":"ต้องการ 🪙 "+U.p}</button>`}</div>`}).join("")}
 const AU={l:['Light','#ffd76a'],s:['Shadow','#a35bff'],a:['Sky','#7fd0ff'],e:['Earth','#6fbf6a']};
@@ -275,9 +275,9 @@ function item(it,t,A){
   if(k=='wisp'){R(fx,fy+2,3,3,c1);R(fx+1,fy-fl,1,3,c2);R(fx,fy+1-fl,1,2,c1)}}
 }
 function cat(t,f,st){
- const sp=K.sp||'cat',SC=SPC[sp],big=st>=3,[bw,bh,hw,hh]=[0,[12,8,16,13],[16,11,18,14],[20,14,20,15],[22,16,22,16]][st].map((v,i)=>v+SC.d[i]),SKN=skinData(K);
+ const sp=K.sp||'cat',SC=SPC[sp],big=st>=3,SKN=skinData(K),[bw,bh,hw,hh]=[0,[12,8,16,13],[16,11,18,14],[20,14,20,15],[22,16,22,16]][st].map((v,i)=>v+SC.d[i]+(SKN&&SKN.ov=='panda'&&i>1?1:0));
  const el=t-T0,idle=t-LA,slp=idle>25000&&el>700,cy=idle%16000,str=!slp&&cy>6000&&cy<7600,chs=!slp&&cy>11000&&cy<13500,jump=el<650?-rd(Math.sin(el/650*Math.PI)*8):chs?-rd(Math.abs(Math.sin(t/160))*3):WK?-((t/130|0)%2):0,br=rd(Math.sin(t/600)*.5+.5);
- const tv=[1,.88,1.1,.94,1.06][(K.seed>>3)%5],pat=K.seed%5,fur=big?dk(SKN&&SKN.fix?SKN.base:SKN?mix(f.fur,SKN.base,.65):sp=='cat'?f.fur:mix(f.fur,SC.base,.4),SKN&&SKN.fix?1:tv):(SKN?SKN.fur0:SC.fur0),acc=st>=2?f.acc:'#f0a0b0',eye=(SKN&&SKN.ov=='panda')?'#f4f4f8':big?f.eye:'#2a1a10',sd0=dk(fur,.7),lt=dk(fur,1.18),OUT=dk(fur,.22);
+ const tv=[1,.88,1.1,.94,1.06][(K.seed>>3)%5],pat=K.seed%5,fur=big?dk(SKN&&SKN.fix?SKN.base:SKN?mix(f.fur,SKN.base,.65):sp=='cat'?f.fur:mix(f.fur,SC.base,.4),SKN&&SKN.fix?1:tv):(SKN?SKN.fur0:SC.fur0),acc=st>=2?f.acc:'#f0a0b0',eye=(SKN&&SKN.ov=='panda')?'#0a0710':big?f.eye:'#2a1a10',sd0=dk(fur,.7),lt=dk(fur,1.18),OUT=dk(fur,.22);
  const gh=(f.ghost||f.halo)&&big?rd(Math.sin(t/500)*2)-(f.halo?3:0):0;
  const by=GY-2-bh+jump+gh,bx=32-bw/2,hy=by-hh+4+br+(slp?2:0)+(str?3:0)+((t-EAT<1000)?rd(Math.abs(Math.sin(t/70))*2):0),hx=32-hw/2;
  if(st==4&&!f.ghost)ell(32,40,26+Math.sin(t/400)*2,24,f.pc,.13);
@@ -335,6 +335,11 @@ function cat(t,f,st){
  const ny=ey+es+1,dm='#3a2030';
  if(pat==3&&st>=2)R(29,ny-1,6,4,'rgba(255,255,255,.75)');R(31,ny,2,1,'#f08a9a');R(30,ny+1,1,1,dm);R(31,ny+2,2,1,dm);R(33,ny+1,1,1,dm);
  R(e1-1,ny,2,1,'rgba(255,120,150,.5)');R(e2+es-1,ny,2,1,'rgba(255,120,150,.5)');if(sp=='dog'){R(28,ny,8,3,lt);R(31,ny,2,2,'#2a1a1a');R(30,ny+2,1,1,dm);R(33,ny+2,1,1,dm);if(t%2400<900)R(31,ny+2,2,2,'#ff7a8a')}else if(sp=='pig'){R(28,ny,8,3,'#f08aa0');R(30,ny,1,2,'#8a3a50');R(33,ny,1,2,'#8a3a50')}else if(sp=='bear'){R(28,ny,8,3,SKN&&SKN.ov=='panda'?'#fcfcfc':'#e8d4b0');R(31,ny,2,2,'#2a1a1a');R(31,ny+2,2,1,dm)}
+ {const pd=SKN&&SKN.ov=='panda',BL='rgba(255,100,130,.55)';
+ if(sp=='dog'){R(e1,ey-3,2,1,'#f6e8d0');R(e2+es-2,ey-3,2,1,'#f6e8d0');R(hx+1,hy+hh-1,hw-2,2,'#d63a4a');R(31,hy+hh+1,2,2,'#ffd76a');R(31,ny,1,1,'#7a7a8a');R(e1-3,ny+1,3,2,BL);R(e2+es,ny+1,3,2,BL)}
+ else if(sp=='pig'){[hx,hx+hw-5].forEach((ex,i)=>R(ex+1,hy-1+tw[i],3,2,'#e58aa4'));R(e1-3,ny,3,2,BL);R(e2+es,ny,3,2,BL);R(29,ny,2,1,'#f8b8c8')}
+ else if(sp=='bear'){R(31,ny,1,1,'#7a7a8a');R(30,ny+3,1,1,dm);R(33,ny+3,1,1,dm);if(pd){R(e1-3,ny+1,3,2,'rgba(255,130,160,.8)');R(e2+es,ny+1,3,2,'rgba(255,130,160,.8)')}else R(bx+4,by+3,bw-8,bh-5,mix(fur,'#ffffff',.3))}
+ else{R(30,by+2,4,Math.max(2,bh-5),'rgba(255,255,255,.4)');R(30,ny+3,1,1,dm);R(33,ny+3,1,1,dm)}}
  if(big&&sp=='cat'){const w=rd(Math.sin(t/700));for(const s of[-1,1]){const wx=s<0?hx-3:hx+hw;R(wx,ny+w,3,1,'rgba(255,255,255,.6)');R(wx+(s<0?1:0),ny+2-w,2,1,'rgba(255,255,255,.4)')}}
  if(f.heads&&big)for(const sd of[-1,1]){const sx=32+sd*14-4,yy=hy+5+rd(Math.sin(t/400+sd)*1);R(sx+2,yy+3,1,2,eye);R(sx+5,yy+3,1,2,eye)}
  if(f.halo&&st>=3){const y0=hy-9+rd(Math.sin(t/400)*1.2),g=t%1200<600?'#ffd76a':'#fff3b0';R(hx+5,y0,hw-10,1,g);R(hx+4,y0+1,1,1,g);R(hx+hw-5,y0+1,1,1,g);R(hx+5,y0+2,hw-10,1,g)}
@@ -390,7 +395,7 @@ function evo(){const n=prog(),ns=Math.max(stageOf(n),K.bs||0);K.n=n;let msg="";
   M.coins+=25;emit(40,ns>=3?FORMS[K.form].pc:"#fff","p",30)}
  return msg}
 function stg(on,tb){$("stg").style.display=on?"":"none";$("tabs").style.display=on&&tb!==0?"flex":"none"}
-function sinfo(){const f=K.stage>=3?" · "+fn(K.form,K.stage==4):"";$("sinfo").innerHTML=`${SPC[K.sp||"cat"].e} Lv ${lvl(S.st.xp)} · ${stn(K.stage,K.sp)}${f} · 🪙 ${M.coins}`}
+function sinfo(){const f=K.stage>=3?" · "+fn(K.form,K.stage==4):"";$("sinfo").innerHTML=`${SPC[K.sp||"cat"].e} ${K.nm?E(K.nm)+" · ":""}Lv ${lvl(S.st.xp)} · ${stn(K.stage,K.sp)}${f} · 🪙 ${M.coins}`}
 const qz=on=>document.body.classList.toggle('qz',on);
 function home(){mgStop();PV={};PVB=PVS=null;G=null;qz(0);stg(1);$("stg").style.position=TAB==2?"sticky":"";sinfo();document.querySelectorAll("#tabs button").forEach((b,i)=>b.classList.toggle("on",i===TAB));[garden,catPage,shopPage,rankPage][TAB]()}
 $("tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;TAB=+b.dataset.t;home()};
@@ -410,13 +415,13 @@ const SB={url:"https://drtcdxlbahpcqesoudmb.supabase.co",key:"sb_publishable_2v2
 const sbOn=()=>SB.url&&SB.key;
 async function sbF(path,opt){const r=await fetch(SB.url+"/rest/v1/"+path,Object.assign({headers:{apikey:SB.key,"Content-Type":"application/json"}},opt));if(!r.ok)throw new Error(r.status);const t=await r.text();return t?JSON.parse(t):null}
 function pinfo(){let m=0,n=0;for(const k in S.c){n++;if(S.c[k][0]>=4)m++}const eq={};for(const s in M.eq)if(M.eq[s]>=0)eq[s]=M.eq[s];
- return{p_id:S.pid,p_token:S.ptk,p_name:S.pname,p_xp:S.st.xp||0,p_level:lvl(S.st.xp),p_words:n,p_mastered:m,p_streak:S.st.streak||0,p_stage:K.stage,p_form:(isCat()&&!K.sk)?(K.form||null):K.sp+"|"+(K.sk||"")+"|"+(K.form||""),p_eq:eq,p_seed:K.seed|0}}
+ return{p_id:S.pid,p_token:S.ptk,p_name:S.pname,p_xp:S.st.xp||0,p_level:lvl(S.st.xp),p_words:n,p_mastered:m,p_streak:S.st.streak||0,p_stage:K.stage,p_form:(isCat()&&!K.sk&&!(K.bg!=null&&K.bg>=0)&&!K.nm)?(K.form||null):K.sp+"|"+(K.sk||"")+"|"+(K.form||"")+"|"+(K.bg!=null&&K.bg>=0?K.bg:"")+"|"+(K.nm||""),p_eq:eq,p_seed:K.seed|0}}
 async function sync(){bup();if(!sbOn()||!S.pname)return;try{await sbF("rpc/save_player",{method:"POST",body:JSON.stringify(pinfo())})}catch(e){}}
 const rnd=n=>{const a=new Uint8Array(n);crypto.getRandomValues(a);return[...a].map(b=>b.toString(16).padStart(2,"0")).join("")};
 function joinRk(){const v=$("#pn").value.trim().slice(0,16);if(!v)return;S.pid=rnd(8);S.ptk=rnd(16);S.pname=v;save();rankPage()}
 let RK=[];
 const PLAIN={fur:"#d9c9b0",acc:"#f0a0b0",eye:"#2a1a10",tail:"normal",pc:"#fff"};
-function drawOther(cv,p,t){const sv=[K,M,PV,x,WK,LA,T0];try{K={seed:p.seed||0,form:p.form,stage:p.stage,n:p.words||0,sp:p.species,sk:p.sk};M={eq:Object.assign({h:-1,n:-1,w:-1,f:-1,g:-1,t:-1},p.eq||{})};PV={};x=cv.getContext("2d");WK=0;LA=t;T0=-9e3;x.clearRect(0,0,64,64);
+function drawOther(cv,p,t){const sv=[K,M,PV,x,WK,LA,T0];try{K={seed:p.seed||0,form:p.form,stage:p.stage,n:p.words||0,sp:p.species,sk:p.sk};M={eq:Object.assign({h:-1,n:-1,w:-1,f:-1,g:-1,t:-1},p.eq||{})};PV={};x=cv.getContext("2d");WK=0;LA=t;T0=-9e3;x.clearRect(0,0,64,64);if(p.bg>=0&&BG[p.bg])bgDraw(t,BG[p.bg]);
  if(p.stage==0)egg(t,"#7f6fd0");else cat(t,p.stage>=3&&FORMS[p.form]?FORMS[p.form]:PLAIN,p.stage)}catch(e){}finally{[K,M,PV,x,WK,LA,T0]=sv}}
 async function rankPage(){
  if(!sbOn()){app.innerHTML=`<p class="mu">ยังไม่ได้ตั้งค่าฐานข้อมูล ใส่ค่า SB.url และ SB.key ในไฟล์ (ดูคู่มือ)</p>`;return}
@@ -424,7 +429,9 @@ async function rankPage(){
  app.innerHTML=`<div class="mu">กำลังโหลด...</div>`;await sync();
  try{RK=await sbF("players?select=id,name,xp,level,words,mastered,streak,stage,form,eq,seed&order=xp.desc&limit=30");RK=RK.map(normRk)}catch(e){app.innerHTML=`<p class="mu">โหลดอันดับไม่ได้</p><button class="go" onclick="rankPage()">ลองใหม่</button>`;return}
  if(TAB!==3)return;
- app.innerHTML=`<div class="row"><b>🏆 อันดับ</b><button class="ghost" onclick="rankPage()">รีเฟรช</button></div>`+RK.map((p,i)=>{const me=p.id===S.pid,F=FORMS[p.form];return `<div class="cd" style="${me?"border-color:var(--ac)":""}"><div class="row" style="justify-content:flex-start;gap:12px"><b style="width:26px">${i+1}</b><canvas class="rc" data-i="${i}" width="64" height="64" style="width:64px;height:64px;image-rendering:pixelated;background:#150d24;border-radius:8px"></canvas><div><b>${E(p.name)}</b>${me?" (คุณ)":""}<div class="mu">Lv ${p.level} · ⭐ ${p.xp}</div><div class="mu">จำได้ ${p.mastered} · เรียน ${p.words} · 🔥 ${p.streak}${p.stage>=3&&F?" · "+E(fn(p.form,p.stage==4,p.species)):""}</div></div></div></div>`}).join("")}
+ app.innerHTML=`<div class="row"><b>🏆 อันดับ · ${E(S.pname)}</b><span><button class="ghost" onclick="rnP()">✏️ ชื่อเล่น</button><button class="ghost" onclick="rankPage()">รีเฟรช</button></span></div>`+RK.map((p,i)=>{const me=p.id===S.pid,F=FORMS[p.form];return `<div class="cd" style="${me?"border-color:var(--ac)":""}"><div class="row" style="justify-content:flex-start;gap:12px"><b style="width:26px">${i+1}</b><canvas class="rc" data-i="${i}" width="64" height="64" style="width:64px;height:64px;image-rendering:pixelated;background:#150d24;border-radius:8px"></canvas><div><b>${E(p.name)}</b>${me?" (คุณ)":""}${p.pn?` · 🐾 ${E(p.pn)}`:""}<div class="mu">Lv ${p.level} · ⭐ ${p.xp}</div><div class="mu">จำได้ ${p.mastered} · เรียน ${p.words} · 🔥 ${p.streak}${p.stage>=3&&F?" · "+E(fn(p.form,p.stage==4,p.species)):""}</div></div></div></div>`}).join("")}
+function rnP(){const v=(prompt("ชื่อเล่นใหม่ในอันดับ (สูงสุด 16 ตัวอักษร)",S.pname||"")||"").trim().slice(0,16);if(!v)return;S.pname=v;save();rankPage()}
+function rnPet(){const v=(prompt("ตั้งชื่อสัตว์เลี้ยง (สูงสุด 12 ตัวอักษร เว้นว่าง = ลบชื่อ)",K.nm||""));if(v===null)return;K.nm=v.trim().replace(/\|/g,"").slice(0,12);save();sync();sinfo();home()}
 function shopPage(){if(SH=="b")return bgShop();if(SH=="s")return skinShop();
  const tb=Object.keys(SL).map(k=>`<button class="ghost${k==SH?" on":""}" onclick="shSlot('${k}')">${SL[k]}</button>`).join("")+`<button class="ghost" onclick="unq()">✖ ถอดทั้งหมด</button>`;
  const li=ITEMS.map((it,i)=>[it,i]).filter(([it])=>it[1]==SH).sort((a,b)=>a[0][2]-b[0][2]).map(([it,i])=>{const own=M.own[i],eq=M.eq[it[1]]==i,p=PR[it[2]],can=M.coins>=p;
