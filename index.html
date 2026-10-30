@@ -371,8 +371,51 @@ function item(it,t,A){
   if(k=='bunny'){R(fx,fy,5,4,c1);R(fx,fy-3,1,3,c1);R(fx+3,fy-3,1,3,c1);R(fx+1,fy+1,1,1,c2);R(fx+3,fy+1,1,1,c2);R(fx+2,fy+2,1,1,c2)}
   if(k=='sparkle'){const q=fl+1;R(fx,fy-q-1,1,2*q+3,c1);R(fx-q-1,fy,2*q+3,1,c1);R(fx,fy,1,1,c2)}}
 }
+
+/* ===== GM dedicated art: Kitsune + Divine Dragon ===== */
+function kitsune(t,pu){const C=Math.cos,Sn=Math.sin,W='#f6efe2',W2='#e6d9c2',RD='#e0302a',DK='#2e2430',BX=32,BY=47,fl=(t/150|0)%2;
+ ell(32,34,27,24,'#7a8bff',.1+.06*pu);
+ for(let i=0;i<60;i++){const a=i/60*6.283;R(32+C(a)*17,22+Sn(a)*17,1,1,i%5?'rgba(190,200,255,.5)':'#fff')}
+ const tl=[0,1,2,3,4,5,6,7,8].sort((a,b)=>Math.abs(b-4)-Math.abs(a-4));
+ for(const j of tl){const a0=-90+(j-4)*17,sw=Sn(t/520+j*.7)*9,L=27-Math.abs(j-4)*.9,n=7,E1=[],E2=[],P=[];
+  for(let i=0;i<=n;i++){const u=i/n,an=(a0+sw*u*u+(j-4)*6*u)*Math.PI/180,r=u*L,w=(Sn(u*3.14)*.8+.25)*(j==4?5.5:4.8)*(1-u*.35),cx=BX+C(an)*r,cy=BY+Sn(an)*r,nx=-Sn(an),ny=C(an);E1.push([cx+nx*w,cy+ny*w]);E2.push([cx-nx*w,cy-ny*w]);P.push([cx,cy,nx,ny,w])}
+  pol([...E1,...E2.reverse()],j%2?W:W2);const q=P[n-1],e=P[n];
+  pol([[q[0]+q[2]*q[4],q[1]+q[3]*q[4]],[e[0],e[1]-1],[q[0]-q[2]*q[4],q[1]-q[3]*q[4]]],(fl+j)%2?'#9fb4ff':'#c9a6ff')}
+ pol([[27,37],[37,37],[41,46],[42,55],[22,55],[23,46]],W);ell(25,52,5,4,W,1);ell(39,52,5,4,W,1);R(29,40,6,10,'#fff');
+ for(const x0 of[27,34]){R(x0-1,48,5,9,'#1d1630');R(x0,49,3,7,W);R(x0,53,3,3,DK)}
+ R(27,38,10,2,RD);R(31,40,2,2,'#ffd23a');R(30,42,1,3,RD);R(33,42,1,3,RD);
+ for(const d of[-1,1]){pol([[32+d*6,15],[32+d*13,3],[32+d*15,21]],W);pol([[32+d*8,16],[32+d*13,7],[32+d*13.5,19]],'#e0605a');R(32+d*12.5-1,3,2,4,DK)}
+ pol([[32,13],[39,14],[43,20],[44,26],[49,29],[42,32],[37,37],[32,39],[27,37],[22,32],[15,29],[20,26],[21,20],[25,14]],W);
+ pol([[32,15],[34,18],[32,21],[30,18]],RD);R(29,30,6,5,'#fff');R(31,31,2,2,DK);R(30,34,1,1,DK);R(33,34,1,1,DK);
+ for(const d of[-1,1]){const x0=d<0?18:40,ex=d<0?24:35;R(x0,27,5,1,RD);R(x0+(d<0?1:0),29,4,1,RD);R(ex,23,5,1,RD);
+  if(t%3600<140)R(ex,25,5,1,DK);else{if(d<0){R(ex,24,2,2,'#ffd23a');R(ex+2,25,3,2,'#ffd23a')}else{R(ex+3,24,2,2,'#ffd23a');R(ex,25,3,2,'#ffd23a')}R(ex+(d<0?3:2),25,1,2,DK)}}
+ for(let i=0;i<3;i++){const a=t/450+i*2.094,ox=32+C(a)*25,oy=30+Sn(a)*10;for(let q=1;q<4;q++)R(32+C(a-q*.2)*25,30+Sn(a-q*.2)*10,2,2,'rgba(160,180,255,'+(.5-q*.12)+')');
+  ell(ox,oy,5,5,'#7a8bff',.25);ell(ox,oy,3,3,'#9fb4ff',1);ell(ox,oy+1,2,2,'#fff',1);R(ox,oy-4-((t/90+i)%2|0),2,3,'#7a8bff')}}
+function drgn(t,pu){const C=Math.cos,Sn=Math.sin,G='#e8b43a',G2='#b8801c',G3='#ffe48a',RD='#d8302a',OR='#ff8a2b',DK='#3a1a10',IV='#fff4d0',fl=Sn(t/260)*3;
+ ell(32,34,28,26,'#ffb13b',.12+.06*pu);
+ for(let i=0;i<16;i++){const a=i/16*6.283+t/1800,r=17,r2=22+(i%2)*4;ln([32+C(a)*r,20+Sn(a)*r],[32+C(a)*r2,20+Sn(a)*r2],i%2?'#ffd23a':OR)}
+ for(let i=0;i<48;i++){const a=i/48*6.283;R(32+C(a)*17,20+Sn(a)*17,1,1,'#fff0a0')}
+ for(const d of[-1,1]){const S=[32+d*9,38],E=[32+d*22,23-fl],T1=[32+d*30,29-fl],T2=[32+d*29,39-fl*.5],T3=[32+d*22,48];
+  pol([S,E,T1,[32+d*24,32],T2,[32+d*25,43],T3,[32+d*12,46]],RD,'#5a1408');[T1,T2,T3].forEach(q=>ln(E,q,G));ln(S,E,G3);ln(E,[32+d*30,29-fl],G)}
+ const tp=[];for(let i=0;i<=14;i++){const u=i/14;tp.push([41+u*17,52-Sn(u*3.5+t/400)*3-u*8,4-u*2.6])}
+ tp.forEach(q=>ell(q[0],q[1],q[2]+1,q[2]+1,DK,1));tp.forEach((q,i)=>ell(q[0],q[1],q[2],q[2],i%2?G:G2,1));const te=tp[14];pol([[te[0]-2,te[1]],[te[0]+3,te[1]-6-(t/90%2|0)],[te[0]+5,te[1]+1]],OR);
+ pol([[26,34],[38,34],[43,44],[43,55],[21,55],[21,44]],G);
+ for(let r=0;r<5;r++){R(27,38+r*3,10,2,G3);R(27,40+r*3,10,1,G2)}for(let i=0;i<8;i++)R(23+(i*5)%4,40+i*2,1,1,G2),R(40-(i*5)%4,41+i*2,1,1,G2);
+ for(const x0 of[22,30]){pol([[x0,52],[x0+7,52],[x0+8,57],[x0-1,57]],G);R(x0-1,57,1,1,IV);R(x0+3,57,1,1,IV);R(x0+7,57,1,1,IV)}
+ for(const d of[-1,1])pol([[32+d*9,40],[32+d*5,40],[32+d*3,47],[32+d*7,48]],G);
+ ell(32,45,6,6,'#fff6c0',.22+.14*pu);ell(32,45,3,3,'#ffd23a',1);R(31,44,1,1,'#fff');
+ for(const d of[-1,1]){const w=(t/110|0)%2;pol([[32+d*10,24],[32+d*18+w*d,20],[32+d*15,28],[32+d*19+w*d,32],[32+d*10,32]],RD)}
+ for(const d of[-1,1]){pol([[32+d*7,13],[32+d*9,6],[32+d*16,1],[32+d*13,7],[32+d*17,8],[32+d*11,14]],IV)}
+ for(let i=0;i<3;i++){const x0=28+i*4,h=7+(i==1?3:0)+((t/80+i*3)%3|0);pol([[x0,13],[x0+2,13-h],[x0+4,13]],i==1?OR:RD)}
+ pol([[32,12],[39,13],[43,19],[44,25],[40,30],[36,32],[28,32],[24,30],[20,25],[21,19],[25,13]],G);pol([[27,24],[37,24],[38,29],[36,33],[28,33],[26,29]],G3);
+ R(29,28,1,2,DK);R(34,28,1,2,DK);R(29,32,1,2,IV);R(34,32,1,2,IV);
+ for(const d of[-1,1]){const ex=d<0?24:35;ell(ex+2,20,4,3,'#ff5a2b',.25);R(ex,19,5,3,'#ff3030');R(ex+2,19,1,3,'#2a0a00');R(ex+1,19,1,1,'#fff');R(ex+(d<0?0:1),17,4,1,DK);R(ex+(d<0?3:0),18,2,1,DK);
+  for(let i=0;i<16;i++)R(32+d*(6+i),29+i*.35+Sn(t/300+i*.4)*2,1,1,G3),R(32+d*(5+i),31+i*.3+Sn(t/300+i*.4+1)*2,1,1,G3)}
+ for(let i=0;i<8;i++)R(10+(i*7)%44,GY-((t/25+i*13)%55),1,1,i%2?'#ffd23a':'#ff6a2b')}
+function gmArt(t,sp){const fk=sp=='fox9',A=fk?{hx:20,hy:13,hw:24,hh:25,bx:24,by:37,bw:16,bh:19}:{hx:21,hy:12,hw:22,hh:21,bx:21,by:32,bw:22,bh:23},E=EQ(),pu=.5+.5*Math.sin(t/500);
+ x.globalAlpha=1;R(24,GY-1,16,2,'rgba(0,0,0,.4)');E.forEach(it=>{if(it[1]=='g')wing(it,t,A)});fk?kitsune(t,pu):drgn(t,pu);E.forEach(it=>{if(it[1]!='g')item(it,t,A)});x.globalAlpha=1}
 function cat(t,f,st){
- const sp=K.sp||'cat',SC=SPC[sp],big=st>=3,SKN=skinData(K),[bw,bh,hw,hh]=[0,[12,8,16,13],[16,11,18,14],[20,14,20,15],[22,16,22,16]][st].map((v,i)=>v+SC.d[i]+(SKN&&SKN.ov=='panda'&&i>1?1:0));
+ const sp=K.sp||'cat',SC=SPC[sp];if(SC.gm&&st>=3)return gmArt(t,sp);const big=st>=3,SKN=skinData(K),[bw,bh,hw,hh]=[0,[12,8,16,13],[16,11,18,14],[20,14,20,15],[22,16,22,16]][st].map((v,i)=>v+SC.d[i]+(SKN&&SKN.ov=='panda'&&i>1?1:0));
  const el=t-T0,idle=t-LA,slp=idle>25000&&el>700,cy=idle%16000,str=!slp&&cy>6000&&cy<7600,chs=!slp&&cy>11000&&cy<13500,jump=el<650?-rd(Math.sin(el/650*Math.PI)*8):chs?-rd(Math.abs(Math.sin(t/160))*3):WK?-((t/130|0)%2):0,br=rd(Math.sin(t/600)*.5+.5);
  const tv=[1,.88,1.1,.94,1.06][(K.seed>>3)%5],pat=K.seed%5,fur=big?dk(SKN&&SKN.fix?SKN.base:SKN?mix(f.fur,SKN.base,.65):sp=='cat'?f.fur:mix(f.fur,SC.base,.4),SKN&&SKN.fix?1:tv):(SKN?SKN.fur0:SC.fur0),acc=st>=2?f.acc:'#f0a0b0',eye=(SKN&&SKN.ov=='panda')?'#0a0710':big?f.eye:'#2a1a10',sd0=dk(fur,.7),lt=dk(fur,1.18),OUT=dk(fur,.22);
  const gh=(f.ghost||f.halo)&&big?rd(Math.sin(t/500)*2)-(f.halo?3:0):0;
