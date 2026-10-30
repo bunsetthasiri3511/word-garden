@@ -160,6 +160,14 @@ const addXp=v=>{S.st.xp+=v;if(!isCat())K.xp=(K.xp||0)+v};
 let PVB=null,PVS=null;
 const BG=[["ทุ่งหญ้ายามเช้า",150,"#6ec3ff","#e4f6ff","#4f9a4a","#6fbf6a","sun"],["พระอาทิตย์ตก",250,"#ff7a5a","#ffd27a","#6a4a3a","#8a4a5a","set"],["ทุ่งหิมะ",250,"#9fb4d8","#e8f0ff","#f4f8ff","#cfd8ec","snow"],["ซากุระบาน",400,"#ffc8e0","#fff0f6","#8fc47a","#f6b6d0","sakura"],["ชายหาด",400,"#5bc8ff","#c8f0ff","#f0dca0","#3a9ad0","beach"],["เมืองยามค่ำ",600,"#0a0a2a","#3a2a6a","#1a1a2a","#15152e","city"],["ป่าเวทมนตร์",600,"#1a3a2a","#3a6a4a","#2a5a30","#1f4a2a","forest"],["อวกาศ",800,"#05030f","#1a1250","#2a2a4a","#3a3a5e","space"]];
 const SKD={cat:{tabby:["แมวส้ม","#e8923a","#e8b070",250,"tabby"],black:["แมวดำ","#2a2a33","#3a3a44",250,null],calico:["แมวสามสี","#f4efe6","#f0e6d8",450,"calico"]},dog:{dal:["ดัลเมเชียน","#f2f2f2","#f4f4f4",350,"dal"],husky:["ฮัสกี้","#8a96a8","#a0aab8",450,"husky"],shiba:["ชิบะ","#d9893f","#e0a060",350,"shiba"]},pig:{black:["หมูดำ","#5a5058","#6a6068",250,null],spot:["หมูลายจุด","#f4b6c2","#f6c8d0",350,"pspot"]},bear:{panda:["แพนด้า","#f6f6f8","#f8f8fa",500,"panda",1],polar:["หมีขาว","#eef4fa","#f4f8fc",300,null],black:["หมีดำ","#3a3a40","#4a4a52",300,null],honey:["หมีน้ำผึ้ง","#d9a63a","#e8c070",250,null]},fox:{arctic:["จิ้งจอกขาว","#f4f4f6","#f6f6f8",350,null,1],silver:["จิ้งจอกเงิน","#9aa0ad","#b0b6c2",350,null,1],dark:["จิ้งจอกดำ","#3a3a44","#4a4a54",300,null,1]},rabbit:{brown:["กระต่ายน้ำตาล","#b08a5a","#c8a070",250,null,1],gray:["กระต่ายเทา","#9a9aa6","#b0b0bc",250,null,1],black:["กระต่ายดำ","#2a2a33","#3a3a44",300,null,1]},hamster:{white:["แฮมสเตอร์ขาว","#f4f0ea","#f6f2ec",250,null,1],gray:["แฮมสเตอร์เทา","#9a9aa6","#b0b0bc",250,null,1]},tiger:{white:["เสือขาว","#f2f0ec","#f4f2ee",450,null,1],black:["เสือดำ","#2a2a33","#3a3a44",450,null,1]}};
+Object.assign(SKD.cat,{gray:["แมวเทา","#9a9aa6","#b0b0bc",250,null,1],white:["แมวขาว","#f4f2ee","#f6f4f0",250,null,1],cream:["แมวครีม","#efd9b0","#f2e2c0",300,null,1]});
+Object.assign(SKD.dog,{gold:["โกลเด้น","#e8c070","#efd08c",300,null,1],choc:["ช็อกโกแลต","#6a4a38","#85624a",300,null,1],collie:["บอร์เดอร์คอลลี่","#2a2a33","#3a3a44",450,"husky",1]});
+Object.assign(SKD.pig,{boar:["หมูป่า","#7a5a44","#8f6e56",300,null,1],cow:["หมูลายวัว","#f6f0f0","#f8f4f4",400,"pspot",1],gold:["หมูทอง","#e8c050","#f0d070",600,null,1]});
+Object.assign(SKD.bear,{red:["หมีน้ำตาลแดง","#a0522d","#b8683e",250,null,1],pink:["หมีชมพู","#f4a6c0","#f8bcd0",350,null,1]});
+Object.assign(SKD.fox,{gold:["จิ้งจอกทอง","#e8c060","#f0d080",350,null,1],violet:["จิ้งจอกม่วง","#8a6ad0","#a088e0",450,null,1]});
+Object.assign(SKD.rabbit,{spot:["กระต่ายลายจุด","#f4f0ea","#f6f2ec",350,"pspot",1],pink:["กระต่ายชมพู","#f4b6c8","#f8c8d6",300,null,1],blue:["กระต่ายฟ้า","#9fd0f0","#b4def6",300,null,1]});
+Object.assign(SKD.hamster,{gold:["แฮมสเตอร์ทอง","#e0a030","#ecb850",250,null,1],tri:["แฮมสเตอร์สามสี","#f4efe6","#f6f2ea",400,"calico",1],black:["แฮมสเตอร์ดำ","#3a3a44","#4a4a54",300,null,1]});
+Object.assign(SKD.tiger,{gold:["เสือทอง","#f0c040","#f4d060",500,null,1],blue:["เสือน้ำเงิน","#6a8fd8","#86a6e4",550,null,1]});
 const curBg=()=>PVB!=null?PVB:(K.bg==null?-1:K.bg);
 function skinData(k){const sp=k.sp||"cat";let id=k.sk;if(PVS!=null&&k===S.pets[S.pet])id=PVS;const r=id&&SKD[sp]&&SKD[sp][id];return r?{base:r[1],fur0:r[2],ov:r[4],fix:r[5]}:null}
 function skOv(o,a){const{bx,by,bw,bh,hx,hy,hw,hh,ey,es,e1,e2}=a,B="#2f2f3a",hb=hh-(ey-hy)-es-1;
@@ -545,18 +553,18 @@ function buy(i){const it=ITEMS[i];delete PV[it[1]];if(!M.own[i]){if(M.coins<PR[i
 function unq(){PV={};K.eq=M.eq={h:-1,n:-1,w:-1,f:-1,g:-1,t:-1};save();sync();shopPage()}
 
 let GT=0;
-function gt(i){GT=i;garden();scrollTo(0,0)}
+function gtab(i){GT=i;garden();scrollTo(0,0)}
 function frc(k){freeReview(k,+$("#frc").value)}
 function garden(){const T=day(),n=D.length;let m=0,l=0,due=0;
  for(const k in S.c){const c=S.c[k];if(c[0]>=4)m++;else l++;if(c[1]<=T)due++}
  const avail=D.filter((d,i)=>!S.c[i]&&S.cfg.lv.includes(d.l)).length,nw=Math.min(Math.max(0,S.cfg.nw-td().nw),avail),df=S.cfg.df||"n",acc=S.st.ta?Math.round(S.st.tc/S.st.ta*100):0;
  const tabs=[["🌱","วันนี้"],["🏋️","ฝึก"],["🎁","ภารกิจ"],["🌼","สวนคำ"],["⚙️","ตั้งค่า"]];
- let h=`<div class="row"><span class="mu">Word Garden · Oxford 3000</span><span class="chips"><span class="chip">🔥 ${S.st.streak}</span><span class="chip">⭐ ${S.st.xp}</span></span></div><div class="stab five">${tabs.map((t,i)=>`<button class="${i==GT?"on":""}" onclick="gt(${i})"><span>${t[0]}</span>${t[1]}${i==2&&qready()?'<i class="dotr"></i>':""}</button>`).join("")}</div>`;
+ let h=`<div class="row"><span class="mu">Word Garden · Oxford 3000</span><span class="chips"><span class="chip">🔥 ${S.st.streak}</span><span class="chip">⭐ ${S.st.xp}</span></span></div><div class="stab five">${tabs.map((t,i)=>`<button class="${i==GT?"on":""}" onclick="gtab(${i})"><span>${t[0]}</span>${t[1]}${i==2&&qready()?'<i class="dotr"></i>':""}</button>`).join("")}</div>`;
  if(GT==0){const a=Math.max(m/n*100,m?1.5:0),b=Math.min(100,a+l/n*100+(l?1.5:0));
   h+=`<div class="hero"><div class="ring" style="--a:${a}%;--b:${b}%"><div><b>${m}</b><span class="mu">จำได้แล้ว</span></div></div><div><div class="mu">จากทั้งหมด ${n} คำ</div><div style="font-size:19px;font-weight:600;margin:4px 0">กำลังเรียน ${l} คำ</div><div class="mu">${due?"มี "+due+" คำรอทบทวน":"ไม่มีคำค้างทบทวน"}</div></div></div>
   <div class="mini"><div><b>${due}</b><span class="mu">ถึงเวลาทบทวน</span></div><div><b>${nw}</b><span class="mu">คำใหม่วันนี้</span></div><div><b>${acc}%</b><span class="mu">แม่นยำ</span></div></div>
   <button class="cta" onclick="start(0)" ${due+nw?"":"disabled"}>${due+nw?`▶ เริ่มภารกิจวันนี้<small>ทบทวน ${due} · คำใหม่ ${nw}</small>`:"วันนี้ครบแล้ว 🎉"}</button>
-  ${qready()?`<button class="o" style="text-align:center;border-color:var(--ac);margin-top:10px" onclick="gt(2)">🎁 มีหีบรางวัลรอเปิด!</button>`:""}
+  ${qready()?`<button class="o" style="text-align:center;border-color:var(--ac);margin-top:10px" onclick="gtab(2)">🎁 มีหีบรางวัลรอเปิด!</button>`:""}
   <button class="ghost" style="margin-top:8px" onclick="start(1)">+ เรียนเพิ่มอีก 10 คำ</button>
   <h2>ระดับที่เรียน</h2><div>${[1,2,3,4].map(v=>{const on=S.cfg.lv.includes(v);return `<button class="rf${on?" on":""}" onclick="lvc(${v},${!on})">${LV[v]} ${LVN[v]}</button>`}).join("")}</div>
   <h2>ความยาก</h2><div class="seg">${[["e","ง่าย","×1"],["n","ปกติ","×1.5"],["h","ยาก","×2.5"]].map(([k,a2,x2])=>`<button class="${df==k?"on":""}" onclick="setdf('${k}')">${a2} <span style="font-size:11px">${x2}</span></button>`).join("")}</div><div class="mu" style="margin-top:6px">${{e:"เลือกคำตอบ",n:"ปรับตามความแม่นของแต่ละคำ",h:"พิมพ์คำตอบเอง"}[df]}</div>
