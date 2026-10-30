@@ -158,7 +158,19 @@ const fn=(k,two,sp)=>{sp=sp||K.sp||"cat";const n=two?FORMS[k].n2:FORMS[k].n;if(s
 const stn=(i,sp)=>STN[i].replace("แมว",SPC[sp||"cat"].th);
 const addXp=v=>{S.st.xp+=v;if(!isCat())K.xp=(K.xp||0)+v};
 let PVB=null,PVS=null;
-const BG=[["ทุ่งหญ้ายามเช้า",150,"#6ec3ff","#e4f6ff","#4f9a4a","#6fbf6a","sun"],["พระอาทิตย์ตก",250,"#ff7a5a","#ffd27a","#6a4a3a","#8a4a5a","set"],["ทุ่งหิมะ",250,"#9fb4d8","#e8f0ff","#f4f8ff","#cfd8ec","snow"],["ซากุระบาน",400,"#ffc8e0","#fff0f6","#8fc47a","#f6b6d0","sakura"],["ชายหาด",400,"#5bc8ff","#c8f0ff","#f0dca0","#3a9ad0","beach"],["เมืองยามค่ำ",600,"#0a0a2a","#3a2a6a","#1a1a2a","#15152e","city"],["ป่าเวทมนตร์",600,"#1a3a2a","#3a6a4a","#2a5a30","#1f4a2a","forest"],["อวกาศ",800,"#05030f","#1a1250","#2a2a4a","#3a3a5e","space"]];
+const BG=[["ทุ่งหญ้ายามเช้า",150,"#6ec3ff","#e4f6ff","#4f9a4a","#6fbf6a","sun"],["พระอาทิตย์ตก",250,"#ff7a5a","#ffd27a","#6a4a3a","#8a4a5a","set"],["ทุ่งหิมะ",250,"#9fb4d8","#e8f0ff","#f4f8ff","#cfd8ec","snow"],["ซากุระบาน",400,"#ffc8e0","#fff0f6","#8fc47a","#f6b6d0","sakura"],["ชายหาด",400,"#5bc8ff","#c8f0ff","#f0dca0","#3a9ad0","beach"],["เมืองยามค่ำ",600,"#0a0a2a","#3a2a6a","#1a1a2a","#15152e","city"],["ป่าเวทมนตร์",600,"#1a3a2a","#3a6a4a","#2a5a30","#1f4a2a","forest"],["อวกาศ",800,"#05030f","#1a1250","#2a2a4a","#3a3a5e","space"],
+["สุสานฮาโลวีน",600,"#150a24","#6a2a4a","#1f1a28","#2a1f38","grave"],
+["ทุ่งฟักทอง",500,"#2a1a3a","#ff8a3a","#3a2a1a","#4a3020","pumpkin"],
+["คฤหาสน์ผีสิง",700,"#0e0a22","#4a2a6a","#16121e","#201a30","haunted"],
+["เมืองซอมบี้",700,"#1e2a12","#a0b050","#3a3c30","#2a3220","apoc"],
+["ทะเลทราย",400,"#ffb870","#ffe9b0","#e8c070","#f0cf88","desert"],
+["ภูเขาไฟ",800,"#2a0808","#ff5a1a","#2a1a1a","#3a1a14","volcano"],
+["ใต้ทะเล",600,"#0a4a8a","#4ac8e8","#e8d49a","#c8b072","ocean"],
+["แสงเหนือ",700,"#05102a","#0a3a4a","#e8f0ff","#9fb4d8","aurora"],
+["ใบไม้ร่วง",400,"#ffcf8a","#fff0d0","#7a4a20","#a0642a","autumn"],
+["นีออนยามค่ำ",800,"#12063a","#ff2aa0","#0a0420","#2a0a5a","neon"],
+["ทุ่งทานตะวัน",350,"#6ec3ff","#fff3b0","#4f9a4a","#6fbf6a","sunflower"],
+["ถ้ำคริสตัล",650,"#0a0618","#2a1a5a","#1a1430","#241a44","cave"]];
 const SKD={cat:{tabby:["แมวส้ม","#e8923a","#e8b070",250,"tabby"],black:["แมวดำ","#2a2a33","#3a3a44",250,null],calico:["แมวสามสี","#f4efe6","#f0e6d8",450,"calico"]},dog:{dal:["ดัลเมเชียน","#f2f2f2","#f4f4f4",350,"dal"],husky:["ฮัสกี้","#8a96a8","#a0aab8",450,"husky"],shiba:["ชิบะ","#d9893f","#e0a060",350,"shiba"]},pig:{black:["หมูดำ","#5a5058","#6a6068",250,null],spot:["หมูลายจุด","#f4b6c2","#f6c8d0",350,"pspot"]},bear:{panda:["แพนด้า","#f6f6f8","#f8f8fa",500,"panda",1],polar:["หมีขาว","#eef4fa","#f4f8fc",300,null],black:["หมีดำ","#3a3a40","#4a4a52",300,null],honey:["หมีน้ำผึ้ง","#d9a63a","#e8c070",250,null]},fox:{arctic:["จิ้งจอกขาว","#f4f4f6","#f6f6f8",350,null,1],silver:["จิ้งจอกเงิน","#9aa0ad","#b0b6c2",350,null,1],dark:["จิ้งจอกดำ","#3a3a44","#4a4a54",300,null,1]},rabbit:{brown:["กระต่ายน้ำตาล","#b08a5a","#c8a070",250,null,1],gray:["กระต่ายเทา","#9a9aa6","#b0b0bc",250,null,1],black:["กระต่ายดำ","#2a2a33","#3a3a44",300,null,1]},hamster:{white:["แฮมสเตอร์ขาว","#f4f0ea","#f6f2ec",250,null,1],gray:["แฮมสเตอร์เทา","#9a9aa6","#b0b0bc",250,null,1]},tiger:{white:["เสือขาว","#f2f0ec","#f4f2ee",450,null,1],black:["เสือดำ","#2a2a33","#3a3a44",450,null,1]}};
 Object.assign(SKD.cat,{gray:["แมวเทา","#9a9aa6","#b0b0bc",250,null,1],white:["แมวขาว","#f4f2ee","#f6f4f0",250,null,1],cream:["แมวครีม","#efd9b0","#f2e2c0",300,null,1]});
 Object.assign(SKD.dog,{gold:["โกลเด้น","#e8c070","#efd08c",300,null,1],choc:["ช็อกโกแลต","#6a4a38","#85624a",300,null,1],collie:["บอร์เดอร์คอลลี่","#2a2a33","#3a3a44",450,"husky",1]});
@@ -168,6 +180,7 @@ Object.assign(SKD.fox,{gold:["จิ้งจอกทอง","#e8c060","#f0d080
 Object.assign(SKD.rabbit,{spot:["กระต่ายลายจุด","#f4f0ea","#f6f2ec",350,"pspot",1],pink:["กระต่ายชมพู","#f4b6c8","#f8c8d6",300,null,1],blue:["กระต่ายฟ้า","#9fd0f0","#b4def6",300,null,1]});
 Object.assign(SKD.hamster,{gold:["แฮมสเตอร์ทอง","#e0a030","#ecb850",250,null,1],tri:["แฮมสเตอร์สามสี","#f4efe6","#f6f2ea",400,"calico",1],black:["แฮมสเตอร์ดำ","#3a3a44","#4a4a54",300,null,1]});
 Object.assign(SKD.tiger,{gold:["เสือทอง","#f0c040","#f4d060",500,null,1],blue:["เสือน้ำเงิน","#6a8fd8","#86a6e4",550,null,1]});
+for(const sp in SKD){SKD[sp].zombie=["ซอมบี้"+SPC[sp].th,"#8fae7a","#a4c08e",450,"zombie",1];SKD[sp].hallo=["ฮาโลวีน"+SPC[sp].th,"#2d2340","#3a2e50",500,"hallo",1]}
 const curBg=()=>PVB!=null?PVB:(K.bg==null?-1:K.bg);
 function skinData(k){const sp=k.sp||"cat";let id=k.sk;if(PVS!=null&&k===S.pets[S.pet])id=PVS;const r=id&&SKD[sp]&&SKD[sp][id];return r?{base:r[1],fur0:r[2],ov:r[4],fix:r[5]}:null}
 function skOv(o,a){const{bx,by,bw,bh,hx,hy,hw,hh,ey,es,e1,e2}=a,B="#2f2f3a",hb=hh-(ey-hy)-es-1;
@@ -175,10 +188,21 @@ function skOv(o,a){const{bx,by,bw,bh,hx,hy,hw,hh,ey,es,e1,e2}=a,B="#2f2f3a",hb=h
  else if(o=="dal"){for(const p of[[bx+3,by+3],[bx+bw-6,by+5],[hx+3,hy+2],[hx+hw-6,hy+4]])R(p[0],p[1],2,2,"#2a2a2a")}
  else if(o=="husky"){R(hx+2,ey+es,hw-4,hb,"#f0f0f0");R(bx+3,by+bh-5,bw-6,5,"#f0f0f0")}
  else if(o=="shiba"){R(bx+3,by+bh-4,bw-6,4,"#f6e8d0");R(hx+1,ey+es,3,hb,"#f6e8d0");R(hx+hw-4,ey+es,3,hb,"#f6e8d0")}
+ else if(o=="zombie"){const S="#243020",BL="#8a1a1a",cx=bx+(bw>>1);
+  R(bx+2,by+3,bw-4,1,S);for(let i=0;i<bw-5;i+=2)R(bx+3+i,by+2,1,3,S);
+  R(bx+bw-7,by+bh-6,5,4,"#6e7a66");R(bx+bw-6,by+bh-5,2,1,"#a06a6a");R(bx+3,by+bh-5,3,2,"#5f6f58");
+  R(hx+2,hy+2,5,4,"#5f6f58");R(hx+3,hy+3,2,1,BL);
+  R(hx+hw-9,hy+hh-6,6,1,S);for(let i=0;i<3;i++)R(hx+hw-8+i*2,hy+hh-7,1,3,S);
+  R(cx+2,hy+hh-2,1,3,BL);R(cx+2,hy+hh+1,1,1,"#c02a2a")}
+ else if(o=="hallo"){const OR="#ff8a1a",K="#140c1c",cx=bx+(bw>>1),y=Math.max(by+3,by+bh-7);
+  R(cx-4,y,8,6,OR);R(cx-5,y+1,10,4,OR);R(cx-1,y-2,2,2,"#3f9a45");R(cx-3,y+1,1,2,K);R(cx+2,y+1,1,2,K);R(cx-2,y+4,4,1,K);R(cx-3,y+3,1,1,K);R(cx+2,y+3,1,1,K);
+  R(bx+2,by+2,3,2,OR);R(bx+bw-5,by+3,3,2,OR);
+  R(hx+2,hy+1,2,3,OR);R(hx+hw-4,hy+1,2,3,OR);R(hx+(hw>>1)-1,hy+1,2,2,OR)}
  else if(o=="tabby"){for(let i=0;i<4;i++)R(bx+2+i*((bw-4)/3|0),by+1,1,3,"#b8601a");R(hx+(hw>>1)-1,hy+1,1,3,"#b8601a")}
  else if(o=="calico"){R(bx+2,by+2,5,4,"#e8923a");R(bx+bw-7,by+3,5,4,"#3a3a3a");R(hx+2,hy+1,5,4,"#e8923a");R(hx+hw-6,hy+2,4,3,"#3a3a3a")}
  else if(o=="pspot"){R(bx+2,by+2,5,4,"#4a4046");R(hx+hw-7,hy+1,5,4,"#4a4046")}}
-function bgDraw(t,b){const c1=b[2],c2=b[3],gd=b[4],hl=b[5],k=b[6];
+function bgDraw(t,b){bgDraw0(t,b);bgB(t,b[6],b)}
+function bgDraw0(t,b){const c1=b[2],c2=b[3],gd=b[4],hl=b[5],k=b[6];
  for(let i=0;i<8;i++)R(0,i*7,64,8,mix(c1,c2,i/7));
  if(k=="sun"){ell(50,12,6,6,"#fff3a0",1);for(let i=0;i<3;i++)ell(((i*31+t/500)%84)-10,9+i*7,7,3,"#fff",.9)}
  if(k=="set"){ell(32,GY-12,14,14,"#ffd27a",.3);ell(32,GY-12,10,10,"#fff0b0",1)}
@@ -187,12 +211,68 @@ function bgDraw(t,b){const c1=b[2],c2=b[3],gd=b[4],hl=b[5],k=b[6];
  if(k=="space"){for(let i=0;i<30;i++)if((Math.floor(t/300)+i)%4)R((i*37)%62+1,(i*23)%48+2,1,1,i%3?"#8a7fc0":"#fff");ell(46,16,7,7,"#c9a6ff",1);ell(44,14,3,3,"#e6d4ff",1);R(36,20,20,1,"#7a5ad0")}
  if(k=="forest")for(let i=0;i<7;i++){const x0=i*10-1;R(x0+3,GY-7,2,7,"#4a3a2a");ell(x0+4,GY-13,6,9,"#1f5a35",1)}
  if(k=="sakura")for(const x0 of[6,52]){R(x0,GY-14,3,14,"#6a4a3a");ell(x0+1,GY-18,9,7,"#f6a8c8",1);ell(x0-2,GY-14,5,4,"#ffc0d8",1)}
+ bgA(t,k,b);
  for(let i=0;i<64;i+=2){const h=7+rd((Math.sin(i*.25+1)+Math.sin(i*.09))*3);R(i,GY-h,2,h,hl)}
  R(0,GY,64,8,gd);R(0,GY,64,1,mix(gd,"#ffffff",.25));
  if(k=="snow")for(let i=0;i<26;i++)R((i*37+Math.sin(t/900+i)*3+64)%64,(t/30+i*17)%GY,1,1,"#fff");
  if(k=="sakura")for(let i=0;i<14;i++)R((i*29+t/50)%64,(t/40+i*13)%GY,2,1,"#ffb3d1");
  if(k=="beach")for(let i=0;i<6;i++)R((i*13+t/60)%64,GY-5+(i%2),4,1,"#e8faff");
  if(k=="forest")for(let i=0;i<8;i++)R(32+Math.sin(t/700+i)*28,30+Math.cos(t/500+i*2)*14,1,1,(Math.floor(t/200)+i)%3<1?"#c8ff5a":"#7a9a3a")}
+
+const RA=(a,b,w,h,c,al)=>{x.globalAlpha=al;R(a,b,w,h,c);x.globalAlpha=1};
+function batp(bx,by,t,i){const f=(t/110+i|0)%2,c="#0a0610";R(bx,by,2,1,c);R(bx-2,by-f,2,1,c);R(bx+2,by-f,2,1,c);R(bx-3,by-f+1,1,1,c);R(bx+4,by-f+1,1,1,c)}
+function bgA(t,k,b){const S=Math.sin,C=Math.cos;
+ if(k=="grave"){ell(46,14,9,9,"#ffb86a",.22);ell(46,14,6,6,"#ffd89a",1);R(44,12,2,2,"#f0b070");R(48,16,2,1,"#f0b070");
+  const T="#120a1a";R(8,GY-22,2,22,T);ln([9,GY-16],[3,GY-25],T);ln([9,GY-19],[17,GY-28],T);ln([9,GY-12],[16,GY-17],T);ln([3,GY-25],[1,GY-28],T);
+  for(let i=0;i<3;i++)batp(((t/40+i*23)%72)-4,8+i*6+S(t/200+i)*2,t,i)}
+ else if(k=="pumpkin"){ell(14,12,6,6,"#fff0c0",.25);ell(14,12,4,4,"#fff6d8",1);R(54,GY-20,2,20,"#120a1a");ln([55,GY-14],[49,GY-22],"#120a1a");ln([55,GY-17],[60,GY-25],"#120a1a");
+  for(let i=0;i<2;i++)batp(((t/50+i*30)%72)-4,10+i*8+S(t/220+i)*2,t,i)}
+ else if(k=="haunted"){ell(14,14,9,9,"#e8e0ff",.18);ell(14,14,6,6,"#f4f0ff",1);R(12,12,2,2,"#d0c8f0");R(16,16,2,1,"#d0c8f0");
+  const H="#0d0816";R(34,GY-22,20,22,H);poly([[32,GY-22],[44,GY-33],[56,GY-22]],H);R(52,GY-31,5,12,H);poly([[51,GY-31],[54.5,GY-37],[58,GY-31]],H);R(37,GY-30,2,6,H);
+  R(38,GY-16,3,4,(t/260|0)%9?"#ffc84a":"#3a2a10");R(46,GY-16,3,4,"#ffc84a");R(53,GY-26,2,3,(t/400|0)%3?"#ffc84a":"#3a2a10");R(42,GY-9,4,9,"#05030a");
+  for(let i=0;i<3;i++)batp(((t/45+i*26)%72)-4,8+i*5+S(t/200+i)*2,t,i);
+  if(t%7000<110)RA(0,0,64,GY,"#ffffff",.3)}
+ else if(k=="apoc"){ell(48,16,9,9,"#d8e090",.2);ell(48,16,5,5,"#e8f0a0",1);
+  for(let i=0;i<7;i++){const x0=i*9,h=14+(i*11)%18;R(x0,GY-h,8,h,"#1c2414");R(x0+2+(i%3),GY-h-2,3,2,"#1c2414");for(let j=0;j<6;j++)R(x0+1+(j%2)*3,GY-h+3+(j>>1)*4,2,2,(i+j)%5?"#0e140a":"#8aa040")}
+  for(let i=0;i<3;i++)ell(18+i*17+S(t/900+i)*2,GY-28-((t/70+i*9)%18),5,3,"#4a5a30",.18)}
+ else if(k=="desert"){ell(32,18,11,11,"#fff0a0",.3);ell(32,18,7,7,"#fffbe0",1);for(let i=0;i<2;i++)ell(((t/160+i*38)%92)-14,8+i*7,8,2,"#fff",.55)}
+ else if(k=="volcano"){ell(32,GY-26,24,15,"#ff6a2b",.16);poly([[6,GY],[27,GY-27],[37,GY-27],[58,GY]],"#1a0a0a");R(28,GY-28,8,2,"#ffb02b");ln([30,GY-26],[25,GY-8],"#ff5a1a");ln([33,GY-26],[37,GY-9],"#ff7a2a");ln([32,GY-26],[32,GY-14],"#ff5a1a");
+  for(let i=0;i<14;i++){const u=(t/25+i*13)%36;R(31+S(i*5.3)*u*.7,GY-28-u,1,1,i%2?"#ffb02b":"#ff5a1a")}}
+ else if(k=="ocean"){for(let i=0;i<4;i++)RA(8+i*15+(t/300)%3,0,3,GY,"#ffffff",.07);
+  for(let i=0;i<3;i++){const fx=((t/(30+i*12)+i*30)%80)-8,fy=14+i*11+S(t/300+i)*2,c=["#ffb13b","#ff7aa8","#7fe0ff"][i];R(fx,fy,4,2,c);R(fx-2,fy-1+(t/150+i|0)%2,2,3,c);R(fx+3,fy,1,1,"#111")}}
+ else if(k=="aurora"){for(let i=0;i<24;i++)if((Math.floor(t/350)+i)%4)R((i*37)%62+1,(i*23)%30+2,1,1,i%3?"#8ab0d0":"#fff");
+  const cl=["#3affb0","#5ab0ff","#c26bff"];for(let q=0;q<3;q++)for(let xx=0;xx<64;xx++){const y0=8+q*6+S(xx*.12+t/700+q*1.7)*5;RA(xx,y0,1,12,cl[q],.14);RA(xx,y0,1,2,cl[q],.45)}
+  for(const x0 of[7,55]){poly([[x0-6,GY],[x0,GY-16],[x0+6,GY]],"#0e3a3a");poly([[x0-3,GY-9],[x0,GY-16],[x0+3,GY-9]],"#e8f0ff")}}
+ else if(k=="autumn"){ell(48,20,6,6,"#ffe9b0",1);for(const x0 of[8,54]){R(x0,GY-14,3,14,"#5a3a1a");ell(x0+1,GY-20,9,8,"#e8761a",1);ell(x0-3,GY-17,5,4,"#c2451a",1);ell(x0+5,GY-18,5,4,"#ffb13b",1)}}
+ else if(k=="neon"){ell(32,GY-10,14,14,"#ff5ac8",.25);ell(32,GY-10,12,12,"#ffd03a",1);for(let j=0;j<4;j++)R(19,GY-10+j*3,26,1+(j>>1),"#c81a9a");
+  for(let i=0;i<16;i++)if((Math.floor(t/250)+i)%3)R((i*37)%62+1,(i*19)%30+2,1,1,i%2?"#2ad8ff":"#fff")}
+ else if(k=="sunflower"){ell(50,10,7,7,"#fff3a0",1);for(let i=0;i<8;i++){const a=i*.785+t/3000;ln([50+C(a)*9,10+S(a)*9],[50+C(a)*12,10+S(a)*12],"#fff3a0")}for(let i=0;i<2;i++)ell(((t/150+i*40)%92)-14,10+i*9,8,3,"#fff",.9)}
+ else if(k=="cave"){for(let i=0;i<9;i++){const x0=i*8+3,h=6+(i*5)%9;poly([[x0-4,0],[x0,h],[x0+4,0]],"#1a1030")}
+  for(const[x0,c]of[[18,"#7fe0ff"],[46,"#c26bff"]]){const g=.12+.06*S(t/500+x0);ell(x0+2,GY-12,13,13,c,g);poly([[x0-1,GY],[x0+1,GY-24],[x0+3,GY-27],[x0+5,GY-23],[x0+6,GY]],c);R(x0+2,GY-22,1,14,"#fff")}}
+}
+function bgB(t,k,b){const S=Math.sin;
+ if(k=="grave"){for(const[x0,h]of[[4,10],[14,7],[48,9],[56,12]]){R(x0,GY-h+4,6,h,"#3a3248");R(x0+1,GY-h+3,4,1,"#3a3248");R(x0+2,GY-h+6,2,5,"#241c30");R(x0+1,GY-h+8,4,1,"#241c30")}
+  for(let i=0;i<4;i++)ell(((t/60+i*24)%90)-12,GY-1+i%2,11,2,"#9a8aaa",.16)}
+ else if(k=="pumpkin"){for(const[px,r]of[[6,6],[15,4],[49,5],[57,7]]){const f=(t/180+px|0)%9?1:0;ell(px,GY+3,r,r-1,"#f08a1a",1);ell(px-r/3,GY+2,r/2,r-2,"#ff9a2a",1);R(px-1,GY+3-r,2,2,"#3f6a2a");
+   ell(px,GY+3,r+3,r+2,"#ffb02b",f?.18:.08);const e=Math.max(1,r/3|0);R(px-r/2,GY+1,e+1,e+1,f?"#ffe066":"#5a2a0a");R(px+r/2-e-1,GY+1,e+1,e+1,f?"#ffe066":"#5a2a0a");R(px-r/2,GY+r/2+2,r,1,f?"#ffe066":"#5a2a0a")}}
+ else if(k=="haunted"){R(0,GY-2,64,1,"#0a0610");for(let i=0;i<64;i+=5){R(i,GY-5,1,7,"#0a0610");R(i,GY-6,1,1,"#0a0610")}
+  for(let i=0;i<3;i++)ell(((t/70+i*30)%90)-12,GY+1,11,2,"#8a7a9a",.14)}
+ else if(k=="apoc"){R(8,GY+3,12,1,"#1a1a14");R(40,GY+5,10,1,"#1a1a14");
+  for(const x0 of[6,56]){const h=3+Math.round((S(t/700+x0)+1)*1.5),g="#8fae7a";R(x0,GY-h+1,2,h+2,g);R(x0-1,GY-h-1,1,3,g);R(x0+2,GY-h-1,1,3,g);R(x0,GY-h-2,1,2,g);R(x0+1,GY-h-2,1,1,g);R(x0-3,GY+1,8,2,"#2a2c22")}}
+ else if(k=="desert"){for(const[x0,h]of[[54,15],[7,9]]){const g="#3f8f4a";R(x0,GY-h,3,h+2,g);R(x0-3,GY-h*.55,3,2,g);R(x0-3,GY-h*.55-3,2,4,g);R(x0+3,GY-h*.7,3,2,g);R(x0+4,GY-h*.7-3,2,4,g);R(x0+1,GY-h,1,h,"#5fbf6a")}
+  const tx=((t/40)%90)-12;ell(tx,GY,3,3,"#8a6a3a",.8);R(tx-1,GY-1,3,1,"#c8a060")}
+ else if(k=="volcano"){for(let i=0;i<64;i++){const w=S(i*.4+t/200)>0?0:1;R(i,GY+4+w,1,4-w,i%3?"#e8401a":"#ff8a2b")}
+  for(let i=0;i<4;i++){const u=(t/400+i*.27)%1;R(8+i*15,GY+4-u*5,1,1,"#ffb02b")}}
+ else if(k=="ocean"){for(let i=0;i<9;i++)R((i*17+S(t/400+i)*2+62)%62,GY-((t/35+i*9)%GY),1,1,"#e8faff");
+  for(const x0 of[4,10,54,60]){for(let j=0;j<8;j++)R(x0+S(t/400+j*.6+x0)*1.6,GY-j*2,2,2,j%2?"#2f9a5a":"#3fba6a")}
+  R(46,GY+1,3,3,"#ff7aa8");R(47,GY-1,1,2,"#ff7aa8");R(12,GY+2,4,2,"#c26bff")}
+ else if(k=="aurora"){for(let i=0;i<14;i++)R((i*37+S(t/900+i)*3+64)%64,(t/30+i*17)%GY,1,1,"#fff")}
+ else if(k=="autumn"){for(let i=0;i<12;i++)R((i*23+t/45+S(t/300+i)*3)%64,(t/35+i*17)%GY,2,1,["#e8761a","#c2451a","#ffb13b"][i%3]);for(let i=0;i<14;i++)R((i*19)%64,GY+1+(i%5),2,1,"#e8761a")}
+ else if(k=="neon"){for(let j=0;j<4;j++)R(0,GY+1+j*2,64,1,j%2?"#ff2aa0":"#2ad8ff");for(let i=-5;i<=5;i++)ln([32+i*4,GY],[32+i*10,63],"#8a2ad8")}
+ else if(k=="sunflower"){for(const x0 of[4,11,52,59]){const sw=S(t/700+x0)*1.2;R(x0,GY-9,1,11,"#3f9a45");R(x0+1,GY-4,3,1,"#3f9a45");ell(x0+sw,GY-11,4,4,"#ffd23a",1);ell(x0+sw,GY-11,2,2,"#5a3a1a",1);R(x0+sw-4,GY-11,1,1,"#ffb13b");R(x0+sw+4,GY-11,1,1,"#ffb13b")}}
+ else if(k=="cave"){for(const[x0,c]of[[3,"#7fe0a8"],[9,"#ff7ad9"],[52,"#7fd0ff"],[58,"#c26bff"]]){const g=.12+.06*S(t/450+x0);ell(x0+1,GY-4,6,6,c,g);poly([[x0-1,GY+1],[x0,GY-8],[x0+2,GY-10],[x0+3,GY-7],[x0+4,GY+1]],c);if((t/200+x0|0)%4<1)R(x0+1,GY-7,1,2,"#fff")}
+  for(let i=0;i<12;i++)R((i*29+S(t/600+i)*4+64)%62,GY-((t/50+i*11)%GY),1,1,"#c9a6ff")}
+}
 const shTabs=()=>Object.keys(SL).map(k=>`<button class="ghost${k==SH?" on":""}" onclick="shSlot('${k}')">${SL[k]}</button>`).join("");
 const SLN={h:"หมวก",n:"คอ",w:"ของถือ",f:"เพื่อน",g:"ปีก",t:"หาง",b:"พื้นหลัง",s:"สกิน"};
 const shTop=sub=>`<div class="shh"><div><b style="font-size:20px">🛍️ ร้านค้า</b><div class="mu">${sub||""}</div></div><div class="coin">🪙 ${M.coins}</div></div><div class="stab">${Object.keys(SL).map(k=>`<button class="${k==SH?"on":""}" onclick="shSlot('${k}')"><span>${SL[k]}</span>${SLN[k]}</button>`).join("")}</div>`;
@@ -458,7 +538,7 @@ function gmArt(t,sp){const fk=sp=='fox9',A=fk?{hx:20,hy:13,hw:24,hh:25,bx:24,by:
 function cat(t,f,st){
  const sp=K.sp||'cat',SC=SPC[sp];if(SC.gm&&st>=3)return gmArt(t,sp);const big=st>=3,SKN=skinData(K),[bw,bh,hw,hh]=[0,[12,8,16,13],[16,11,18,14],[20,14,20,15],[22,16,22,16]][st].map((v,i)=>v+SC.d[i]+(SKN&&SKN.ov=='panda'&&i>1?1:0));
  const el=t-T0,idle=t-LA,slp=idle>25000&&el>700,cy=idle%16000,str=!slp&&cy>6000&&cy<7600,chs=!slp&&cy>11000&&cy<13500,jump=el<650?-rd(Math.sin(el/650*Math.PI)*8):chs?-rd(Math.abs(Math.sin(t/160))*3):WK?-((t/130|0)%2):0,br=rd(Math.sin(t/600)*.5+.5);
- const tv=[1,.88,1.1,.94,1.06][(K.seed>>3)%5],pat=K.seed%5,fur=big?dk(SKN&&SKN.fix?SKN.base:SKN?mix(f.fur,SKN.base,.65):sp=='cat'?f.fur:mix(f.fur,SC.base,.4),SKN&&SKN.fix?1:tv):(SKN?SKN.fur0:SC.fur0),acc=st>=2?f.acc:'#f0a0b0',eye=(SKN&&SKN.ov=='panda')?'#0a0710':big?f.eye:'#2a1a10',sd0=dk(fur,.7),lt=dk(fur,1.18),OUT=dk(fur,.22);
+ const tv=[1,.88,1.1,.94,1.06][(K.seed>>3)%5],pat=K.seed%5,fur=big?dk(SKN&&SKN.fix?SKN.base:SKN?mix(f.fur,SKN.base,.65):sp=='cat'?f.fur:mix(f.fur,SC.base,.4),SKN&&SKN.fix?1:tv):(SKN?SKN.fur0:SC.fur0),acc=st>=2?f.acc:'#f0a0b0',eye=(SKN&&SKN.ov=='panda')?'#0a0710':(SKN&&SKN.ov=='zombie')?'#e8e070':(SKN&&SKN.ov=='hallo')?'#ffa020':big?f.eye:'#2a1a10',sd0=dk(fur,.7),lt=dk(fur,1.18),OUT=dk(fur,.22);
  const gh=(f.ghost||f.halo)&&big?rd(Math.sin(t/500)*2)-(f.halo?3:0):0;
  const by=GY-2-bh+jump+gh,bx=32-bw/2,hy=by-hh+4+br+(slp?2:0)+(str?3:0)+((t-EAT<1000)?rd(Math.abs(Math.sin(t/70))*2):0),hx=32-hw/2;
  if(st==4&&!f.ghost)ell(32,40,26+Math.sin(t/400)*2,24,f.pc,.13);
@@ -492,7 +572,7 @@ function cat(t,f,st){
  // body details
  R(bx+3,by+3,bw-6,bh-3,lt);
  R(bx+1,by+bh-2,bw-2,2,sd0);R(bx+2,by+1,bw-4,1,lt);R(hx+1,hy+hh-3,hw-2,2,sd0);R(hx+2,hy+1,hw-4,1,lt);
- if(st>=2&&!(SKN&&SKN.ov=='panda')){const W='rgba(255,255,255,.8)';
+ if(st>=2&&!(SKN&&/panda|zombie|hallo/.test(SKN.ov))){const W='rgba(255,255,255,.8)';
   if(pat==0)for(let i=0;i<3;i++)R(bx+2+i*((bw-4)/2.5|0),by+1,1,3,sd0);
   if(pat==1)for(let i=0;i<5;i++)R(bx+2+(i*7)%(bw-4),by+1+(i*5)%(bh-3),2,2,sd0);
   if(pat==2){R(bx+2,by+bh,4,2,W);R(bx+bw-6,by+bh,4,2,W)}
