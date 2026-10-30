@@ -28,7 +28,7 @@ h2{font-size:15px;font-weight:600;margin:26px 0 8px;color:var(--mu)}
 .sp{background:none;border:0;font-size:22px}
 .o{display:block;width:100%;text-align:left;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:13px 15px;margin:8px 0;font-size:17px}
 .o.ok{border-color:var(--ok);background:#0c2a1f}.o.no{border-color:var(--no);background:#2e1212}
-input[type=text]{width:100%;box-sizing:border-box;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:13px;font-size:20px;text-align:center}
+input[type=text],input[type=password]{width:100%;box-sizing:border-box;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:13px;font-size:20px;text-align:center}
 .fb{border-left:3px solid var(--bd);padding:4px 0 4px 12px;margin:14px 0;font-size:15px}
 .fb.ok{border-color:var(--ok)}.fb.no{border-color:var(--no)}.fb mark{background:none;color:var(--ac);font-weight:700}
 .hud{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--mu)}
@@ -619,7 +619,7 @@ function garden(){const T=day(),n=D.length;let m=0,l=0,due=0;
   h+=lvUi()+`<h2>แตะจุดเพื่อดูคำ</h2><div id="inf" class="mu">เทา = ยังไม่เรียน · เหลืองเข้มขึ้น = จำแน่นขึ้น · แดง = ใกล้ลืม</div><div id="gd">${g}</div>`}
  else h+=`<div class="cd" style="margin-top:12px"><div class="row"><span>คำใหม่ต่อวัน</span><select onchange="S.cfg.nw=+this.value;save();home()">${[5,10,20,30].map(v=>`<option ${S.cfg.nw===v?"selected":""}>${v}</option>`).join("")}</select></div></div>
   <button class="ghost" onclick="tst(this)">🔊 ทดสอบเสียง</button><button class="ghost" onclick="trd()">ลำดับคำใหม่: ${S.cfg.rd===false?"เรียงตามลำดับ":"สุ่ม"}</button><button class="ghost" onclick="tfx()">เอฟเฟกต์และเสียง: ${S.cfg.fx===false?"ปิด":"เปิด"}</button><button class="ghost" onclick="tpt()">🎲 เดาก่อนเรียนคำใหม่: ${S.cfg.pt===false?"ปิด":"เปิด"}</button><button class="ghost" onclick="guide()">📖 คู่มือเกม</button><button class="ghost" onclick="onboard()">👋 แนะนำมือใหม่</button>
-  <h2>ข้อมูล</h2><button class="ghost" onclick="rcUi()">🔑 รหัสกู้คืน</button><button class="ghost" onclick="bk(0)">สำรองความคืบหน้า</button><button class="ghost" onclick="bk(1)">กู้คืน</button><button class="ghost" onclick="bk(2)">คำแปลแปลกๆ (${Object.keys(S.fl).length})</button><button class="ghost" onclick="if(confirm('ล้างความคืบหน้าทั้งหมด?')){localStorage.removeItem('wg1');location.reload()}">รีเซ็ต</button>
+  <h2 onclick="gaTap()">ข้อมูล</h2><button class="ghost" onclick="rcUi()">🔑 รหัสกู้คืน</button><button class="ghost" onclick="bk(0)">สำรองความคืบหน้า</button><button class="ghost" onclick="bk(1)">กู้คืน</button><button class="ghost" onclick="bk(2)">คำแปลแปลกๆ (${Object.keys(S.fl).length})</button><button class="ghost" onclick="if(confirm('ล้างความคืบหน้าทั้งหมด?')){localStorage.removeItem('wg1');location.reload()}">รีเซ็ต</button>
   <textarea id="bk" placeholder="ข้อมูลสำรองจะขึ้นที่นี่ วางข้อมูลที่นี่เพื่อกู้คืน"></textarea>`;
  app.innerHTML=h;
  if(GT==3)$("#gd").onclick=e=>{const i=e.target.dataset.i;if(i==null)return;const d=D[i],c=S.c[i];say(d.w);
@@ -819,7 +819,7 @@ function guide(k){const old=document.getElementById("gdm");if(old)old.remove();
  document.body.appendChild(d);if(k){const e=document.getElementById("gd_"+k);if(e)setTimeout(()=>e.scrollIntoView({block:"start"}),50)}}
 /* 👋 แนะนำมือใหม่ */
 const OB=[["🌱","เรียนคำใหม่ทุกวัน","กด “เริ่มภารกิจวันนี้” จะเห็นการ์ดคำ ความหมาย และประโยคตัวอย่าง แล้วทดสอบทันที ตอบผิดไม่เป็นไร คำจะวนกลับมาถามอีกในรอบเดียวกัน"],["🧠","ระบบทบทวนก่อนลืม","ตอบถูกแล้วคำจะกลับมาถามห่างขึ้นเรื่อย ๆ (1, 3, 7, 14 วัน...) จุดแดงในสวนคือคำที่ใกล้ลืม เข้ามาวันละนิดก็พอ"],["🐱","ตอบถูกแล้วแมวโต","ตอบถูกได้ ⭐ และ 🪙 เอาเหรียญไปซื้อของแต่งแมวที่แท็บร้าน เรียนครบ 6 คำจะปลดล็อกโหมดฝึกพิเศษ และเปิดคู่มือเต็มได้ตลอดที่ปุ่ม 📖 หน้าสวน"]];
-function obClose(){S.ob=1;save();const m=document.getElementById("obm");if(m)m.remove()}
+function obClose(){S.ob=1;save();const m=document.getElementById("obm");if(m)m.remove();setTimeout(rcNotice,400)}
 function onboard(i){i=i||0;const old=document.getElementById("obm");if(old)old.remove();const o=OB[i],last=i===OB.length-1,d=document.createElement("div");d.id="obm";
  d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:10;display:flex;align-items:center;justify-content:center;padding:16px";
  d.innerHTML=`<div class="q" style="background:var(--sf);max-width:380px;width:100%;margin:0"><div class="mu">${i+1} / ${OB.length}</div><div style="font-size:54px;margin:6px 0">${o[0]}</div><div class="th" style="font-size:22px">${o[1]}</div><p class="mu" style="font-size:15px;text-align:left;margin:12px 0">${o[2]}</p>${last?`<button class="go" onclick="obClose()">เริ่มเรียนเลย</button><button class="ghost" onclick="obClose();guide()">อ่านคู่มือเต็ม</button>`:`<button class="go" onclick="onboard(${i+1})">ถัดไป</button><button class="ghost" onclick="obClose()">ข้าม</button>`}</div>`;
@@ -829,18 +829,23 @@ const fmtRc=c=>c.match(/.{4}/g).join("-");
 function genRc(){const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",a=new Uint8Array(16);crypto.getRandomValues(a);return[...a].map(b=>A[b%32]).join("")}
 let _bt=0;
 async function bup(force){if(!S.rc||!sbOn())return 0;const n=Date.now();if(!force&&n-_bt<20000)return 0;_bt=n;
- try{await sbF("rpc/save_backup",{method:"POST",body:JSON.stringify({p_code:S.rc,p_data:S})});return 1}catch(e){return 0}}
+ const pl=Object.assign({},S);delete pl.rc;
+ try{const ok=await sbF("rpc/save_backup2",{method:"POST",body:JSON.stringify({p_code:S.rc,p_pid:S.pid||null,p_nick:S.pname||null,p_data:pl})});return ok===false?0:1}
+ catch(e){if(String(e.message)==="404"){try{await sbF("rpc/save_backup",{method:"POST",body:JSON.stringify({p_code:S.rc,p_data:pl})});return 1}catch(e2){return 0}}return 0}}
 function rcUi(){if(!sbOn()){alert("ยังไม่ได้ตั้งค่าฐานข้อมูล");return}
  const d=document.createElement("div");d.id="rcm";d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:10;display:flex;align-items:flex-start;justify-content:center;padding:16px;overflow:auto";
- d.innerHTML=`<div class="q" style="background:var(--sf);max-width:380px;width:100%;margin:auto;text-align:left"><b style="font-size:18px">🔑 รหัสกู้คืน</b><p class="mu">จดรหัสไว้ใช้ย้ายเครื่องหรือกู้ข้อมูลที่หาย ใครมีรหัสนี้จะเปิดข้อมูลของคุณได้ จึงไม่ควรแชร์</p><div id="rcc" style="font-size:22px;font-weight:700;letter-spacing:2px;text-align:center;margin:10px 0;user-select:all">${S.rc?fmtRc(S.rc):"ยังไม่มีรหัส"}</div><button class="go" style="margin:0 0 6px" onclick="rcMake()">${S.rc?"สำรองข้อมูลตอนนี้":"สร้างรหัสและสำรองข้อมูล"}</button><div id="rcs" class="mu" style="min-height:22px"></div><h2>กู้คืนด้วยรหัส</h2><input type="text" id="rci" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX"><button class="go" style="background:var(--sf);color:var(--tx);border:1px solid var(--bd)" onclick="rcRestore()">กู้คืนข้อมูล</button><button class="ghost" onclick="document.getElementById('rcm').remove()">ปิด</button></div>`;document.body.appendChild(d)}
+ d.innerHTML=`<div class="q" style="background:var(--sf);max-width:380px;width:100%;margin:auto;text-align:left"><b style="font-size:18px">🔑 รหัสกู้คืน</b><p class="mu">รหัสนี้สร้างให้อัตโนมัติและสำรองข้อมูลให้เองหลังเล่นจบรอบ จดไว้ใช้ย้ายเครื่องหรือกู้ข้อมูลที่หาย ใครมีรหัสนี้จะเปิดข้อมูลของคุณได้ จึงไม่ควรแชร์ ถ้าลืมรหัสให้แจ้งผู้ดูแลพร้อมชื่อเล่นในหน้าอันดับ</p><div id="rcc" style="font-size:22px;font-weight:700;letter-spacing:2px;text-align:center;margin:10px 0;user-select:all">${S.rc?fmtRc(S.rc):"ยังไม่มีรหัส"}</div><button class="ghost" onclick="rcCopy()">📋 คัดลอกรหัส</button><button class="go" style="margin:0 0 6px" onclick="rcMake()">${S.rc?"สำรองข้อมูลตอนนี้":"สร้างรหัสและสำรองข้อมูล"}</button><div id="rcs" class="mu" style="min-height:22px"></div><h2>กู้คืนด้วยรหัส</h2><input type="text" id="rci" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX"><button class="go" style="background:var(--sf);color:var(--tx);border:1px solid var(--bd)" onclick="rcRestore()">กู้คืนข้อมูล</button><button class="ghost" onclick="document.getElementById('rcm').remove()">ปิด</button></div>`;document.body.appendChild(d)}
 async function rcMake(){if(!S.rc){S.rc=genRc();save()}$("rcc").textContent=fmtRc(S.rc);$("rcs").textContent="กำลังบันทึก...";
  const ok=await bup(1);$("rcs").textContent=ok?"✅ สำรองแล้ว จดรหัสไว้ได้เลย ต่อไปจะสำรองอัตโนมัติหลังเล่นจบ":"❌ บันทึกไม่ได้ (เช็กอินเทอร์เน็ต หรือยังไม่ได้รัน SQL ใน Supabase)"}
 async function rcRestore(){const c=$("rci").value.toUpperCase().replace(/[^A-Z0-9]/g,""),s=$("rcs");
  if(c.length!==16){s.textContent="รหัสต้องมี 16 ตัวอักษร";return}
- s.textContent="กำลังค้นหา...";let r;try{r=await sbF("rpc/load_backup",{method:"POST",body:JSON.stringify({p_code:c})})}catch(e){s.textContent="เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง";return}
+ s.textContent="กำลังค้นหา...";let r=null;
+ try{r=await sbF("rpc/load_backup2",{method:"POST",body:JSON.stringify({p_code:c})})}catch(e){if(String(e.message)!=="404"){s.textContent="เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง";return}}
+ if(r&&r.revoked){s.textContent="รหัสนี้ถูกยกเลิกแล้ว ให้ใช้รหัสใหม่ที่ผู้ดูแลออกให้";return}
+ if(!r||!r.c){try{r=await sbF("rpc/load_backup",{method:"POST",body:JSON.stringify({p_code:c})})}catch(e){s.textContent="เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง";return}}
  if(!r||!r.c){s.textContent="ไม่พบรหัสนี้";return}
  if(!confirm("ข้อมูลในเครื่องนี้จะถูกแทนที่ด้วยข้อมูลจากรหัส ดำเนินการต่อ?"))return;
- S=Object.assign({c:{},cfg:{nw:10,lv:[1,2,3,4]},st:{last:0,streak:0,xp:0},td:{d:0,nw:0},fl:{}},r);S.rc=c;bind();evo();save();document.body.classList.toggle("nofx",S.cfg.fx===false);$("rcm").remove();TAB=0;home()}
+ S=Object.assign({c:{},cfg:{nw:10,lv:[1,2,3,4]},st:{last:0,streak:0,xp:0},td:{d:0,nw:0},fl:{}},r);S.rc=c;S.rcs=1;bind();evo();save();document.body.classList.toggle("nofx",S.cfg.fx===false);$("rcm").remove();TAB=0;home();bup(1)}
 /* ===== v2: เดาก่อนเรียน · เคล็ดลับจำ · แยกร่างคำ · คู่สับสน · GM ใหม่ ===== */
 function tpt(){S.cfg.pt=S.cfg.pt===false;save();home()}
 function guess(id){const d=D[id],o=opts(id,"t");G.ans=false;G.go=o;G.gk=d.t;say(d.w);
@@ -932,7 +937,37 @@ function solarph(t,pu){const C=Math.cos,Sn=Math.sin,fl=Sn(t/230)*3,O='#ff7a1a',Y
 Object.assign(SPC,{voidk:{nm:"Void",th:"ราชันย์แห่งความว่าง",e:"🕳️",fur0:"#a35bff",base:"#a35bff",d:[4,3,2,1],ear:"cat",tn:0,gm:1,form:"voidk",bg:7},solph:{nm:"Phoenix",th:"ฟีนิกซ์สุริยะ",e:"🔥",fur0:"#ff8a2b",base:"#ff8a2b",d:[4,3,2,1],ear:"cat",tn:0,gm:1,form:"solph",bg:1}});
 FORMS.voidk={n:"Void Sovereign",n2:"Void Sovereign",fur:"#a35bff",acc:"#ff5aa0",eye:"#c9a6ff",tail:"normal",pc:"#a35bff",c:"GM"};
 FORMS.solph={n:"Solar Phoenix",n2:"Solar Phoenix",fur:"#ff7a1a",acc:"#ffd23a",eye:"#2a0a00",tail:"normal",pc:"#ffd23a",c:"GM"};
+/* ===== รหัสกู้คืนอัตโนมัติ + หน้า GM (ตรวจรหัสที่เซิร์ฟเวอร์ ไม่มีรหัส/แฮชในไฟล์นี้) ===== */
+function cpy(t,b,ok,bad){try{navigator.clipboard.writeText(t).then(()=>{if(b)b.textContent=ok},()=>{if(b)b.textContent=bad})}catch(e){if(b)b.textContent=bad}}
+function rcCopy(){const s=$("rcs");cpy(fmtRc(S.rc),null,"","");if(s)s.textContent="คัดลอกแล้ว"}
+function rcNotice(){if(S.rcs||!sbOn()||!S.rc||document.getElementById("rcn")||document.getElementById("obm"))return;
+ const d=document.createElement("div");d.id="rcn";d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:10;display:flex;align-items:center;justify-content:center;padding:16px";
+ d.innerHTML=`<div class="q" style="background:var(--sf);max-width:380px;width:100%;margin:0"><div style="font-size:44px">🔑</div><b style="font-size:18px">รหัสกู้คืนของคุณ</b><div style="font-size:22px;font-weight:700;letter-spacing:2px;margin:12px 0;user-select:all">${fmtRc(S.rc)}</div><p class="mu" style="text-align:left;font-size:14px">เราสร้างรหัสนี้ให้อัตโนมัติและสำรองความคืบหน้าของคุณไว้แล้ว จดหรือคัดลอกเก็บไว้ ใช้กู้ข้อมูลเมื่อเปลี่ยนเครื่อง ห้ามแชร์ให้ใคร<br>ถ้าลืมรหัส ให้แจ้งผู้ดูแลพร้อมชื่อเล่น ตั้งชื่อเล่นไว้ที่แท็บ 🏆 อันดับ เพื่อให้ผู้ดูแลหาข้อมูลของคุณเจอ</p><button class="go" onclick="rcnCopy(this)">📋 คัดลอกรหัส</button><button class="ghost" onclick="rcnOk()">จดแล้ว ปิด</button></div>`;document.body.appendChild(d)}
+function rcnCopy(b){cpy(fmtRc(S.rc),b,"✅ คัดลอกแล้ว","คัดลอกไม่ได้ ให้จดเอง")}
+function rcnOk(){S.rcs=1;save();const d=document.getElementById("rcn");if(d)d.remove()}
+
+let GA=null,GAN=0,GAL=0,GAR=[];
+function gaTap(){const n=Date.now();GAN=n-GAL<1500?GAN+1:1;GAL=n;if(GAN>=7){GAN=0;gaOpen()}}
+async function gaRpc(fn,a){const r=await fetch(SB.url+"/rest/v1/rpc/"+fn,{method:"POST",headers:{apikey:SB.key,"Content-Type":"application/json"},body:JSON.stringify(a)}),t=await r.text();let j=null;try{j=t?JSON.parse(t):null}catch(e){}
+ if(!r.ok)throw new Error(r.status===404?"nofn":(j&&j.message)||String(r.status));return j}
+function gaOpen(){if(!sbOn())return;let d=document.getElementById("gam");if(!d){d=document.createElement("div");d.id="gam";d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:10;overflow:auto;padding:16px";document.body.appendChild(d)}GA?gaMain():gaLogin()}
+function gaClose(){if(GA){gaRpc("gm_logout",{p_token:GA}).catch(()=>{});GA=null}const d=document.getElementById("gam");if(d)d.remove()}
+function gaLogin(){$("gam").innerHTML=`<div style="max-width:420px;margin:40px auto 0"><div class="row"><b style="font-size:20px">🛡️ GM</b><button class="ghost" style="margin:0" onclick="gaClose()">ปิด</button></div><p class="mu">ตรวจรหัสที่เซิร์ฟเวอร์ ล็อกอินอยู่ได้ 15 นาทีหลังใช้งานล่าสุด</p><input type="password" id="gap" autocomplete="off" placeholder="รหัส GM" onkeydown="if(event.key==='Enter')gaGo()"><button class="go" onclick="gaGo()">เข้าสู่ระบบ</button><div id="gas" class="mu"></div></div>`;$("gap").focus()}
+async function gaGo(){const v=$("gap").value,s=$("gas");if(!v)return;s.textContent="กำลังตรวจสอบ...";
+ try{const t=await gaRpc("gm_login",{p_pw:v});if(!t){s.textContent="รหัสไม่ถูกต้อง";return}GA=t;gaMain()}
+ catch(e){s.textContent=e.message==="GM_LOCKED"?"ลองผิดหลายครั้ง ถูกล็อกชั่วคราว รอ 15 นาที":e.message==="nofn"?"ยังไม่ได้รัน SQL ใน Supabase":"เกิดข้อผิดพลาด: "+e.message}}
+function gaMain(){$("gam").innerHTML=`<div style="max-width:560px;margin:0 auto 40px"><div class="row"><b style="font-size:20px">🛡️ GM · ข้อมูลผู้เล่น</b><button class="ghost" style="margin:0" onclick="gaClose()">ออก</button></div><input type="text" id="gaq" maxlength="32" placeholder="ค้นหาชื่อเล่น (เว้นว่าง = ล่าสุด)" onkeydown="if(event.key==='Enter')gaSearch()" style="margin-top:10px"><button class="go" onclick="gaSearch()">🔍 ค้นหา</button><button class="ghost" onclick="gaLogs()">📜 ประวัติ GM</button><div id="gan"></div><div id="gar"></div></div>`;gaSearch()}
+function gaErr(e){if(e.message==="GM_AUTH"){GA=null;gaLogin();$("gas").textContent="หมดเวลา ล็อกอินใหม่อีกครั้ง";return}alert("ผิดพลาด: "+e.message)}
+async function gaSearch(){const q=$("gaq").value.trim();$("gar").innerHTML='<div class="mu" style="margin-top:10px">กำลังค้นหา...</div>';
+ try{gaShow(await gaRpc("gm_search",{p_token:GA,p_q:q}))}catch(e){gaErr(e)}}
+function gaShow(r){GAR=r;$("gar").innerHTML=r.length?r.map(p=>`<div class="cd"><div class="row"><b>${p.nick?E(p.nick):"(ไม่มีชื่อเล่น)"}</b><span class="mu">#${p.id}</span></div><div class="mu">Lv ${p.level} · ⭐ ${p.xp} · 🪙 ${p.coins} · 🔥 ${p.streak}</div><div class="mu">เรียน ${p.words} · จำได้ ${p.mastered} · สัตว์: ${E(p.pets||"-")}</div><div class="mu">สำรองล่าสุด ${E(new Date(p.updated_at).toLocaleString("th-TH"))}</div><button class="ghost" onclick="gaRe(${p.id})">🔑 ออกรหัสใหม่</button></div>`).join(""):`<div class="mu" style="margin-top:10px">ไม่พบข้อมูล ผู้เล่นจะอยู่ในรายการหลังเปิดเกมเวอร์ชันใหม่อย่างน้อย 1 ครั้ง</div>`}
+async function gaRe(id){const p=GAR.find(x=>x.id===id);if(!p||!confirm("ออกรหัสใหม่ให้ «"+(p.nick||"#"+id)+"» ?\nรหัสเก่าจะใช้ไม่ได้ทันที"))return;
+ try{const c=await gaRpc("gm_reissue",{p_token:GA,p_id:id});$("gan").innerHTML=`<div class="cd" style="border-color:var(--ok)"><div class="mu">รหัสใหม่ของ ${E(p.nick||"#"+id)} (แสดงครั้งนี้ครั้งเดียว)</div><div style="font-size:22px;font-weight:700;letter-spacing:2px;text-align:center;margin:10px 0;user-select:all">${fmtRc(c)}</div><button class="ghost" onclick="cpy('${c}',this,'✅ คัดลอกแล้ว','คัดลอกไม่ได้ ให้จดเอง')">📋 คัดลอก</button></div>`;$("gam").scrollTo(0,0)}catch(e){gaErr(e)}}
+async function gaLogs(){try{const r=await gaRpc("gm_logs",{p_token:GA});$("gar").innerHTML=r.length?r.map(l=>`<div class="cd"><b>${E(l.action==="reissue"?"ออกรหัสใหม่":l.action==="login"?"ล็อกอิน":l.action)}</b>${l.nick?" · "+E(l.nick):""}${l.target_id?` <span class="mu">#${l.target_id}</span>`:""}<div class="mu">${E(new Date(l.at).toLocaleString("th-TH"))}</div></div>`).join(""):`<div class="mu">ยังไม่มีประวัติ</div>`}catch(e){gaErr(e)}}
 addEventListener("keydown",e=>{if(e.key!=="Enter")return;const b=$("#go");if(b&&!b.disabled)b.click()});
-bind();evo();document.body.classList.toggle("nofx",S.cfg.fx===false);requestAnimationFrame(loop);home();
+bind();evo();if(!S.rc){S.rc=genRc();save()}document.body.classList.toggle("nofx",S.cfg.fx===false);requestAnimationFrame(loop);home();
 if(!S.ob){if(Object.keys(S.c).length)S.ob=1;else setTimeout(onboard,400)}
+if(S.ob&&!S.rcs)setTimeout(rcNotice,1500);
+if(sbOn()&&Object.keys(S.c).length)setTimeout(()=>bup(1),2500);
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&Object.keys(S.c).length)bup()});
 </script></body></html>
