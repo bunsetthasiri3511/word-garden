@@ -1248,11 +1248,20 @@ function twBossDef(f){const i=f/10,l=twL(f),big=f%100==0,r=n=>{let a=Math.imul(f
  sk=sp=="dgn"?null:(r(1)<.6?dk2[i%2]:sks[(i*5)%sks.length]),forms=["demon","cerb","fallen","poison","storm","gaia"],form=f==400?"divdrag":forms[(i*7+l)%6],eq={};
  Object.keys(BPOOL).forEach((sl,j)=>{if(j<2+l||big){const a=BPOOL[sl];eq[sl]=IT(a[Math.min(a.length-1,Math.floor(r(j+3)*a.length)+(l>2?1:0))])}});
  return{species:sp,sk,form,stage:4,seed:f,words:2000,eq,evil:1,tint:["#2a8a2a","#6a1aa0","#b01020","#101018"][l-1],bg:-1,nm:fn(form,1,sp),s:big?1.55:1.3+l*.03}}
-function btBoss(cx,gy,s,k,t,fl){const B=BT;if(!B.bd||B.bf!==MG.f){B.bd=twBossDef(MG.f);B.bf=MG.f;B.bc=Object.assign(document.createElement("canvas"),{width:64,height:64})}
+function btBoss(cx,gy,s,k,t,fl){const B=BT;if(!B.bd||B.bf!==MG.f){B.bd=twFoe(MG.f);B.bf=MG.f;B.bc=Object.assign(document.createElement("canvas"),{width:64,height:64})}
  const d=B.bd,sc=d.s*(1+.025*Math.sin(t/330)),w=64*sc,a=x.globalAlpha,X=Math.round(cx-w/2),Y=Math.round(gy-57*sc),W=Math.round(w);drawOther(B.bc,d,t);
  ell(cx,gy-w*.4,w*.42,w*.45,d.tint,.16+.06*Math.sin(t/250));x.globalAlpha=a;x.drawImage(B.bc,X,Y,W,W);
  if(fl){x.globalAlpha=.5*a;x.globalCompositeOperation="lighter";x.drawImage(B.bc,X,Y,W,W);x.globalCompositeOperation="source-over"}
  for(let i=0;i<6;i++){const u=(t/900+i/6)%1;x.globalAlpha=(1-u)*.6*a;R(cx-w*.35+i*w*.14+Math.sin(t/200+i)*2,gy-20-u*w*.8,2,3,i%2?"#ff2a2a":d.tint)}x.globalAlpha=a}
+
+function twMonDef(f){const l=twL(f),r=n=>{let a=Math.imul(f*6151+n*130363,2246822519)>>>0;a=Math.imul(a^a>>>15,3266489917)>>>0;return((a^a>>>13)>>>0)%1000/1000};
+ const sps=["pig","dog","bear","fox","cat","rabbit","hamster","tiger"],sp=sps[Math.floor(r(1)*8)],sks=Object.keys(SKD[sp]),
+ sk=r(2)<.45?["zombie","hallo"][Math.floor(r(3)*2)]:r(4)<.7?sks[Math.floor(r(5)*sks.length)]:null,
+ stage=l==1?2:l==2?3:(r(6)<.5?3:4),forms=["demon","cerb","fallen","poison","storm","gaia"],form=forms[Math.floor(r(7)*6)],eq={},
+ cols=["#2a8a2a","#6a1aa0","#b01020","#1a5aa8","#a86a10","#10808a","#a01a70","#404048"],n=l==1?0:Math.min(3,Math.floor(r(8)*(l+1))),sl=Object.keys(BPOOL);
+ for(let j=0;j<n;j++){const k=sl[Math.floor(r(9+j)*6)],a=BPOOL[k];eq[k]=IT(a[Math.min(a.length-1,Math.floor(r(20+j)*(l+1)))])}
+ return{species:sp,sk,form,stage,seed:f*13,words:2000,eq,evil:1,tint:cols[Math.floor(r(10)*8)],bg:-1,nm:"",s:1.05+l*.04+r(11)*.1}}
+const twFoe=f=>twBoss(f)?twBossDef(f):twMonDef(f);
 let RKM=0;function rkm(v){RKM=v;rankPage()}
 /* 🎬 ฉากต่อสู้พิกเซล: สัตว์เลี้ยง vs บอส */
 let BT={fx:[],pt:[]};
@@ -1290,7 +1299,7 @@ function btDraw(cv,t){const g=MG,c=cv.getContext("2d"),now=performance.now(),sv=
   if(ba>=250&&!B.h2){B.h2=1;btSpark(12,58,GR-16,["#ffffff","#ff5d5d"]);B.fx.push({x:36,y:GR-44,t:B.blk?"BLOCK":"-1",c:B.blk?"#7fd0ff":"#ff5d5d",l:1})}
   if(ko>=0&&!B.kf){B.kf=1;btSpark(46,BX,GR-18,["#ffffff","#ffe066","#ff9a2b","#ff5d5d"])}
   if(ko<0||ko<800){ell(r(bX),GR,r(14*s),2,"#000",.4);if(boss)ell(r(bX),GR-14,24,22,["","#7fd0ff","#c26bff","#ff5d5d","#ff9a2b"][l],.1+.05*Math.sin(now/300));
-   x.globalAlpha=ko>=0?1-ko/800:1;(boss?btBoss:btMon)(bX+(pa>=250&&pa<450?(now%50<25?-2:2):0),GR,s,k,now,(pa>=250&&pa<400)||(ko>=0&&((ko/70|0)&1)==0));x.globalAlpha=1}
+   x.globalAlpha=ko>=0?1-ko/800:1;btBoss(bX+(pa>=250&&pa<450?(now%50<25?-2:2):0),GR,s,k,now,(pa>=250&&pa<400)||(ko>=0&&((ko/70|0)&1)==0));x.globalAlpha=1}
   const PD={seed:K.seed|0,form:K.form,stage:K.stage,words:K.n||0,species:K.sp||"cat",sk:K.sk,eq:M.eq,bg:-1};
   B.pc=B.pc||Object.assign(document.createElement("canvas"),{width:64,height:64});drawOther(B.pc,PD,now);
   const dsh=pu>0&&pu<1,ox=(tx-6)*pu,oy=(B.crit&&dsh?-Math.sin(Math.min(1,pa/250)*Math.PI)*10:0)-(dsh?Math.abs(Math.sin(now/45))*2:0),kb=ba>=250&&ba<450?4:0,pxp=r(6+ox-kb),py=GR-57+r(oy);
