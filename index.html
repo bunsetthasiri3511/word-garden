@@ -1328,6 +1328,10 @@ function btDraw(cv,t){const g=MG,c=cv.getContext("2d"),now=performance.now(),sv=
   B.pt=B.pt.filter(p=>{p.x+=p.vx*dt/16;p.y+=p.vy*dt/16;p.vy+=.15*dt/16;p.l-=dt/600;if(p.l<=0)return false;x.globalAlpha=p.l;R(p.x,p.y,2,2,p.c);x.globalAlpha=1;return true});
   c.font="bold 9px sans-serif";c.textAlign="center";c.lineWidth=2;c.strokeStyle="#000";
   B.fx=B.fx.filter(e=>{e.y-=.03*dt;e.l-=dt/900;if(e.l<=0)return false;c.globalAlpha=e.l;c.strokeText(e.t,e.x,e.y);c.fillStyle=e.c;c.fillText(e.t,e.x,e.y);c.globalAlpha=1;return true});
+  {const fd=B.bd&&B.bf===f?B.bd:twFoe(f),pn=K.nm||SPC[K.sp||"cat"].th,fnm=boss?"BOSS "+fd.nm:(fd.stage>=3?fn(fd.form,fd.stage==4,fd.species):(SPC[fd.species]||SPC.cat).th+"ตัวร้าย");
+   c.font="bold 8px sans-serif";c.lineWidth=2;c.strokeStyle="#000";
+   c.textAlign="left";c.strokeText(pn,5,93,62);c.fillStyle="#7fd0ff";c.fillText(pn,5,93,62);
+   c.textAlign="right";c.strokeText(fnm,155,93,92);c.fillStyle=boss?"#ffb13b":"#ff8a8a";c.fillText(fnm,155,93,92);c.textAlign="center"}
   if(ko>=700){c.font="bold 15px sans-serif";c.strokeText("CLEAR!",80,34);c.fillStyle="#ffd23a";c.fillText("CLEAR!",80,34)}
   if(pko>=500){c.font="bold 15px sans-serif";c.strokeText("KO",80,34);c.fillStyle="#ff5d5d";c.fillText("KO",80,34)}
   const tg=(g.N-g.ok)/g.N;B.hpv=B.hpv==null?tg:B.hpv+(tg-B.hpv)*Math.min(1,dt/120);
