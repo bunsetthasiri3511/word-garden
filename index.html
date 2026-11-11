@@ -1483,6 +1483,7 @@ function godz(t,f,st){
  body=SK?SK.base:"#46705a",lt=mix(body,"#ffffff",.16),dc=dk(body,.58),bel=mix(body,"#d8cfa8",.5),pl=st>=4?((t/250|0)%2?BC.m:BC.l):"#c4d2d8",pd=dk(pl,.7),
  X=v=>32+(v-32)*s+sh,Y=v=>GY-(GY-v-jy)*s,P=q=>q.map(p=>[X(p[0]),Y(p[1])]),Rr=(a,b,w,h,c)=>R(X(a),Y(b),Math.max(1,Math.round(w*s)),Math.max(1,Math.round(h*s)),c),wv=Math.sin(t/300)*3,
  A={bx:X(21),by:Y(32),bw:22*s,bh:24*s,hx:X(23),hy:Y(13),hw:19*s,hh:24*s},ec=(st>=4||(gp>=0&&gp<3400))?"#ff5a1a":"#ffd23a";
+ if(gp>=0&&x===xm){LA=t;pt=pt.filter(p=>p.k!="z")}
  x.globalAlpha=1;if(st>=4)ell(32,36,26,24,K.bc?BC.m:(f.pc||"#7fd0ff"),.13);ell(32,GY,Math.round(17*s)+2,2,"#000",.4);if(gp>=0&&gp<3400)ell(32,36,22+Math.min(1,gp/1800)*8,22,BC.m,.1+Math.min(1,gp/1800)*.15);
  EQ().forEach(it=>{if(it[1]=="g")wing(it,t,A)});
  [[15,38,10],[19,28,13],[25,17,14],[32,8,16],[39,17,14],[45,28,13],[49,38,10]].forEach((p,i)=>{pol(P([[p[0]-4,p[1]+10],[p[0]+(i<3?-1:i>3?1:0),p[1]-p[2]+10],[p[0]+4,p[1]+10]]),gp>=0&&gp<3400&&gp/1800*7>i?BC.l:i%2?pl:pd)});
