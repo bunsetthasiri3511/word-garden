@@ -1443,6 +1443,94 @@ function btLoop(){requestAnimationFrame(btLoop);try{const cv=document.getElement
 requestAnimationFrame(btLoop);
 
 addEventListener("keydown",e=>{if(e.key!=="Enter")return;const b=$("#go");if(b&&!b.disabled)b.click()});
+/* ===== v4: พื้นหลังใหม่ · ก๊อตซีล่า · คอสตูมใหม่ · สกินใหม่ ===== */
+BG.push(["ทุ่งลาเวนเดอร์",450,"#ffb8d8","#fff0e0","#6a4a9a","#9a7ac8","lav"],["สายฝน",400,"#4a5a70","#8a9ab0","#2a3a3a","#3a4a50","rain"],["ป่าไผ่",450,"#bfe8c0","#f0ffe0","#3a6a3a","#4f8a4f","bamboo"],["ปราสาทเทพนิยาย",650,"#7ab8ff","#e8f4ff","#4f9a4a","#6fbf6a","castle"],["โตเกียวยามค่ำ",700,"#1a1038","#ff7a9a","#1a1a2a","#241a3a","tokyo"],["ดาวอังคาร",700,"#3a1414","#e8704a","#a04a2a","#7a3a22","mars"],["แดนขนม",550,"#ffc8f0","#fff0b0","#ff8ac8","#ffb0d8","candy"],["วัดไทย",600,"#ffb060","#fff0c0","#6a5a3a","#8a7a4a","temple"],["ตลาดกลางคืน",600,"#1a0a2a","#ff8a3a","#2a1a1a","#3a2418","nmk"],["ธารน้ำแข็ง",550,"#7ac8ff","#e8faff","#e8f4ff","#a8d0f0","glacier"],["ฝนดาวตก",600,"#02061a","#2a1a5a","#14122a","#1c1a38","meteor"],["ทุ่งดอกไม้",350,"#9ad8ff","#fff8d8","#5aa850","#7ac870","meadow"]);
+const _bgA=bgA,_bgB=bgB;
+bgA=function(t,k,b){_bgA(t,k,b);const S=Math.sin;
+ if(k=="lav"){ell(46,12,9,9,"#ffd0e8",.3);ell(46,12,6,6,"#fff3d0",1);ell(((t/200)%90)-14,10,8,2,"#fff",.7)}
+ else if(k=="rain"){for(let i=0;i<5;i++)ell(6+i*14,6,10,5,"#3a4658",1);if(t%6000<120)RA(0,0,64,GY,"#fff",.4)}
+ else if(k=="bamboo")for(let i=0;i<8;i++){const x0=i*8+2;R(x0,0,2,GY,"#3a8a46");for(let j=0;j<6;j++)R(x0,j*10+4,2,1,"#2a6a34");R(x0+2,12+(i*7)%30,5,1,"#5fbf6a")}
+ else if(k=="castle"){R(18,GY-30,10,30,"#9a9ab8");R(36,GY-26,10,26,"#9a9ab8");R(26,GY-20,12,20,"#a8a8c8");poly([[16,GY-30],[23,GY-42],[30,GY-30]],"#c04a6a");poly([[34,GY-26],[41,GY-36],[48,GY-26]],"#c04a6a");R(23,GY-48,1,7,"#444");R(24,GY-48,4+(S(t/200)>0?1:0),2,"#ff5a5a");R(22,GY-22,2,3,"#ffe08a");R(40,GY-18,2,3,"#ffe08a");for(let i=0;i<3;i++)R(27+i*4,GY-22,2,2,"#a8a8c8");R(30,GY-12,4,12,"#4a3a5a")}
+ else if(k=="tokyo"){ell(52,10,4,4,"#fff6c8",1);for(let i=0;i<14;i++)if((Math.floor(t/300)+i)%3)R((i*37)%62+1,(i*19)%24+2,1,1,"#fff");for(let i=0;i<8;i++){const h=12+(i*9)%18;R(i*8+3,GY-h,7,h,"#15102a");for(let j=0;j<5;j++)R(i*8+4+(j%2)*3,GY-h+2+(j>>1)*4,2,2,(i+j)%3?"#ffd88a":"#2a2050")}poly([[6,GY],[14,GY-44],[22,GY]],"#ff5a3a");R(11,GY-30,6,2,"#fff");R(12,GY-18,4,2,"#fff");if((t/400|0)%2)R(14,GY-47,1,3,"#ff2a2a")}
+ else if(k=="mars"){ell(14,10,4,4,"#ffd0b0",1);ell(50,18,2,2,"#cfc0b0",1);for(let i=0;i<10;i++)R((i*37)%62+1,(i*23)%30+2,1,1,"#ffe0c0");ell(10,GY-4,6,4,"#5a2a1a",1);ell(54,GY-3,8,3,"#6a3220",1)}
+ else if(k=="candy"){ell(((t/220)%90)-14,10,9,3,"#fff",.8);[[8,"#ff5a9a"],[24,"#7fd0ff"],[44,"#ffd23a"],[56,"#a35bff"]].forEach(([x0,c])=>{R(x0,GY-18,1,18,"#fff");ell(x0,GY-20,5,5,c,1);R(x0-2,GY-20,4,1,"#fff")})}
+ else if(k=="temple"){ell(50,14,6,6,"#fff0a0",1);poly([[22,GY],[32,GY-40],[42,GY]],"#e8b43a");R(28,GY-14,8,2,"#fff3b0");R(29,GY-24,6,2,"#fff3b0");R(31,GY-44,2,6,"#ffd23a");for(const x0 of[8,52])poly([[x0-5,GY],[x0,GY-16],[x0+5,GY]],"#d8a02a")}
+ else if(k=="nmk"){for(let i=0;i<12;i++)R((i*37)%62+1,(i*19)%10+1,1,1,"#c9a6ff");ln([0,10],[63,10],"#3a2a2a");for(let i=0;i<8;i++){const sw=S(t/500+i);R(4+i*8+sw,11,1,1,"#666");ell(4+i*8+sw,15,3,4,i%2?"#ff3a2a":"#ffb02b",1)}R(4,GY-16,20,3,"#c42a2a");R(6,GY-13,16,13,"#3a2a40");R(40,GY-16,20,3,"#c4802a");R(42,GY-13,16,13,"#3a2a40")}
+ else if(k=="glacier"){ell(52,10,5,5,"#fff",1);poly([[0,GY],[12,GY-28],[24,GY]],"#cfe8ff");poly([[16,GY],[36,GY-36],[56,GY]],"#e8f6ff");poly([[36,GY-36],[56,GY],[36,GY]],"#b8d8f0")}
+ else if(k=="meteor"){for(let i=0;i<24;i++)if((Math.floor(t/300)+i)%4)R((i*37)%62+1,(i*23)%40+2,1,1,"#fff");ell(12,12,5,5,"#f4f0d0",1);for(let i=0;i<3;i++){const u=(t/900+i*.33)%1,sx=60-u*60+i*8,sy=u*38+i*5;ln([sx,sy],[sx+7,sy-3],"#fff");R(sx,sy,2,2,"#ffe066")}}
+ else if(k=="meadow"){ell(50,10,6,6,"#fff3a0",1);for(let i=0;i<2;i++)ell(((t/160+i*40)%92)-14,10+i*8,8,3,"#fff",.9)}};
+bgB=function(t,k,b){_bgB(t,k,b);const S=Math.sin;
+ if(k=="lav")for(let i=0;i<14;i++){const x0=(i*5)%64,h=4+(i*3)%4,sw=Math.round(S(t/600+i));R(x0+sw,GY-h+2,1,h,"#8a5ad0");R(x0-1+sw,GY-h+2,3,2,"#b08ae8")}
+ else if(k=="rain"){for(let i=0;i<36;i++)RA((i*37)%64,(t/8+i*13)%GY,1,3,"#bfe0ff",.7);ell(14,GY+3,6,1,"#8ab0d0",.6)}
+ else if(k=="bamboo")for(let i=0;i<8;i++)R((i*23+t/40)%64,(t/50+i*11)%GY,2,1,"#7fd08a");
+ else if(k=="castle")for(let i=0;i<8;i++)R(i*9,GY+2+(i%3),2,2,["#ff8fb8","#ffe066"][i%2]);
+ else if(k=="tokyo"){RA(0,GY+3,64,1,"#ff7a9a",.5);const tx=((t/30)%80)-8;R(tx,GY+5,5,2,"#ff5a3a");R(tx+1,GY+4,3,1,"#ffd23a")}
+ else if(k=="mars"){ell(18,GY+4,5,1,"#7a3a22",1);ell(48,GY+5,6,1,"#7a3a22",1);for(let i=0;i<10;i++)RA((i*29+t/30)%64,GY-((t/60+i*7)%12),1,1,"#e8a070",.5)}
+ else if(k=="candy")for(let i=0;i<14;i++)R((i*19)%64,GY+1+(i%5),2,1,["#ffd23a","#7fd0ff","#fff","#a35bff"][i%4]);
+ else if(k=="temple")for(let i=0;i<5;i++)R((i*13+7)%60,GY-((t/60+i*14)%50),2,2,"#ffd23a");
+ else if(k=="nmk"){RA(0,GY+1,64,1,"#ff8a3a",.3);ell(14+S(t/400)*2,GY-((t/40)%14),2,2,"#cfcfcf",.3)}
+ else if(k=="glacier")for(let i=0;i<14;i++)R((i*37+S(t/900+i)*3+64)%64,(t/30+i*17)%GY,1,1,"#fff");
+ else if(k=="meteor")for(let i=0;i<9;i++)R(i*7,GY-1,1,2,"#2a2a4a");
+ else if(k=="meadow"){for(let i=0;i<16;i++){const x0=(i*4+2)%64,y0=GY+1+(i%5);R(x0,y0-3,1,3,"#3f9a45");R(x0-1,y0-4,3,2,["#ff8fb8","#ffd23a","#fff","#c26bff"][i%4])}R(((t/50)%70)-4,20+S(t/300)*5,2,1,"#ff8fb8")}};
+/* ----- ก๊อตซีล่า ----- */
+SPC.godzilla={nm:"Godzilla",th:"ก๊อตซีล่า",e:"🦖",fur0:"#6a8a74",base:"#4f7a62",d:[1,0,0,0],ear:"cat",tn:0};
+UNL.godzilla={st:3,p:1800};for(const k in UNL)UNL[k].st=0;TWB.godzilla={t:"XP ×1.5 และโล่",xm:1.5,sh:1};SKD.godzilla={};
+const _cat0=cat;
+cat=function(t,f,st){if((K.sp||"cat")==="godzilla"&&st>=1)return godz(t,f,st);return _cat0(t,f,st)};
+function godz(t,f,st){
+ const s=[0,.55,.72,.9,1][st]||1,SK=skinData(K),el=t-T0,jy=(el<650?-Math.round(Math.sin(el/650*Math.PI)*8):WK?-((t/130|0)%2):0)+Math.round(Math.sin(t/500)*.6),
+ body=SK?SK.base:"#4f7a62",lt=mix(body,"#ffffff",.22),dc=dk(body,.62),bel=mix(body,"#efe6c0",.55),pl=st>=4?((t/250|0)%2?"#7fd0ff":"#c8f0ff"):"#d8e4ea",
+ X=v=>32+(v-32)*s,Y=v=>GY-(GY-v-jy)*s,P=q=>q.map(p=>[X(p[0]),Y(p[1])]),Rr=(a,b,w,h,c)=>R(X(a),Y(b),Math.max(1,Math.round(w*s)),Math.max(1,Math.round(h*s)),c),wv=Math.sin(t/300)*3,
+ A={bx:X(22),by:Y(33),bw:20*s,bh:22*s,hx:X(24),hy:Y(13),hw:17*s,hh:22*s};
+ x.globalAlpha=1;if(st>=4)ell(32,36,26,24,f.pc||"#7fd0ff",.13);ell(32,GY,Math.round(16*s)+2,2,"#000",.4);
+ EQ().forEach(it=>{if(it[1]=="g")wing(it,t,A)});
+ [[22,28],[27,20],[32,14],[37,20],[42,28]].forEach(p=>pol(P([[p[0]-3,p[1]+6],[p[0],p[1]-6],[p[0]+3,p[1]+6]]),pl));
+ pol(P([[38,46],[46,44+wv],[56,46+wv*1.6],[63,41+wv*2],[56,52+wv],[46,54],[38,56]]),body);
+ for(let i=0;i<3;i++)pol(P([[44+i*5,45+wv*(.5+i*.3)],[46+i*5,40+wv*(.5+i*.3)],[48+i*5,46+wv*(.5+i*.3)]]),pl);
+ pol(P([[22,48],[31,48],[32,56],[20,57]]),dk(body,.85));pol(P([[33,48],[42,48],[44,57],[32,56]]),dk(body,.85));
+ for(const a of[20,24,28,34,38,42])Rr(a,56,2,2,"#f4efe6");
+ pol(P([[23,57],[21,42],[26,32],[38,32],[43,42],[41,57]]),body);
+ ell(Math.round(X(32)),Math.round(Y(47)),Math.round(6*s),Math.round(9*s),bel,1);for(let i=0;i<4;i++)Rr(27,41+i*3,10,1,dk(bel,.8));
+ pol(P([[21,38],[16,42],[18,47],[23,44]]),body);pol(P([[43,38],[48,42],[46,47],[41,44]]),body);
+ pol(P([[24,20],[28,13],[36,13],[40,20],[42,30],[38,35],[26,35],[22,30]]),lt);
+ if(SK&&SK.ov)skOv(SK.ov,Object.assign({ey:A.hy+7*s,es:3,e1:X(27),e2:X(34)},A));
+ Rr(26,20,5,2,dc);Rr(33,20,5,2,dc);
+ if(t%3500<130){Rr(27,23,4,1,"#111");Rr(34,23,4,1,"#111")}else{Rr(27,22,4,3,"#ffd23a");Rr(34,22,4,3,"#ffd23a");Rr(29,22,1,3,"#201008");Rr(36,22,1,3,"#201008")}
+ Rr(30,27,1,1,dc);Rr(34,27,1,1,dc);Rr(27,31,11,1,"#2a1018");for(let i=0;i<5;i++)Rr(28+i*2,32,1,2,"#fff");
+ if(st>=3){const ph=t%7000;if(ph<1200){const L=Math.min(1,ph/300),a=ph>900?1-(ph-900)/300:1,mx=X(38),my=Y(31),len=Math.round(L*28);x.globalAlpha=a*.85;ell(Math.round(mx),Math.round(my),4,4,f.pc||"#7fd0ff",.5);R(mx,my-2,len,4,"#7fd0ff");R(mx,my-1,len,2,"#ffffff");for(let i=0;i<6;i++)R(mx+((t/6+i*9)%Math.max(1,len)),my-3+(i%3)*3,1,1,"#c8f0ff");x.globalAlpha=1}}
+ EQ().forEach(it=>{if(it[1]!="g")item(it,t,A)});x.globalAlpha=1}
+const _cs0=costumeShop;
+costumeShop=function(){if((K.sp||"cat")=="godzilla"){app.innerHTML=shTop("ชุดแฟนซี")+`<div class="mu">ก๊อตซีล่าตัวใหญ่เกินกว่าจะใส่ชุดแฟนซี แต่ใช้สกิน พื้นหลัง และไอเทมได้</div>`;return}_cs0()};
+AS("godzilla",{shin:["ชิน ก๊อตซีล่า","#8a3a30",450],old:["ก๊อตซีล่ายุคเก่า","#7a8088",350],ice:["ก๊อตซีล่าน้ำแข็ง","#6a9ad0",450],mecha:["เมก้า ก๊อตซีล่า","#b8c4d0",600,"stripe"],pink:["ก๊อตซีล่าชมพู","#f4b6c8",350],gold:["ก๊อตซีล่าทอง","#e8c060",700,"gold"],black:["ก๊อตซีล่ามืด","#2a2a33",500],burn:["ก๊อตซีล่าเดือด","#c8381e",650,"lava"]});
+/* ----- คอสตูมใหม่ ----- */
+Object.assign(CSD,{
+cow:{n:"ชุดวัว",p:350,c:"#f6f2f0",c2:"#f4b6c2",sp:"#2a2a2a",ear:"horn",tl:"ball",fc:"muzzle",spots:1},
+penguin:{n:"ชุดเพนกวิน",p:350,c:"#2a3a5a",c2:"#ffffff",sp:"#ff9a2b",ear:"none",tl:"ball",fc:"nose"},
+chick:{n:"ชุดลูกเจี๊ยบ",p:350,c:"#ffe45a",c2:"#fff3b0",sp:"#ff9a2b",ear:"none",tl:"ball",fc:"nose"},
+cat:{n:"ชุดแมวส้ม",p:350,c:"#e8923a",c2:"#fff6ea",sp:"#3a2a2a",ear:"point",tl:"fox",fc:"fox",stripe:1},
+ghost:{n:"ชุดผีน้อย",p:500,c:"#f4f4ff",c2:"#dfe6ff",sp:"#aab4cc",ear:"none",tl:"none",fc:"none",nb:1},
+robot:{n:"ชุดหุ่นยนต์",p:500,c:"#9aa8b8",c2:"#5a6a7a",sp:"#ff5a5a",ear:"knob",tl:"none",fc:"none",rd:1},
+alien:{n:"ชุดมนุษย์ต่างดาว",p:500,c:"#7fe08a",c2:"#c8f8c8",sp:"#3a8a4a",ear:"knob",tl:"none",fc:"none"},
+ninja:{n:"ชุดนินจา",p:500,c:"#1a1a2a",c2:"#2a2a3a",sp:"#d63a4a",ear:"none",tl:"ball",fc:"none",nb:1},
+astro:{n:"ชุดนักบินอวกาศ",p:700,c:"#f4f4f8",c2:"#cfd6e0",sp:"#3a6ad0",ear:"none",tl:"ball",fc:"none",limbs:1},
+monkey:{n:"ชุดลิง",p:350,c:"#8a5a3a",c2:"#e8c890",sp:"#5a3a22",ear:"round",tl:"long",fc:"muzzle"},
+fairy:{n:"ชุดนางฟ้า",p:700,c:"#ffd0e8",c2:"#ffffff",sp:"#ff8fb8",ear:"point",tl:"rainbow",fc:"uni",wing:1},
+devil:{n:"ชุดปีศาจน้อย",p:700,c:"#c8201a",c2:"#ff5a4a",sp:"#3a0a0a",ear:"horn",tl:"dragon",fc:"teeth",wing:1},
+snowman:{n:"ชุดมนุษย์หิมะ",p:350,c:"#ffffff",c2:"#dfeaff",sp:"#ff9a2b",ear:"none",tl:"ball",fc:"nose"},
+santa:{n:"ชุดซานตาคลอส",p:500,c:"#d63a3a",c2:"#ffffff",sp:"#ffffff",ear:"none",tl:"pom",fc:"muzzle"}});
+/* ----- สกินใหม่ (ลายพิเศษ) ----- */
+const _skOv=skOv;
+skOv=function(o,a){_skOv(o,a);const{bx,by,bw,bh,hx,hy,hw,hh}=a,T=performance.now();
+ if(o=="stripe"){for(let i=0;i<4;i++)R(bx+2+i*((bw-4)/3|0),by+1,2,bh-3,"rgba(0,0,0,.3)");R(hx+2,hy+1,2,4,"rgba(0,0,0,.3)");R(hx+hw-4,hy+1,2,4,"rgba(0,0,0,.3)")}
+ else if(o=="dots"){for(const p of[[2,3],[bw-5,4],[5,bh-5],[bw-8,bh-4]])R(bx+p[0],by+p[1],2,2,"#fff");R(hx+3,hy+2,2,2,"#fff");R(hx+hw-6,hy+3,2,2,"#fff")}
+ else if(o=="star"){for(const p of[[bx+4,by+4],[bx+bw-5,by+bh-5],[hx+hw-5,hy+3]]){R(p[0],p[1],1,1,"#ffe066");R(p[0]-1,p[1],3,1,"#ffe066");R(p[0],p[1]-1,1,3,"#ffe066")}}
+ else if(o=="heart"){for(const p of[[bx+3,by+3],[bx+bw-8,by+bh-6],[hx+hw-7,hy+2]]){const c="#ff4a7a";R(p[0],p[1],2,1,c);R(p[0]+3,p[1],2,1,c);R(p[0],p[1]+1,5,1,c);R(p[0]+1,p[1]+2,3,1,c);R(p[0]+2,p[1]+3,1,1,c)}}
+ else if(o=="galaxy"){R(bx+2,by+2,6,3,"rgba(160,90,255,.35)");for(let i=0;i<10;i++){if((T/300+i)%3<2)R(bx+(i*7)%bw,by+(i*5)%bh,1,1,i%3?"#fff":"#ffd76a");if((T/300+i)%3<2)R(hx+(i*5)%hw,hy+(i*3)%hh,1,1,"#c9a6ff")}}
+ else if(o=="rainbow"){for(let j=0;j<5;j++)R(bx+1,by+2+j*Math.max(1,bh/6|0),bw-2,1,"hsl("+j*60+",80%,65%)")}
+ else if(o=="gold"){R(bx+1,by+1,bw-2,2,"rgba(255,245,180,.5)");R(hx+1,hy+1,hw-2,2,"rgba(255,245,180,.5)");for(let i=0;i<4;i++)if((T/200+i*3)%5<1)R(bx+(i*5+2)%bw,by+(i*3)%bh,1,1,"#fff")}
+ else if(o=="frost"){R(bx+1,by,bw-2,2,"#fff");R(hx+1,hy,hw-2,2,"#fff");for(let i=0;i<4;i++)R(bx+2+i*4,by+2,1,2+i%2,"#dff3ff")}
+ else if(o=="lava"){const c=(T/200|0)%2?"#ff8a2b":"#ffd23a";ln([bx+3,by+2],[bx+6,by+bh-3],c);ln([bx+bw-4,by+3],[bx+bw-7,by+bh-2],c);ln([hx+4,hy+1],[hx+6,hy+6],c)}};
+Object.keys(SKD).forEach(sp=>[["stripe","ลายทาง","#c8a070",300],["dots","ลายจุดขาว","#f4a6b8",350],["star","ลายดาว","#7fb8e8",400],["heart","ลายหัวใจ","#ffc8d8",400],["galaxy","กาแล็กซี","#1c1f5a",600],["rainbow","สายรุ้ง","#f8f4ff",550],["gold","ทองอร่าม","#e8c050",700],["frost","น้ำแข็ง","#cfe6f4",500],["lava","ลาวา","#3a1a1a",650]].forEach(g=>{SKD[sp]["n_"+g[0]]=[SPC[sp].th+g[1],g[2],mix(g[2],"#ffffff",.2),g[3],g[0],1]}));
 bind();evo();if(!S.rc){S.rc=genRc();save()}document.body.classList.toggle("nofx",S.cfg.fx===false);requestAnimationFrame(loop);home();
 if(!S.ob){if(Object.keys(S.c).length)S.ob=1;else setTimeout(onboard,400)}
 if(S.ob&&!S.rcs)setTimeout(rcNotice,1500);
