@@ -1477,31 +1477,58 @@ SPC.godzilla={nm:"Godzilla",th:"ก๊อตซีล่า",e:"🦖",fur0:"#6a8
 UNL.godzilla={st:3,p:1800};for(const k in UNL)UNL[k].st=0;TWB.godzilla={t:"XP ×1.5 และโล่",xm:1.5,sh:1};SKD.godzilla={};
 const _cat0=cat;
 cat=function(t,f,st){if((K.sp||"cat")==="godzilla"&&st>=1)return godz(t,f,st);return _cat0(t,f,st)};
+let GZT=-9e9;
 function godz(t,f,st){
- const s=[0,.55,.72,.9,1][st]||1,SK=skinData(K),el=t-T0,jy=(el<650?-Math.round(Math.sin(el/650*Math.PI)*8):WK?-((t/130|0)%2):0)+Math.round(Math.sin(t/500)*.6),
- body=SK?SK.base:"#4f7a62",lt=mix(body,"#ffffff",.22),dc=dk(body,.62),bel=mix(body,"#efe6c0",.55),pl=st>=4?((t/250|0)%2?"#7fd0ff":"#c8f0ff"):"#d8e4ea",
- X=v=>32+(v-32)*s,Y=v=>GY-(GY-v-jy)*s,P=q=>q.map(p=>[X(p[0]),Y(p[1])]),Rr=(a,b,w,h,c)=>R(X(a),Y(b),Math.max(1,Math.round(w*s)),Math.max(1,Math.round(h*s)),c),wv=Math.sin(t/300)*3,
- A={bx:X(22),by:Y(33),bw:20*s,bh:22*s,hx:X(24),hy:Y(13),hw:17*s,hh:22*s};
- x.globalAlpha=1;if(st>=4)ell(32,36,26,24,f.pc||"#7fd0ff",.13);ell(32,GY,Math.round(16*s)+2,2,"#000",.4);
+ const s=[0,.55,.72,.9,1][st]||1,SK=skinData(K),el=t-T0,gp=(st<3||x!==xm)?-1:(t-GZT>=0&&t-GZT<3800)?t-GZT:(t%9000<3800?t%9000:-1),sh=gp<0?0:gp<1800?Math.round(Math.sin(t/22)*gp/1800*1.6):gp<2100?-2:gp<3400?Math.round(Math.sin(t/30)):0,jy=(el<650?-Math.round(Math.sin(el/650*Math.PI)*8):WK?-((t/130|0)%2):0)+Math.round(Math.sin(t/500)*.6),
+ body=SK?SK.base:"#46705a",lt=mix(body,"#ffffff",.16),dc=dk(body,.58),bel=mix(body,"#d8cfa8",.5),pl=st>=4?((t/250|0)%2?"#7fd0ff":"#c8f0ff"):"#c4d2d8",pd=dk(pl,.7),
+ X=v=>32+(v-32)*s+sh,Y=v=>GY-(GY-v-jy)*s,P=q=>q.map(p=>[X(p[0]),Y(p[1])]),Rr=(a,b,w,h,c)=>R(X(a),Y(b),Math.max(1,Math.round(w*s)),Math.max(1,Math.round(h*s)),c),wv=Math.sin(t/300)*3,
+ A={bx:X(21),by:Y(32),bw:22*s,bh:24*s,hx:X(23),hy:Y(13),hw:19*s,hh:24*s},ec=(st>=4||(gp>=0&&gp<3400))?"#ff5a1a":"#ffd23a";
+ x.globalAlpha=1;if(st>=4)ell(32,36,26,24,f.pc||"#7fd0ff",.13);ell(32,GY,Math.round(17*s)+2,2,"#000",.4);if(gp>=0&&gp<3400)ell(32,36,22+Math.min(1,gp/1800)*8,22,"#7fd0ff",.1+Math.min(1,gp/1800)*.15);
  EQ().forEach(it=>{if(it[1]=="g")wing(it,t,A)});
- [[22,28],[27,20],[32,14],[37,20],[42,28]].forEach(p=>pol(P([[p[0]-3,p[1]+6],[p[0],p[1]-6],[p[0]+3,p[1]+6]]),pl));
- pol(P([[38,46],[46,44+wv],[56,46+wv*1.6],[63,41+wv*2],[56,52+wv],[46,54],[38,56]]),body);
- for(let i=0;i<3;i++)pol(P([[44+i*5,45+wv*(.5+i*.3)],[46+i*5,40+wv*(.5+i*.3)],[48+i*5,46+wv*(.5+i*.3)]]),pl);
- pol(P([[22,48],[31,48],[32,56],[20,57]]),dk(body,.85));pol(P([[33,48],[42,48],[44,57],[32,56]]),dk(body,.85));
- for(const a of[20,24,28,34,38,42])Rr(a,56,2,2,"#f4efe6");
- pol(P([[23,57],[21,42],[26,32],[38,32],[43,42],[41,57]]),body);
- ell(Math.round(X(32)),Math.round(Y(47)),Math.round(6*s),Math.round(9*s),bel,1);for(let i=0;i<4;i++)Rr(27,41+i*3,10,1,dk(bel,.8));
- pol(P([[21,38],[16,42],[18,47],[23,44]]),body);pol(P([[43,38],[48,42],[46,47],[41,44]]),body);
- pol(P([[24,20],[28,13],[36,13],[40,20],[42,30],[38,35],[26,35],[22,30]]),lt);
- if(SK&&SK.ov)skOv(SK.ov,Object.assign({ey:A.hy+7*s,es:3,e1:X(27),e2:X(34)},A));
- Rr(26,20,5,2,dc);Rr(33,20,5,2,dc);
- if(t%3500<130){Rr(27,23,4,1,"#111");Rr(34,23,4,1,"#111")}else{Rr(27,22,4,3,"#ffd23a");Rr(34,22,4,3,"#ffd23a");Rr(29,22,1,3,"#201008");Rr(36,22,1,3,"#201008")}
- Rr(30,27,1,1,dc);Rr(34,27,1,1,dc);Rr(27,31,11,1,"#2a1018");for(let i=0;i<5;i++)Rr(28+i*2,32,1,2,"#fff");
- if(st>=3){const ph=t%7000;if(ph<1200){const L=Math.min(1,ph/300),a=ph>900?1-(ph-900)/300:1,mx=X(38),my=Y(31),len=Math.round(L*28);x.globalAlpha=a*.85;ell(Math.round(mx),Math.round(my),4,4,f.pc||"#7fd0ff",.5);R(mx,my-2,len,4,"#7fd0ff");R(mx,my-1,len,2,"#ffffff");for(let i=0;i<6;i++)R(mx+((t/6+i*9)%Math.max(1,len)),my-3+(i%3)*3,1,1,"#c8f0ff");x.globalAlpha=1}}
+ [[15,38,10],[19,28,13],[25,17,14],[32,8,16],[39,17,14],[45,28,13],[49,38,10]].forEach((p,i)=>{pol(P([[p[0]-4,p[1]+10],[p[0]+(i<3?-1:i>3?1:0),p[1]-p[2]+10],[p[0]+4,p[1]+10]]),gp>=0&&gp<3400&&gp/1800*7>i?"#bff4ff":i%2?pl:pd)});
+ pol(P([[40,46],[47,43+wv],[56,45+wv*1.6],[63,39+wv*2],[57,52+wv],[47,55],[40,57]]),body);
+ for(let i=0;i<4;i++){const w2=wv*(.4+i*.3);pol(P([[44+i*5,44+w2],[47+i*5,37+w2],[49+i*5,45+w2]]),i%2?pl:pd)}
+ pol(P([[21,47],[31,47],[32,56],[19,57]]),dk(body,.85));pol(P([[33,47],[43,47],[45,57],[32,56]]),dk(body,.85));
+ for(const a of[19,22,25,35,38,41])pol(P([[a,56],[a+2,56],[a+1,59]]),"#f4efe6");
+ pol(P([[22,57],[18,44],[20,34],[27,30],[37,30],[44,34],[46,44],[42,57]]),body);
+ pol(P([[19,33],[24,28],[27,32],[22,36]]),dk(body,.8));pol(P([[45,33],[40,28],[37,32],[42,36]]),dk(body,.8));
+ for(let r=0;r<6;r++)for(let c=0;c<4;c++)Rr(21+c*5+(r%2)*2,36+r*3,2,1,dc);
+ ell(Math.round(X(32)),Math.round(Y(46)),Math.round(5*s),Math.round(8*s),bel,1);for(let i=0;i<4;i++)Rr(28,41+i*3,8,1,dk(bel,.75));
+ for(const d of[-1,1]){pol(P([[32+d*11,36],[32+d*17,41],[32+d*16,47],[32+d*10,43]]),body);for(let i=0;i<3;i++)Rr(32+d*17-(d<0?1:0)+(i-1)*d,47,1,2,"#f4efe6")}
+ pol(P([[25,30],[39,30],[41,36],[32,39],[23,36]]),dk(lt,.88));
+ pol(P([[22,22],[25,14],[32,11],[39,14],[42,22],[42,29],[39,33],[25,33],[22,29]]),lt);
+ pol(P([[27,13],[29,7],[31,13]]),pd);pol(P([[33,13],[35,7],[37,13]]),pd);
+ pol(P([[22,24],[19,22],[22,29]]),dk(lt,.8));pol(P([[42,24],[45,22],[42,29]]),dk(lt,.8));
+ Rr(22,26,2,2,dc);Rr(40,26,2,2,dc);
+ if(SK&&SK.ov)skOv(SK.ov,Object.assign({ey:A.hy+9*s,es:3,e1:X(26),e2:X(35)},A));
+ pol(P([[23,18],[32,23],[32,25],[23,22]]),dc);pol(P([[41,18],[32,23],[32,25],[41,22]]),dc);
+ if(t%3500<130){Rr(26,25,5,1,"#111");Rr(34,25,5,1,"#111")}else{ell(Math.round(X(28)),Math.round(Y(26)),4,2,ec,.25);ell(Math.round(X(37)),Math.round(Y(26)),4,2,ec,.25);Rr(26,25,5,3,ec);Rr(34,25,5,3,ec);Rr(28,25,1,3,"#1a0800");Rr(36,25,1,3,"#1a0800");Rr(26,25,2,1,"#fff6c0");Rr(37,25,2,1,"#fff6c0")}
+ Rr(29,29,2,1,dc);Rr(34,29,2,1,dc);Rr(25,32,15,3,"#2a0a10");
+ for(let i=0;i<7;i++)Rr(25+i*2,32,1,2,"#fff6e8");for(let i=0;i<6;i++)Rr(26+i*2,34,1,2,"#fff6e8");
+ if(gp>=0&&gp<3800){const mx=X(40),my=Y(33),ch=Math.min(1,gp/1800);
+  if(gp<1800){for(let i=0;i<14;i++){const u=(gp/650+i/14)%1,a=i*.9+gp/180,r=(1-u)*24*s+2;R(mx+Math.cos(a)*r,my+Math.sin(a)*r*.8,u>.6?2:1,u>.6?2:1,i%2?"#c8f0ff":"#7fd0ff")}const rr=Math.round(1+ch*5);ell(Math.round(mx),Math.round(my),rr+2,rr+2,"#7fd0ff",.35);ell(Math.round(mx),Math.round(my),rr,rr,"#ffffff",.9)}
+  else if(gp<3400){const k=gp-1800,len=Math.round(Math.min(1,k/180)*(64-mx)),th=3+Math.round(Math.sin(t/40))+(k<300?2:0);x.globalAlpha=gp>3100?1-(gp-3100)/300:1;if(k<120)RA(0,0,64,64,"#ffffff",.3);
+   ell(Math.round(mx),Math.round(my),6,6,"#7fd0ff",.5);R(mx,my-th-1,len,2*th+2,"rgba(127,208,255,.45)");R(mx,my-th,len,2*th,"#7fd0ff");R(mx,my-1,len,2,"#ffffff");
+   for(let i=0;i<len;i+=4)R(mx+i,my-th-1+((i+t/20)%3|0),2,1,"#e8faff");
+   for(let i=0;i<8;i++)R(62-((t/20+i*7)%10),my-6+(i*5)%12,2,1,i%2?"#fff":"#ffd23a");x.globalAlpha=1}}
  EQ().forEach(it=>{if(it[1]!="g")item(it,t,A)});x.globalAlpha=1}
+{const _oc=$("c").onclick;$("c").onclick=function(){if((K.sp||"cat")=="godzilla"&&K.stage>=3&&performance.now()-GZT>3800){GZT=performance.now();sfx(true,true)}if(_oc)_oc()}}
 const _cs0=costumeShop;
 costumeShop=function(){if((K.sp||"cat")=="godzilla"){app.innerHTML=shTop("ชุดแฟนซี")+`<div class="mu">ก๊อตซีล่าตัวใหญ่เกินกว่าจะใส่ชุดแฟนซี แต่ใช้สกิน พื้นหลัง และไอเทมได้</div>`;return}_cs0()};
 AS("godzilla",{shin:["ชิน ก๊อตซีล่า","#8a3a30",450],old:["ก๊อตซีล่ายุคเก่า","#7a8088",350],ice:["ก๊อตซีล่าน้ำแข็ง","#6a9ad0",450],mecha:["เมก้า ก๊อตซีล่า","#b8c4d0",600,"stripe"],pink:["ก๊อตซีล่าชมพู","#f4b6c8",350],gold:["ก๊อตซีล่าทอง","#e8c060",700,"gold"],black:["ก๊อตซีล่ามืด","#2a2a33",500],burn:["ก๊อตซีล่าเดือด","#c8381e",650,"lava"]});
+BG.push(["เมืองถูกทำลาย",700,"#2a1410","#ff7a2a","#2a2420","#3a2c26","ruins"]);
+const _bgA2=bgA,_bgB2=bgB;
+bgA=function(t,k,b){_bgA2(t,k,b);if(k!="ruins")return;const S=Math.sin;ell(32,GY-6,34,18,"#ff5a1a",.15+.05*S(t/300));ell(50,8,4,4,"#ff9a6a",1);
+ [[0,9,26],[8,8,38],[17,10,20],[27,7,32],[34,9,44],[43,8,24],[51,6,36],[57,8,28]].forEach((q,i)=>{const[x0,w,h]=q;R(x0,GY-h,w,h,"#1a1212");for(let j=0;j<w;j+=2){const jg=(j*7+i*3)%4;R(x0+j,GY-h-jg,2,jg+1,"#1a1212")}
+  for(let r=0;r<(h-6)/4;r++)for(let j=0;j<2;j++)R(x0+1+j*3,GY-h+4+r*4,2,2,(i+r+j)%4==0?((t/150+i+r|0)%5?"#ff8a2a":"#3a1a10"):"#2a1c1a");
+  if(i%3==1)ell(x0+3,GY-h+3,3,4+((t/90+i|0)%2),"#ff7a1a",.8)});
+ ln([30,GY],[33,GY-52],"#120c0c");ln([31,GY],[34,GY-52],"#120c0c");ln([33,GY-52],[40,GY-50],"#120c0c");
+ for(let m=0;m<3;m++)for(let i=0;i<8;i++){const u=(t/60+i*6+m*20)%50;ell(12+m*20+S(t/700+i)*3+u*.1,GY-20-u,3+u*.15,3+u*.1,"#3a3030",.25*(1-u/50))}};
+bgB=function(t,k,b){_bgB2(t,k,b);if(k!="ruins")return;const S=Math.sin;
+ for(let i=0;i<9;i++){R(i*7+2,GY+1+(i%3),4,2,"#3a3030");R(i*7+3,GY,2,1,"#5a4a44")}ln([0,GY+3],[20,GY+4],"#14100e");ln([20,GY+4],[26,GY+7],"#14100e");R(40,GY+2,6,3,"#4a2a2a");R(41,GY+1,4,1,"#5a3a3a");
+ [8,30,52].forEach((x0,i)=>{const fl=(t/80+i*3|0)%3;ell(x0,GY-2-fl,3,4,"#ff5a1a",.9);ell(x0,GY-1,2,2,"#ffd23a",1)});
+ for(let i=0;i<12;i++)R((i*23+S(t/300+i)*3+64)%64,GY-((t/40+i*9)%45),1,1,i%2?"#ffb02b":"#ff5a1a");
+ for(let i=0;i<14;i++)R((i*37+t/30)%64,(t/25+i*13)%GY,1,1,"#6a5a5a")};
 /* ----- คอสตูมใหม่ ----- */
 Object.assign(CSD,{
 cow:{n:"ชุดวัว",p:350,c:"#f6f2f0",c2:"#f4b6c2",sp:"#2a2a2a",ear:"horn",tl:"ball",fc:"muzzle",spots:1},
