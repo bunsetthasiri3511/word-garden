@@ -1528,10 +1528,6 @@ function gbeamSnd(){if(S.cfg.fx===false)return;const a=gAu();if(!a)return;const 
  cv.onclick=function(){if(!gzOn()){oc&&oc.call(this);return}if(LPF){LPF=0;return}
   const n=performance.now();TC=n-TL<1200?TC+1:1;TL=n;if(TC>=3){TC=0;fire();return}
   RRT=n;LA=n;groar(1);try{navigator.vibrate&&navigator.vibrate([50,30,50])}catch(e){}}}
-/* จอสั่นทั้งแคนวาส */
-const _draw=draw;
-draw=function(t){let a=0;if(gzOn()&&S.cfg.fx!==false){const r=t-RRT;if(r>=0&&r<800)a=2.2*(1-r/800);const g=gzGp(t);if(g>=0)a=Math.max(a,g<1800?g/1800*1.2:g<3400?2.4:g<3800?1:0)}
- if(!a)return _draw(t);x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,64,64);x.save();x.translate(Math.round(Math.sin(t/17)*a),Math.round(Math.cos(t/23)*a*.7));try{_draw(t)}finally{x.restore()}};
 /* เอฟเฟกต์รอบตัว (เฉพาะแคนวาสหลัก) */
 const _cat2=cat;
 cat=function(t,f,st){if((K.sp||"cat")!=="godzilla"||st<1||x!==xm)return _cat2(t,f,st);
