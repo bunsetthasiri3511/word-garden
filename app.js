@@ -1573,3 +1573,122 @@ const _item=item;item=function(it,t,A){if(it[4]=="minizilla")return minizilla(t,
 /* สกินเพิ่ม */
 AS("godzilla",{gal:["ก๊อตซีล่ากาแล็กซี","#1c1f5a",700,"galaxy"],rbw:["ก๊อตซีล่าสายรุ้ง","#f8f4ff",800,"rainbow"],hrt:["ก๊อตซีล่าหัวใจ","#f4a6c0",450,"heart"]});
 GD.push(["gz","🦖","ก๊อตซีล่า",`<ul><li><b>แตะ</b> = คำราม (จอสั่น มีคลื่นกระแทก)</li><li><b>แตะ 3 ครั้งติด หรือกดค้าง</b> = พ่นลำแสง ปลายลำแสงระเบิดและไฟลุกค้าง</li><li><b>Burning Mode</b> คอมโบ 10 ข้อติด (หรือชั้นบอสในหอคอย) หนามเรืองไฟ มีควันและประกาย</li><li>ชั้นหอคอย ตอบถูกคริติคอล (คอมโบ 5) พ่นลำแสงใส่บอส</li><li>ร้านค้า ช่องเพื่อน มี Mini Godzilla วิ่งตามข้างเท้า</li><li>ร้านค้า แท็บ 💥 ท่าลำแสง ซื้อท่าพ่นได้ 4 แบบ: ลำตรง · พัดกระจาย · พ่นขึ้นฟ้า · เกลียวคู่ (กด 👁 เพื่อให้ตัวหลักพ่นให้ดู) ใช้ร่วมกับสีลำแสงได้</li></ul>`]);
+
+/* ===== NEW-PATCH v6: สัตว์ใหม่ 6 ชนิด · สกินใหม่ · ไอเทมใหม่ 40 ชิ้น =====
+   วางต่อท้าย app.js (หลังบล็อก GZ-PATCH) ไม่ต้องแก้โค้ดเก่า */
+
+/* ---------- 1) สัตว์ชนิดใหม่ ---------- */
+const NSL=["penguin","owl","raccoon","otter","unicorn","frog"];
+Object.assign(SPC,{
+ penguin:{nm:"Penguin",th:"เพนกวิน",e:"🐧",fur0:"#4a5678",base:"#2f3a5a",d:[2,1,0,0],ear:"pig",tn:0},
+ owl:{nm:"Owl",th:"นกฮูก",e:"🦉",fur0:"#a88a68",base:"#8a6a4a",d:[1,0,2,1],ear:"cat",tn:0},
+ raccoon:{nm:"Raccoon",th:"แรคคูน",e:"🦝",fur0:"#a8a8b2",base:"#8a8a94",d:[1,0,1,0],ear:"bear",tn:6},
+ otter:{nm:"Otter",th:"นากน้ำ",e:"🦦",fur0:"#a88868",base:"#8a6a4a",d:[2,0,1,0],ear:"bear",tn:6},
+ unicorn:{nm:"Unicorn",th:"ยูนิคอร์น",e:"🦄",fur0:"#f8f4ff",base:"#f6f2ff",d:[1,1,0,0],ear:"fox",tn:6},
+ frog:{nm:"Frog",th:"กบ",e:"🐸",fur0:"#7fd07a",base:"#5fbf5a",d:[1,-1,2,0],ear:"pig",tn:0}});
+Object.assign(UNL,{penguin:{st:0,p:500},owl:{st:0,p:550},raccoon:{st:0,p:500},otter:{st:0,p:500},frog:{st:0,p:450},unicorn:{st:0,p:900}});
+Object.assign(TWB,{penguin:{t:"หัวใจ +1",h:1},owl:{t:"XP ×1.25",xm:1.25},raccoon:{t:"เหรียญ ×1.25",cm:1.25},otter:{t:"โล่กันพลาดข้อแรกของชั้น",sh:1},unicorn:{t:"XP ×1.5",xm:1.5},frog:{t:"ฟื้นหัวใจ 1 ดวงทุกคอมโบ 5",rg:1}});
+NSL.forEach(s=>SKD[s]={});
+
+/* ลายเฉพาะสายพันธุ์: วาดผ่านกลไก skOv เดิม (อยู่ใต้ตา จึงไม่ทับหน้า) */
+const NSPD={
+ penguin:a=>{const{bx,by,bw,bh,hx,hy,hw,ey,es}=a,ny=ey+es+1,W="#f4f4f8",OR="#ff9a2b";
+  R(bx+3,by+2,bw-6,bh-3,W);R(hx+2,ey-1,hw-4,es+3,W);R(30,ny-1,4,2,OR);R(31,ny+1,2,1,"#e07a10");
+  R(bx+1,by+bh,5,2,OR);R(bx+bw-6,by+bh,5,2,OR)},
+ owl:a=>{const{bx,by,bw,bh,hx,hy,hw,hh,ey,es,e1,e2}=a,ny=ey+es+1,B="#e8d8b8",D="#6a4a30";
+  R(bx+3,by+3,bw-6,bh-5,B);for(let i=0;i<3;i++)R(bx+(bw>>1)-2,by+4+i*3,4,1,"#b89868");
+  R(bx,by+2,3,bh-3,D);R(bx+bw-3,by+2,3,bh-3,D);
+  ell(rd(e1+es/2),rd(ey+es/2),4,4,"#f4e6c8",1);ell(rd(e2+es/2),rd(ey+es/2),4,4,"#f4e6c8",1);
+  R(31,ny-1,2,3,"#ffb02b");R(bx+3,by+bh,3,2,"#ffb02b");R(bx+bw-6,by+bh,3,2,"#ffb02b")},
+ raccoon:a=>{const{bx,by,bw,bh,hx,hy,hw,ey,es,e1,e2}=a,ny=ey+es+1,T=performance.now(),sx=bx+bw-1,sy=by+bh-3;
+  R(hx+1,ey-1,hw-2,es+2,"#2a2a33");R(e1,ey-1,es,es+2,"#f4f4f4");R(e2,ey-1,es,es+2,"#f4f4f4");
+  R(29,ny-1,6,4,"#f0f0f0");R(bx+3,by+3,bw-6,bh-5,"#b8b8c0");R(bx+2,by+bh,4,2,"#2a2a33");R(bx+bw-6,by+bh,4,2,"#2a2a33");
+  for(let i=1;i<6;i+=2)R(sx+i*1.3+Math.sin(T/320-i*.7)*i*.8,sy-i*2.3,3,3,"#2a2a33")},
+ otter:a=>{const{bx,by,bw,bh,hx,hy,hw,ey,es}=a,ny=ey+es+1;
+  R(28,ny-1,8,4,"#efe0c8");R(31,ny-1,2,1,"#2a1a1a");R(bx+3,by+3,bw-6,bh-4,"#d8c4a0");
+  R(29,by+bh-5,6,3,"#9a9aa6");R(30,by+bh-5,2,1,"#c8c8d2");R(bx+2,by+bh,4,2,"#6a4a30");R(bx+bw-6,by+bh,4,2,"#6a4a30")},
+ unicorn:a=>{const{bx,by,bw,bh,hx,hy,hw,hh,ey,es}=a,T=performance.now(),sx=bx+bw-1,sy=by+bh-3,H=(j,o)=>"hsl("+((j*55+T/12)%360|0)+",80%,"+o+"%)";
+  for(let j=0;j<4;j++){R(hx-2,hy+1+j*3,3,3,H(j,72));R(bx-1,by+1+j*3,2,3,H(j+2,72))}
+  for(let i=0;i<6;i++)R(sx+i*1.3+Math.sin(T/320-i*.7)*i*.8,sy-i*2.3,3,3,H(i,70));
+  R(31,hy-5,2,6,"#ffd76a");R(31,hy-3,2,1,"#ffb02b");R(31,hy-5,1,1,"#fff");R(bx+2,by+bh,4,2,"#ffd76a");R(bx+bw-6,by+bh,4,2,"#ffd76a");
+  R(hx+1,ey+es,3,2,"rgba(255,140,180,.55)");R(hx+hw-4,ey+es,3,2,"rgba(255,140,180,.55)")},
+ frog:a=>{const{bx,by,bw,bh,hx,hy,hw,hh,ey,es}=a,ny=ey+es+1,G="#5fbf5a",D="#3f9a45";
+  R(hx+1,hy-3,5,4,G);R(hx+hw-6,hy-3,5,4,G);R(hx+2,hy-3,2,1,"#b8f0a0");R(hx+hw-5,hy-3,2,1,"#b8f0a0");
+  R(bx+3,by+3,bw-6,bh-5,"#d8f0a0");R(hx+2,ny+2,hw-4,1,"#2a5a2a");
+  R(bx+3,by+1,2,2,D);R(bx+bw-6,by+2,2,2,D);R(bx,by+bh,6,2,D);R(bx+bw-6,by+bh,6,2,D);
+  if((performance.now()/1500|0)%4==0)R(31,ny+3,2,3,"#ff6a8a")}};
+let CURSP=null,NSK=null;
+const _skinDataN=skinData,_skOvN=skOv;
+skinData=function(k){const sp=k.sp||"cat",r=_skinDataN(k);NSK=null;CURSP=NSPD[sp]?sp:null;if(!CURSP)return r;
+ if(!r)return{base:SPC[sp].base,fur0:SPC[sp].fur0,ov:"hallo:"+sp,fix:1};
+ NSK=r.ov||null;return Object.assign({},r,{ov:/^(zombie|hallo|panda)$/.test(r.ov)?r.ov:"hallo:"+sp})};
+skOv=function(o,a){if(CURSP&&NSPD[CURSP]){NSPD[CURSP](a);if(o.indexOf("hallo:")==0)o=NSK}if(o)_skOvN(o,a)};
+
+/* ---------- 2) สกินใหม่ ---------- */
+AS("penguin",{ice:["เพนกวินน้ำแข็ง","#6a9ad0",350,"frost"],pink:["เพนกวินชมพู","#f4a6c8",300],gold:["เพนกวินทอง","#e8c050",600,"gold"],night:["เพนกวินราตรี","#1c1f5a",600,"galaxy"]});
+AS("owl",{snow:["นกฮูกหิมะ","#f0eeea",400],storm:["นกฮูกพายุ","#6a7a9a",350,"stripe"],night:["นกฮูกราตรี","#2a2a40",500,"star"],gold:["นกฮูกทอง","#e0a840",600,"gold"]});
+AS("raccoon",{red:["แรคคูนแดง","#c0602a",350],albino:["แรคคูนขาว","#f0eee8",400],blue:["แรคคูนฟ้า","#7a9ad0",350,"dots"],dark:["แรคคูนมืด","#3a3a44",400]});
+AS("otter",{sea:["นากทะเล","#6a5040",300],white:["นากขาว","#e8e0d0",350],gray:["นากเทา","#9a9aa6",300],golden:["นากทอง","#c89a50",500,"gold"]});
+AS("unicorn",{pink:["ยูนิคอร์นชมพู","#ffc8e0",350,"heart"],blue:["ยูนิคอร์นฟ้า","#9fd0f0",350],galaxy:["ยูนิคอร์นกาแล็กซี","#2a1a5a",700,"galaxy"],rainbow:["ยูนิคอร์นสายรุ้ง","#f8f4ff",800,"rainbow"],dark:["ยูนิคอร์นเงา","#2a2a33",500]});
+AS("frog",{poison:["กบพิษน้ำเงิน","#3a6ad0",400,"dots"],gold:["กบทอง","#e8c050",500,"gold"],red:["กบตาแดง","#d63a3a",400,"dots"],violet:["กบม่วง","#8a6ad0",350]});
+NSL.forEach(sp=>{const L=SKD[sp],T=SPC[sp].th;
+ L.zombie=["ซอมบี้"+T,"#8fae7a","#a4c08e",450,"zombie",1];L.hallo=["ฮาโลวีน"+T,"#2d2340","#3a2e50",500,"hallo",1];
+ [["stripe","ลายทาง","#c8a070",300],["dots","ลายจุดขาว","#f4a6b8",350],["star","ลายดาว","#7fb8e8",400],["heart","ลายหัวใจ","#ffc8d8",400],["galaxy","กาแล็กซี","#1c1f5a",600],["rainbow","สายรุ้ง","#f8f4ff",550],["gold","ทองอร่าม","#e8c050",700],["frost","น้ำแข็ง","#cfe6f4",500],["lava","ลาวา","#3a1a1a",650]]
+ .forEach(g=>{if(!L["n_"+g[0]])L["n_"+g[0]]=[T+g[1],g[2],mix(g[2],"#ffffff",.2),g[3],g[0],1]})});
+
+/* ---------- 3) ไอเทมใหม่ (ต่อท้าย ITEMS จึงไม่กระทบไอเทมเดิม) ---------- */
+ITEMS.push(
+["Knit Beanie","h",1,0,"beanie","#d63a4a","#ffffff"],["Winter Beanie","h",1,"a","beanie","#3a6ad0","#ffe066"],
+["Santa Hat","h",2,0,"santa","#d63a3a","#ffffff"],["Ninja Headband","h",1,0,"headband","#d63a4a","#ffffff"],["Champion Headband","h",2,"l","headband","#ffd76a","#ffffff"],
+["Reindeer Antlers","h",2,"e","antlers","#8a5a2a","#ff5a5a"],["Crystal Antlers","h",3,"a","antlers","#7fd0ff","#ffffff"],
+["Gem Tiara","h",2,"l","tiara","#ffd76a","#ff5aa0"],["Moon Tiara","h",3,"s","tiara","#c9a6ff","#ffffff"],
+["Astronaut Helmet","h",3,"a","bubble","#cfd6e0","#7fd0ff"],["Fishbowl Helmet","h",2,0,"bubble","#9fd0f0","#ffffff"],
+["Propeller Cap","h",1,0,"propeller","#ff5a5a","#ffe066"],["Rainbow Propeller","h",3,"a","propeller","#7fd0ff","#ff8fb8"],
+["Candy Scarf","n",1,0,"candy","#ff5a5a","#ffffff"],["Mint Candy Scarf","n",2,"e","candy","#7fe0a8","#ffffff"],
+["Sheriff Badge","n",1,0,"badge","#ffd76a","#fff3b0"],["Hero Badge","n",3,"l","badge","#7fd0ff","#ffffff"],
+["Mini Backpack","n",1,0,"backpack","#3a6ad0","#ffd23a"],["Explorer Pack","n",2,"e","backpack","#6b4a2a","#c8ff5a"],["Rocket Pack","n",4,"a","rocket","#cfd6e0","#ff9a2b"],
+["Blue Saber","w",3,"a","saber","#7fd0ff","#ffffff"],["Red Saber","w",3,"s","saber","#ff4a4a","#ffffff"],
+["Mini Guitar","w",2,0,"guitar","#c2452b","#ffd76a"],["Neon Guitar","w",3,"a","guitar","#ff2aa0","#7fd0ff"],
+["Ice Cream Cone","w",1,0,"icecream","#ff8fb8","#e8c070"],["Mint Ice Cream","w",1,0,"icecream","#8fe0c0","#e8c070"],
+["Team Flag","w",1,0,"flag","#d63a4a","#ffffff"],["Victory Flag","w",3,"l","flag","#ffd76a","#ffffff"],
+["Golden Mic","w",2,0,"mic","#ffd76a","#2a2a3a"],["Star Mic","w",3,"l","mic","#ff5aa0","#ffffff"],
+["Tiny Bat","f",1,"s","minibat","#3a2a4a","#ff5a5a"],["Rubber Duck","f",1,0,"duck","#ffe45a","#ff9a2b"],["Baby Chick","f",1,"e","chick","#ffe45a","#ff9a2b"],
+["Jelly Buddy","f",2,"a","jelly","#ff8fe0","#ffffff"],["Glow Jelly","f",3,"s","jelly","#7fe0ff","#c9a6ff"],["Mini UFO","f",3,"a","ufo","#9aa8b8","#7fe0a8"],
+["Mecha Wings","g",3,"a","mech","#9aa8b8","#7fd0ff"],["Gold Mecha Wings","g",4,"l","mech","#ffd76a","#ff9a2b"],["Neon Wings","g",3,0,"neon","#ff2aa0","#7fd0ff"],["Cyan Neon Wings","g",2,"a","neon","#7fe0ff","#ffffff"],
+["Devil Tail","t",2,"s","devil","#c8201a","#3a0a0a"],["Imp Tail","t",3,"s","devil","#a35bff","#ff5aa0"],["Spring Tail","t",1,0,"spring","#9aa8b8","#ff5a5a"],["Candy Spring Tail","t",2,0,"spring","#ff8fb8","#7fd0ff"]);
+
+const FO=t=>{const a=t/700;return[rd(32+Math.cos(a)*23),rd(30+Math.sin(a*1.3)*9)]};
+/* kind -> [slot, draw(t,A,c1,c2)]  (ปีกรับ P แทน A) */
+const NI={
+ beanie:["h",(t,A,c1,c2)=>{const{hx,hy,hw}=A;R(hx,hy-2,hw,3,c2);R(hx+1,hy-5,hw-2,3,c1);R(hx+3,hy-7,hw-6,2,c1);R(31,hy-9,3,2,c2);for(let i=hx+3;i<hx+hw-3;i+=4)R(i,hy-5,1,3,c2)}],
+ santa:["h",(t,A,c1,c2)=>{const{hy}=A,o=rd(Math.sin(t/300));R(24,hy-3,16,2,c2);R(26,hy-6,12,3,c1);R(28,hy-8,9,2,c1);R(36,hy-7,3,2,c1);R(38,hy-6+o,3,3,c2)}],
+ headband:["h",(t,A,c1,c2)=>{const{hx,hy,hw}=A,w=rd(Math.sin(t/120)*1.5);R(hx,hy+2,hw,2,c1);R(30,hy+2,4,2,c2);R(hx+hw,hy+3+w,3,1,c1);R(hx+hw+2,hy+4+w*2,2,1,c1);R(hx+hw,hy+4,3,1,c1)}],
+ antlers:["h",(t,A,c1,c2)=>{const{hy}=A;for(const d of[-1,1]){const p=32+d*6;R(p,hy-8,1,8,c1);R(d>0?p:p-3,hy-6,4,1,c1);R(d>0?p:p-2,hy-9,3,1,c1);R(p,hy-9,1,1,c2)}}],
+ tiara:["h",(t,A,c1,c2)=>{const{hy}=A;R(26,hy-3,12,2,c1);for(let i=0;i<3;i++)R(28+i*4,hy-5-(i==1?1:0),2,3+(i==1?1:0),c1);R(31,hy-5,2,2,c2);if((t/300|0)%3==0)R(37,hy-6,1,1,"#fff")}],
+ bubble:["h",(t,A,c1,c2)=>{const{hx,hy,hw,hh}=A;RA(hx-2,hy-3,hw+4,hh+5,c2,.18);R(hx-2,hy-3,hw+4,1,c1);R(hx-2,hy-2,1,hh+4,c1);R(hx+hw+1,hy-2,1,hh+4,c1);R(hx-1,hy+hh+2,hw+2,1,c1);R(hx,hy-1,3,1,"#fff")}],
+ propeller:["h",(t,A,c1,c2)=>{const{hy}=A,w=[10,6,2,6][(t/50|0)%4];R(26,hy-3,12,2,c1);R(28,hy-5,8,2,c1);R(31,hy-7,2,2,c2);R(32-w/2,hy-8,w,1,c2)}],
+ candy:["n",(t,A,c1,c2)=>{const{hx,hy,hw,hh}=A,ny=hy+hh;R(hx+1,ny-1,hw-2,2,c1);for(let i=0;i<(hw-4)/4;i++)R(hx+2+i*4,ny-1,2,2,c2);R(hx+hw-5,ny,3,5,c1);R(hx+hw-5,ny+1,3,1,c2);R(hx+hw-5,ny+3,3,1,c2)}],
+ badge:["n",(t,A,c1,c2)=>{const{bx,by}=A;R(bx+4,by+2,1,5,c1);R(bx+2,by+4,5,1,c1);R(bx+3,by+3,3,3,c1);R(bx+4,by+4,1,1,c2);if((t/400|0)%4==0)R(bx+6,by+2,1,1,"#fff")}],
+ backpack:["n",(t,A,c1,c2)=>{const{bx,by,bh}=A;R(bx-3,by+1,4,bh-2,c1);R(bx-2,by+3,2,3,c2);R(bx+2,by,1,bh-2,c2)}],
+ rocket:["n",(t,A,c1,c2)=>{const{bx,by,bh}=A,f=(t/70|0)%3;R(bx-4,by,4,bh-1,c1);R(bx-4,by+bh-1,4,1,c2);R(bx-3,by-2,2,2,c2);R(bx+2,by,1,bh-2,c2);R(bx-3,by+bh,2,2+f,"#ff9a2b");R(bx-3,by+bh,1,1+f,"#ffe066")}],
+ saber:["w",(t,A,c1,c2)=>{const{bx,bw,by}=A,x0=bx+bw+2;if((t/50|0)%7)RA(x0-1,by-10,4,17,c1,.3);R(x0,by-9,2,16,c1);R(x0,by-9,1,16,c2);R(x0,by+6,2,4,"#555566");R(x0-1,by+6,4,1,"#999")}],
+ guitar:["w",(t,A,c1,c2)=>{const{bx,bw,by,bh}=A,x0=bx+bw+2;R(x0-1,by+bh-6,6,6,c1);R(x0+1,by+bh-4,2,2,"#2a2a2a");R(x0+2,by-3,1,bh-2,c2);R(x0+1,by-4,3,2,c2);if((t/120|0)%3==0)R(x0+4,by+bh-7,1,1,"#fff")}],
+ icecream:["w",(t,A,c1,c2)=>{const{bx,bw,by}=A,x0=bx+bw+2;R(x0,by+4,3,5,c2);R(x0+1,by+9,1,2,c2);ell(x0+1,by+2,3,3,c1,1);R(x0,by+4,1,1+rd(Math.sin(t/400)+1),c1);R(x0+1,by-2,1,1,"#d63a4a")}],
+ flag:["w",(t,A,c1,c2)=>{const{bx,bw,by,bh}=A,x0=bx+bw+2;R(x0+1,by-8,1,bh+8,"#8a6a3a");for(let i=0;i<6;i++)R(x0+2+i,by-8+rd(Math.sin(t/150+i)),1,5,c1);R(x0+3,by-6,3,1,c2)}],
+ mic:["w",(t,A,c1,c2)=>{const{bx,bw,by}=A,x0=bx+bw+2;R(x0+1,by+3,2,7,c2);ell(x0+2,by+1,3,3,c1,1);R(x0+1,by,1,1,"#fff")}],
+ minibat:["f",(t,A,c1,c2)=>{const[a,b]=FO(t),w=(t/100|0)%2;R(a,b,3,2,c1);R(a-3,b-w,3,1,c1);R(a+3,b-w,3,1,c1);R(a,b,1,1,c2);R(a+2,b,1,1,c2)}],
+ duck:["f",(t,A,c1,c2)=>{const[a,b0]=FO(t),b=b0+rd(Math.sin(t/200));R(a,b,5,3,c1);R(a+3,b-2,3,3,c1);R(a+6,b-1,2,1,c2);R(a+5,b-1,1,1,"#111")}],
+ chick:["f",(t,A,c1,c2)=>{const[a,b0]=FO(t),b=b0-rd(Math.abs(Math.sin(t/200))*2);R(a,b,4,4,c1);R(a+4,b+1,2,1,c2);R(a+3,b+1,1,1,"#111");R(a+1,b+4,1,2,c2);R(a+3,b+4,1,2,c2)}],
+ jelly:["f",(t,A,c1,c2)=>{const[a,b]=FO(t);ell(a+3,b,4,3,c1,.85);R(a+2,b-1,1,1,c2);for(let i=0;i<4;i++)RA(a+1+i*2,b+3+((t/150+i)%2|0),1,3+(i%2),c1,.7)}],
+ ufo:["f",(t,A,c1,c2)=>{const[a,b]=FO(t);RA(a+1,b+2,5,6,c2,.15);ell(a+3,b,5,2,c1,1);ell(a+3,b-2,2,2,c2,.8);for(let i=0;i<3;i++)if((t/200+i|0)%2)R(a+i*3,b+1,1,1,c2)}],
+ mech:["g",(t,P,c1,c2)=>{pol([P(0,0),P(6,-10),P(18,-14),P(16,-6),P(20,-2),P(10,3)],c1,dk(c1,.4));ln(P(2,-1),P(15,-11),c2);ln(P(3,0),P(17,-4),c2);const q=P(10,3);R(q[0],q[1],2,2+(t/90|0)%2,"#ff9a2b")}],
+ neon:["g",(t,P,c1,c2)=>{const p=[P(0,0),P(7,-14),P(15,-12),P(12,-5),P(18,-1),P(8,3),P(0,2)],a0=x.globalAlpha;x.globalAlpha=a0*.12;poly(p,c1);
+  for(let i=0;i<p.length-1;i++){x.globalAlpha=a0*.3;ln([p[i][0]+1,p[i][1]],[p[i+1][0]+1,p[i+1][1]],c1);ln([p[i][0],p[i][1]+1],[p[i+1][0],p[i+1][1]+1],c1);x.globalAlpha=a0;ln(p[i],p[i+1],(t/200+i|0)%5?c1:c2)}x.globalAlpha=a0}],
+ devil:["t",(t,A,c1,c2)=>{const sx=A.bx+A.bw-1,sy=A.by+A.bh-3;let px=0,py=0;for(let i=0;i<8;i++){px=sx+i*1.2+Math.sin(t/320-i*.7)*i*.7;py=sy-i*2;R(px,py,2,3,c1)}pol([[px+1,py-5],[px+4,py-1],[px+1,py+1],[px-2,py-1]],c2)}],
+ spring:["t",(t,A,c1,c2)=>{const sx=A.bx+A.bw-1,sy=A.by+A.bh-3;let px=0,py=0;for(let i=0;i<10;i++){px=sx+3+Math.sin(i*1.5+t/150)*3;py=sy-i*1.8;R(px,py,2,2,i%2?c1:c2)}R(px-1,py-3,4,4,c2)}]};
+const _itemN=item,_wingN=wing;
+item=function(it,t,A){const N=NI[it[4]];if(N&&N[0]===it[1]&&it[1]!=="g")return N[1](t,A,it[5],it[6]);return _itemN(it,t,A)};
+wing=function(it,t,A){const N=NI[it[4]];if(!(N&&N[0]==="g"))return _wingN(it,t,A);
+ const{bx,by,bw}=A,fl=Math.sin(t/230);for(const m of[-1,1]){const rx=m<0?bx+1:bx+bw-1,ry=by+3;N[1](t,(dx,dy)=>[rx+m*dx,ry+dy-fl*dx*.25],it[5],it[6])}};
+
+GD.push(["new6","🦄","สัตว์ใหม่ สกินใหม่ ไอเทมใหม่",`<p>สัตว์ใหม่ 6 ชนิดที่แท็บ 🐾 สัตว์: 🐧 เพนกวิน · 🦉 นกฮูก · 🦝 แรคคูน · 🦦 นากน้ำ · 🦄 ยูนิคอร์น · 🐸 กบ แต่ละชนิดมีสกิน 4+ แบบ (รวมซอมบี้ ฮาโลวีน และลายพิเศษ) และโบนัสในหอคอยต่างกัน</p><p>ไอเทมใหม่ 40 ชิ้น: หมวก (ไหมพรม ซานต้า เขากวาง มงกุฎ หมวกนักบินอวกาศ ใบพัด) · ผ้าพันคอ/ป้าย/เป้ (รวมเป้จรวด) · ของถือ (ดาบแสง กีตาร์ ไอศกรีม ธง ไมค์) · เพื่อน (ค้างคาว เป็ดยาง ลูกเจี๊ยบ แมงกะพรุน UFO) · ปีกเมก้า/นีออน · หางปีศาจ/หางสปริง</p>`]);
