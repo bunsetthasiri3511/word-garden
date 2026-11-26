@@ -1498,11 +1498,6 @@ function beamMoveShop(){if((K.sp||"cat")!=="godzilla"){app.innerHTML=shTop("ท�
 function tryBm(id){PVBM=PVBM===id?null:id;if(PVBM)GZT=performance.now();shopPage()}
 function buyBm(id){PVBM=null;if(id!=="line"){const d=BMD[id],k="godzilla:bm_"+id;if(!M.skins[k]){if(M.coins<d[1])return;M.coins-=d[1];M.skins[k]=1}}K.bm=id==="line"?null:id;GZT=performance.now();save();sync();sinfo();shopPage()}
 if(S.pets&&S.pets.godzilla&&!S.pets.godzilla.bs){S.pets.godzilla.bs=3;S.pets.godzilla.xp=Math.max(S.pets.godzilla.xp||0,XS[2])}
-bind();evo();if(!S.rc){S.rc=genRc();save()}document.body.classList.toggle("nofx",S.cfg.fx===false);requestAnimationFrame(loop);home();
-if(!S.ob){if(Object.keys(S.c).length)S.ob=1;else setTimeout(onboard,400)}
-if(S.ob&&!S.rcs)setTimeout(rcNotice,1500);
-if(sbOn()&&Object.keys(S.c).length)setTimeout(()=>bup(1),2500);
-document.addEventListener("visibilitychange",()=>{if(document.hidden&&Object.keys(S.c).length)bup()});
 /* ===== GZ-PATCH: ก๊อตซีล่า v5 (คำราม · ระเบิดปลายลำแสง · Burning Mode · ฝุ่น/สั่น · Mini Godzilla · เสียง) ===== */
 let RRT=-9e9,HIT=-9e9,BRNT=-9e9,GP2=[],GLT=0,LPH=0,LRR=-1,BAv=0;
 const gzOn=()=>(K.sp||"cat")==="godzilla"&&K.stage>=3;
@@ -1826,3 +1821,9 @@ function xtree(t,f,st){
 {const _sp1=shopPage;shopPage=function(){if((K.sp||"cat")==="xtree"&&/^[hnwfgtc]$/.test(SH)){app.innerHTML=shTop("ต้นคริสต์มาส (ตัวสำเร็จรูป)")+`<div class="mu">ต้นคริสต์มาสแต่งตัวเต็มยศอยู่แล้ว ไม่รองรับของสวมใส่ ใช้ได้เฉพาะสกินและพื้นหลัง</div>`;return}_sp1()}}
 
 {const _cs1=costumeShop;costumeShop=function(){if((K.sp||"cat")==="xtree"){app.innerHTML=shTop("ชุดแฟนซี")+`<div class="mu">ต้นคริสต์มาสแต่งตัวเต็มยศอยู่แล้ว ใช้ได้เฉพาะสกินและพื้นหลัง</div>`;return}_cs1()}}
+/* ===== START GAME: ต้องอยู่ท้ายไฟล์เสมอ (หลังประกาศสัตว์/ไอเทม/แพตช์ทั้งหมด) ===== */
+bind();evo();if(!S.rc){S.rc=genRc();save()}document.body.classList.toggle("nofx",S.cfg.fx===false);requestAnimationFrame(loop);home();
+if(!S.ob){if(Object.keys(S.c).length)S.ob=1;else setTimeout(onboard,400)}
+if(S.ob&&!S.rcs)setTimeout(rcNotice,1500);
+if(sbOn()&&Object.keys(S.c).length)setTimeout(()=>bup(1),2500);
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&Object.keys(S.c).length)bup()});
