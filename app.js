@@ -1398,7 +1398,7 @@ function godz(t,f,st){
  EQ().forEach(it=>{if(it[1]!="g")item(it,t,A)});x.globalAlpha=1}
 {const _oc=$("c").onclick;$("c").onclick=function(){if((K.sp||"cat")=="godzilla"&&K.stage>=3&&performance.now()-GZT>3800){GZT=performance.now();sfx(true,true)}if(_oc)_oc()}}
 const _cs0=costumeShop;
-costumeShop=function(){if((K.sp||"cat")=="godzilla"){app.innerHTML=shTop("ชุดแฟนซี")+`<div class="mu">ก๊อตซีล่าตัวใหญ่เกินกว่าจะใส่ชุดแฟนซี แต่ใช้ได้เฉพาะสกินและพื้นหลัง</div>`;return}_cs0()};
+costumeShop=function(){if((K.sp||"cat")=="godzilla"){app.innerHTML=shTop("ชุดแฟนซี")+`<div class="mu">ก๊อตซีล่าตัวใหญ่เกินกว่าจะใส่ชุดแฟนซี แต่ใช้สกิน พื้นหลัง และไอเทมได้</div>`;return}_cs0()};
 AS("godzilla",{shin:["ชิน ก๊อตซีล่า","#8a3a30",450],old:["ก๊อตซีล่ายุคเก่า","#7a8088",350],ice:["ก๊อตซีล่าน้ำแข็ง","#6a9ad0",450],mecha:["เมก้า ก๊อตซีล่า","#b8c4d0",600,"stripe"],pink:["ก๊อตซีล่าชมพู","#f4b6c8",350],gold:["ก๊อตซีล่าทอง","#e8c060",700,"gold"],black:["ก๊อตซีล่ามืด","#2a2a33",500],burn:["ก๊อตซีล่าเดือด","#c8381e",650,"lava"]});
 BG.push(["เมืองถูกทำลาย",700,"#2a1410","#ff7a2a","#2a2420","#3a2c26","ruins"]);
 const _bgA2=bgA,_bgB2=bgB;
@@ -1747,82 +1747,51 @@ buyPet=function(sp){
 const _cat5=cat;
 cat=function(t,f,st){if((K.sp||"cat")!=="xtree"||st<1)return _cat5(t,f,st);xtree(t,f,st)};
 
-const XTP={};
 function xtree(t,f,st){
- const S=Math.sin,C=Math.cos,PI=Math.PI,SK=skinData(K),g=SK?SK.base:"#2a9a4a",TL=.18,NB=44,gy=55,
- GD="#ffd23a",CL=["#ff4a4a","#ffd23a","#4ac8ff","#ff8fe0","#7fff9a"],
- rot=.55+t*2*PI/16000,pu=.5+.5*S(t/500),cl=(v,a,b)=>v<a?a:v>b?b:v,
- bi=z=>Math.max(0,Math.min(NB-1,Math.floor((z+34)/68*NB)));
- let PL=XTP[g];if(!PL){const d=dh(g,.5),l=mix(g,"#f2ffe8",.22);
-  PL=XTP[g]=[...Array(8)].map((_,i)=>mix(d,l,i/7)).concat([...Array(4)].map((_,i)=>mix("#9fb0d0","#ffffff",i/3)),[...Array(4)].map((_,i)=>mix("#3a2412","#a87a48",i/3)))}
+ const S=Math.sin,C=Math.cos,SK=skinData(K),g=SK?SK.base:"#2a9a4a",el=t-T0,
+ jy=(el<650?-rd(S(el/650*Math.PI)*8):WK?-((t/130|0)%2):0)+rd(S(t/500)*.6),
+ P=q=>q.map(p=>[p[0],p[1]+jy]),Rr=(a,b,w,h,c)=>R(a,b+jy,w,h,c),
+ A={bx:22,by:36+jy,bw:20,bh:20,hx:23,hy:18+jy,hw:18,hh:14},
+ hi=mix(g,"#ffffff",.22),dd=dk(g,.72),wk=WK?(t/130|0)%2:0,pu=.5+.5*S(t/500),
+ CL=["#ff4a4a","#ffd23a","#4ac8ff","#ff8fe0","#7fff9a"],GD="#ffd23a";
  x.globalAlpha=1;
- /* ฉากรอบตัว (เหมือนเดิม) */
- ell(32,32,29,27,GD,.1+.06*pu);ell(32,34,20,20,"#fff3b0",.08);
+ ell(32,32,29,27,"#ffd23a",.1+.06*pu);ell(32,34,20,20,"#fff3b0",.08);
  rays(32,30,10,38,14,t/3000,"#ffe48a",.1+.07*pu);
  for(let i=0;i<40;i++){const a=i/40*6.283+t/1800;R(32+C(a)*27,GY-2+S(a)*4,1,1,i%3?GD:"#fff")}
  {const sx=((t/55)%110)-30,sy=7+S(t/300)*2;
   for(let i=0;i<6;i++)RA(sx-2-i*2,sy+3,1,1,i%2?GD:"#fff",1-i/6);
   R(sx,sy,6,2,"#c42a2a");R(sx-1,sy+2,8,1,GD);R(sx+2,sy-2,2,2,"#d63a3a");
   for(let i=0;i<2;i++){const rx=sx+9+i*6;R(rx,sy,4,2,"#8a5a2a");R(rx+3,sy-1,2,2,"#8a5a2a");R(rx+5,sy,1,1,i?"#ff2a2a":"#8a5a2a")}}
- ell(32,56,27,4,"#000",.22);ell(32,GY+1,22,3,"#f4f8ff",1);ell(32,GY,17,1,"#fff",1);
- /* ===== ต้นไม้ 3 มิติแบบ voxel หมุนรอบแกนตั้ง ===== */
- const BK=[];for(let i=0;i<NB;i++)BK.push([[],[],[]]);
- /* ชั้นกรวย: [ฐานสูง, ยอดสูง, รัศมี, จำนวนกลีบกิ่ง, เฟส] */
- const TI=[[7,21,19,8,.3],[16,29,15,7,1.1],[24,36,11.5,6,2],[31,42,8.5,5,.6],[37,47,5,4,1.7]];
- for(let ia=0;ia<14;ia++){const a=ia/14*2*PI,ar=a+rot,ca=C(ar),sa=S(ar),dot=-.6*ca+.8*sa,z=3.4*sa;
-  for(let h=0;h<=7;h+=.9)BK[bi(z)][0].push(32+3.4*ca,gy-h+z*TL,12+Math.round(cl(.5+.4*dot+.15*S(a*4+h),0,1)*3))}
- TI.forEach((q,ti)=>{const yb=q[0],yt=q[1],rb=q[2],lb=q[3],ph=q[4],nth=Math.round(rb*4.4+8),nr=Math.round((yt-yb)*.9)+2;
-  for(let ia=0;ia<nth;ia++){const a=ia/nth*2*PI,ar=a+rot,ca=C(ar),sa=S(ar),lv=C(lb*a+ph),dot=-.6*ca+.8*sa,hp=Math.max(0,lv);
-   for(let ir=0;ir<nr;ir++){const tt=ir/nr,u=1-tt,r=rb*u*(1+.09*lv*(1-tt*.5)),h=yb+(yt-yb)*tt-1.6*hp*u*u,z=r*sa;
-    const ci=(tt>.15&&(ia*7+ir*13+ti*5)%19==0)?8+Math.round(cl(.5+.5*dot,0,1)*3):Math.round(cl(.4+.4*dot+.14*lv+tt*.1-(ir==0?.25:0)-(ir&1?.07:0),0,1)*7);
-    BK[bi(z)][0].push(32+r*ca,gy-h+z*TL,ci)}}});
- /* ลูกบอลประดับ */
- TI.forEach((q,ti)=>{const yb=q[0],yt=q[1],rb=q[2],lb=q[3],ph=q[4],n=ti<3?6:ti==3?4:3;
-  for(let k=0;k<n;k++){const a=ph*2+k*2*PI/n+ti*.9,tt=.2+((k*37+ti*11)%45)/100,ar=a+rot,lv=C(lb*a+ph),u=1-tt,
-   r=rb*u*(1+.09*lv*(1-tt*.5))+1.6,h=yb+(yt-yb)*tt-1.6*Math.max(0,lv)*u*u+.6,z=r*S(ar),sx=Math.round(32+r*C(ar)),sy=Math.round(gy-h+z*TL),c=CL[(k+ti*2)%5];
-   BK[bi(z+1.5)][1].push(()=>{R(sx-1,sy-1,3,3,c);R(sx-1,sy+1,3,1,dh(c,.6));R(sx-1,sy-1,1,1,"#fff");R(sx,sy-2,1,1,GD)})}});
- /* สายไฟเกลียวรอบต้น กะพริบหลายสี */
- TI.forEach((q,ti)=>{const yb=q[0],yt=q[1],rb=q[2],lb=q[3],ph=q[4],N=Math.round(rb*1.7+8);
-  for(let i=0;i<=N;i++){const u=i/N,tt=.08+.62*u,a=u*2*PI*1.6+ti*1.3,ar=a+rot,lv=C(lb*a+ph),v=1-tt,
-   r=rb*v*(1+.09*lv*(1-tt*.5))+1,h=yb+(yt-yb)*tt-1.6*Math.max(0,lv)*v*v+.3,z=r*S(ar),sx=Math.round(32+r*C(ar)),sy=Math.round(gy-h+z*TL),
-   bulb=i%5==2,on=(Math.floor(t/260)+i+ti)%3,c=CL[(i+ti)%5];
-   BK[bi(z+1.5)][1].push(bulb?()=>{if(on){ell(sx,sy,3,3,c,.25);R(sx-1,sy-1,2,2,c);R(sx-1,sy-1,1,1,"#fff")}else R(sx-1,sy-1,2,2,dh(c,.45))}:()=>R(sx,sy,2,1,i%2?GD:"#fff3b0"))}});
- /* ของขวัญใต้ต้น: กล่อง 3 มิติ หมุนไปพร้อมต้น */
- [[.3,23,6,5,"#d63a3a","#ffd23a",.4],[1.5,23.5,5,5,"#3a6ad0","#ffffff",1.1],[2.5,24,6,6,"#3f9a45","#ff8fb8",.2],[3.7,23,5,4,"#a35bff","#ffd76a",.9],[4.6,24,5,4,"#ff8fb8","#4ac8ff",1.4],[5.5,23.5,6,5,"#ffb13b","#d63a3a",.6]].forEach(G=>{
-  const a=G[0],r=G[1],s=G[2],h=G[3],c=G[4],rb=G[5],ar=a+rot,cx=r*C(ar),cz=r*S(ar),ps=G[6]+rot,cs=C(ps),sn=S(ps),hs=s/2,
-  pt=(lx,lz,hh)=>[32+cx+lx*cs-lz*sn,gy-hh+(cz+lx*sn+lz*cs)*TL],
-  cr=[[-hs,-hs],[hs,-hs],[hs,hs],[-hs,hs]],nm=[[0,-1],[1,0],[0,1],[-1,0]],ol=dh(c,.4),lc=mix(c,"#ffffff",.15),dc=dh(c,.5);
-  BK[bi(cz)][2].push(()=>{
-   for(let k=0;k<4;k++){const n=nm[k],nz=n[0]*sn+n[1]*cs;if(nz<=.02)continue;const nx=n[0]*cs-n[1]*sn,sh=cl(.25+.75*(.5+.5*(-.6*nx+.8*nz)),0,1),
-    A=pt(cr[k][0],cr[k][1],0),B=pt(cr[(k+1)%4][0],cr[(k+1)%4][1],0),D=pt(cr[(k+1)%4][0],cr[(k+1)%4][1],h),E=pt(cr[k][0],cr[k][1],h);
-    pol([A,B,D,E],mix(dc,lc,sh),ol);
-    const m0=[(A[0]+B[0])/2,(A[1]+B[1])/2],m1=[(E[0]+D[0])/2,(E[1]+D[1])/2];ln(m0,m1,rb);ln([m0[0]+1,m0[1]],[m1[0]+1,m1[1]],rb)}
-   const T=cr.map(p=>pt(p[0],p[1],h));pol(T,mix(c,"#ffffff",.28),ol);
-   const mp=(p,q)=>[(p[0]+q[0])/2,(p[1]+q[1])/2];ln(mp(T[0],T[1]),mp(T[2],T[3]),rb);ln(mp(T[1],T[2]),mp(T[3],T[0]),rb);
-   const o=pt(0,0,h),ox=Math.round(o[0]),oy=Math.round(o[1]);R(ox-3,oy-2,3,2,rb);R(ox+1,oy-2,3,2,rb);R(ox-1,oy-1,2,2,dh(rb,.7))})});
- /* วาดตามลำดับความลึก ไกล -> ใกล้ */
- for(let b=0;b<NB;b++){const q=BK[b],p=q[0];
-  for(let i=0;i<p.length;i+=3)R(p[i]-1,p[i+1]-1,2,2,PL[p[i+2]]);
-  for(let i=0;i<q[1].length;i++)q[1][i]();
-  for(let i=0;i<q[2].length;i++)q[2][i]()}
- /* ดาวทองบนยอด: แท่ง 3 มิติ หมุนพร้อมต้น */
- {const c=C(rot),s=S(rot),sg=.75+.25*S(t/280),zl=(c>=0?1:-1)*1.4,
-  sp=[...Array(10)].map((_,i)=>{const a=-PI/2+i*PI/5,r=i%2?1.9:4.2;return[r*C(a),r*S(a)]}),
-  fc=z=>sp.map(p=>[32+p[0]*c+z*s,5+p[1]]);
-  ell(32,5,10,10,GD,.2*sg);ell(32,5,6,6,"#fff6c0",.3*sg);
-  const bk=fc(-zl),fr=fc(zl);
-  pol(bk,dh(GD,.6),dh(GD,.35));
-  for(let i=0;i<10;i++){const j=(i+1)%10;poly([bk[i],bk[j],fr[j],fr[i]],dh(GD,.78))}
-  pol(fr,GD,dh(GD,.45));R(32-Math.round(c*1.5),3,1,1,"#fff");R(32,5,1,1,"#fff6c0")}
- /* ประกาย หิมะ */
+ ell(32,GY,21,2,"#000",.35);ell(32,GY+1,19,3,"#f4f8ff",1);ell(32,GY,15,1,"#fff",1);
+ EQ().forEach(it=>{if(it[1]=="g")wing(it,t,A)});
+ [[4,50,9,7,"#d63a3a","#ffd76a"],[12,53,7,5,"#3a6ad0","#ffffff"],[50,50,9,7,"#3f9a45","#ff8fb8"],[45,53,7,5,"#a35bff","#ffd76a"],[55,54,6,4,"#ff8fb8","#4ac8ff"]]
+ .forEach(([gx,gy,w,h,c1,c2])=>{Rr(gx,gy,w,h,c1);Rr(gx+(w>>1),gy,1,h,c2);Rr(gx,gy+(h>>1),w,1,c2);Rr(gx+(w>>1)-1,gy-2,3,2,c2)});
+ Rr(24,54+wk,6,4-wk,"#6a4a2a");Rr(34,54+(1-wk),6,4-(1-wk),"#6a4a2a");Rr(28,48,8,7,"#6a4a2a");Rr(28,48,2,7,"#8a6a3a");
+ pol(P([[10,54],[32,36],[54,54]]),dd);
+ pol(P([[15,44],[32,24],[49,44]]),g);
+ pol(P([[20,33],[32,13],[44,33]]),hi);
+ pol(P([[24,22],[32,6],[40,22]]),mix(g,"#ffffff",.36));
+ [[11,53,4],[53,53,4],[16,43,3],[48,43,3],[21,32,3],[43,32,3]].forEach(([a,b,r])=>ell(a,b+jy,r,1,"#fff",1));
+ const gar=(x1,y1,x2,y2,sag)=>{for(let i=0;i<=22;i++){const u=i/22;if((Math.floor(t/200)+i)%5)Rr(x1+(x2-x1)*u,y1+(y2-y1)*u+sag*S(u*3.14),2,1,i%2?GD:"#fff")}};
+ gar(14,51,50,51,3);gar(21,34,43,34,2.5);gar(26,24,38,24,2);gar(29,14,35,14,1.5);
+ [[16,52],[27,52],[38,52],[48,52],[21,46],[44,45],[24,35],[40,35],[28,25],[36,26],[32,16]].forEach((p,i)=>{
+  const yy=p[1]+rd(S(t/380+i)*1);Rr(p[0],yy,3,3,CL[i%5]);Rr(p[0],yy,1,1,"#fff");Rr(p[0]+1,yy-1,1,1,GD)});
+ [[19,49],[30,48],[35,49],[45,49],[18,40],[47,40],[25,30],[39,30],[30,20],[34,20]].forEach((p,i)=>{
+  if((Math.floor(t/260)+i)%3){const c=CL[(Math.floor(t/260)+i)%5];ell(p[0],p[1]+jy,2,2,c,.25);Rr(p[0],p[1],2,2,c)}});
+ if(t%3500<130){Rr(27,41,3,1,"#150d24");Rr(35,41,3,1,"#150d24")}
+ else{Rr(27,39,4,4,"#150d24");Rr(34,39,4,4,"#150d24");Rr(27,39,2,2,"#fff");Rr(34,39,2,2,"#fff");Rr(30,42,1,1,"#fff");Rr(37,42,1,1,"#fff")}
+ Rr(24,44,3,2,"rgba(255,110,150,.75)");Rr(38,44,3,2,"rgba(255,110,150,.75)");
+ Rr(30,45,5,1,"#3a2030");Rr(29,44,1,1,"#3a2030");Rr(35,44,1,1,"#3a2030");
+ const sg=.75+.25*S(t/280);
+ ell(32,5+jy,10,10,GD,.2*sg);ell(32,5+jy,6,6,"#fff6c0",.3*sg);
+ pol(P([[32,-4],[34,1],[39,2],[35,5],[36,10],[32,8],[28,10],[29,5],[25,2],[30,1]]),GD,"#c88a10");
+ R(31,0+jy,2,2,"#fff");
  for(let i=0;i<4;i++){const a=t/600+i*1.571,ox=rd(32+C(a)*25),oy=rd(30+S(a)*11);
   for(let q=1;q<4;q++)RA(32+C(a-q*.2)*25,30+S(a-q*.2)*11,2,2,GD,.5-q*.12);
-  spk(ox,oy,1,i%2?"#fff6c0":"#ff9be8")}
- for(let i=0;i<7;i++){const ph=(t/500+i*.9)%3;if(ph<1)spk((i*47)%58+3,(i*31)%46+8,ph<.5?1:2,"#fff")}
+  spk(ox,oy+jy,1,i%2?"#fff6c0":"#ff9be8")}
+ for(let i=0;i<7;i++){const ph=(t/500+i*.9)%3;if(ph<1)spk((i*47)%58+3,(i*31)%46+8+jy,ph<.5?1:2,"#fff")}
  for(let i=0;i<20;i++)R((i*29+S(t/800+i)*3+64)%64,(t/35+i*13)%GY,1,1,"#fff");
+ EQ().forEach(it=>{if(it[1]!="g")item(it,t,A)});
  x.globalAlpha=1}
 
-/* ต้นคริสต์มาสเป็นตัวสำเร็จรูป ไม่รองรับของสวมใส่ */
-{const _sp1=shopPage;shopPage=function(){if((K.sp||"cat")==="xtree"&&/^[hnwfgtc]$/.test(SH)){app.innerHTML=shTop("ต้นคริสต์มาส (ตัวสำเร็จรูป)")+`<div class="mu">ต้นคริสต์มาสแต่งตัวเต็มยศอยู่แล้ว ไม่รองรับของสวมใส่ ใช้ได้เฉพาะสกินและพื้นหลัง</div>`;return}_sp1()}}
-
-{const _cs1=costumeShop;costumeShop=function(){if((K.sp||"cat")==="xtree"){app.innerHTML=shTop("ชุดแฟนซี")+`<div class="mu">ต้นคริสต์มาสแต่งตัวเต็มยศอยู่แล้ว ใช้ได้เฉพาะสกินและพื้นหลัง</div>`;return}_cs1()}}
+{const _cs1=costumeShop;costumeShop=function(){if((K.sp||"cat")==="xtree"){app.innerHTML=shTop("ชุดแฟนซี")+`<div class="mu">ต้นคริสต์มาสแต่งตัวเต็มยศอยู่แล้ว ใช้สกิน พื้นหลัง และไอเทมได้</div>`;return}_cs1()}}
